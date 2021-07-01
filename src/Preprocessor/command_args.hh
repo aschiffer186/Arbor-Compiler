@@ -15,6 +15,7 @@ namespace Arbor::preprocessor
         std::vector<std::string> files;
     };
 
+    ///\brief Processes command line arguments
     options get_opt(int argc, char** argv);
 } // namespace Arbor::preprocessor
 

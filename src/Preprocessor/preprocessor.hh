@@ -6,7 +6,7 @@
 
 namespace Arbor::preprocessor
 {
-
+    ///\brief A struct containing informaton about a source file
     struct source_file_t
     {
         std::string _M_file_name;
