@@ -1,0 +1,249 @@
+#Lexical conventions
+token = IDENTIFIER | literal | keyowrd | operator
+
+IDENTIFIER = identifier-nondigit | identifier identifier-nondigit | identifier digit
+digit:
+  one of 0 1 2 3 4 5 6 7 8 9 10
+identifier-nondigit:
+  alpha |
+  '=' |
+  '-' |
+alpha:
+  [a-zA-Z]
+
+literal = bool-literal | pointer-literal | string-literal | int-literal | float-literal
+bool-literal = "true" | "false"
+  #Built-in type: bool
+pointer-literal = "nptr"
+  #Built-in type: nptr_t
+string-literal = " [character-sequence] "
+character-sequence = character-sequence s-char | s-char
+s-char = basic-s-char | escape-sequence 
+  #Built in type: char
+basic-s-char = any character except newline and "
+escape-sequence = '\\' escape-sequence-char
+escape-sequence-char = 't' | 'f' | 'n' | 'r' | 'a' | 'b' | 'v'
+integer-literal = digit-sequence | digit-sequence integer-literal-suffix
+  #Built-in types: short, int, long
+digit-sequence = digit-sequence digit | digit
+integer-literal-suffix = 's' | 'S' | 'l' | 'L'
+floating-point-literal = fractional-constant [exponential-part] floating-point-suffix [opt] |
+                         digit-sequence exponential-part floating-pointer-suffix [opt]
+  #Built-in type: float
+fractional-const = [digit-sequence] '.' digit-sequence | digit-sequence '.'
+exponential-part = 'e' [sign] digit-sequence | 'E' [sign] digit-sequence 
+sign = '+' | '-'
+floating-pointer-suffix = 'f' or 'F'
+
+keywords = 
+
+operators = "&" "*" "!" "[" "]" "<" ">" "," "(" ")" '+' '-' '/' '^^' '^'' '%'
+  '+=' '-=' '*=' '/=' '^^=''%=' '&&' '||' '==' '!=' '<=' '>=' '^' '|' '??' '='
+  '++' '--' '{' '}' '.' '->'
+
+#Notation
+$$ = lhs
+$0 = parent 
+$n = nth term on rhs (1 based)
+
+#Types
+type = reference-type | $$.type = $1.referenced_type, $$.is_reference_type = true
+  non-reference-type | $$.type = $1
+reference-type = non-reference-type "&" | 
+non-reference-type = type-core | 
+  non-reference-type "*" |  $$.is_pointer = true, $$.pointer-to_type = $1
+  non-reference-type "!*" | $$.is_pointer = true, $$.pointer-to_type = $1
+  or non-reference-type "[" [integer-literal] "]" 
+type-core = IDENTIFIER [type-template-paramters] | $$.type = add_tempate_paramaters($1, $2)
+type-temlate-paramaters = "<" template-paramater-list ">" $$.template_types = $2
+template-paramater-list = type | $$.type = $1
+  template-paramater list "," type | $$.add_template_type($3)
+
+#Variable declaration
+variable-declaration = "let" [type-modifier] ["const" ] type identifier | $$.type = $4, $1.name = $5, $$.size = sizeof($4) $$.is_pointer = $4.is_pointer, if $4.is_pointer, $$.pointer-to-type = $4.pointer-to-type
+  note: if type == "auto", $$.type = $0.type
+type-modifier = "static" | "virtual" | "compeval"
+
+#Expressions
+expression = 
+  IDENTIFIER | $$.type = lookup-type($1), $$.value = lookup-value($1)
+  literal |$$.type = $1.type, $$.value = $1.value
+  '(' expression ')' |
+  variable-declaration |
+  expression '+' expression | $$.type = +($1.type, $3.type), $$.value = +($1.value, $2.value)
+  expression '-' expression | $$.type = -($1.type, $3.type), $$.value = -($1.type, $2.type)
+  expression '/' expression | $$.type = /($1.type, $3.type), $$.value = /($1.value, $3.value)
+  expression '^^' expression | $$.type = ^^($1.type, $3.type), $$.value = ^^($1.value, $3.value)
+  expression '%' expression | $$.type = %($1.type, $3.type), $$.value = %($1.value, $3.value)
+  expression '+=' expression | $1.type = +($1.type, $3.type), $1.value = +($1.value, $3.value)
+  expression '-=' expression | $$.type = -($1.type, $3.type), $1.value = -($1.value, $3.value)
+  expression '*=' expression | $1.type = *($1.type, $3.type), $1.value = *($1.value, $3.value)
+  expression '/=' expression | $1.type = /($1.type, $3.type), $1.value = /($1.value, $3.value)
+  expression '^^=' expression | $1.type = ^^($1.type, $3.type), $1.value = ^^($1.value, $3.value)
+  expression '%=' expression | $1.type = %($1.type, $3.type), $1.value = %($1.value, $3.value)
+  expression '&&' expression | $$.type = 'bool', $$.value = $1.value && $3.value; enforce-type($1.type, 'bool'), enforce-type($3.type, 'bool')
+  expression '||' expression | $$.type = 'bool', $$.value = $1.value && $3.value; enforce-type($1.type, 'bool'), enforce-type($3.type, 'bool')
+  expression '==' expression | %%.type = 'bool', $$.value = ==($1.value, $3.value); enforce-type($1.type, 'bool'), enforce-type($3.type, 'bool')
+  expression '!=' expression | $$.type = 'bool', $$.value = !=($1.value, $3.value)
+  expression '<' expression | $$.type = 'bool', $$.value = <($1.value, $3.value)
+  expression '<=' expression | $$.type = 'bool', $$.value = <=($1.value, $3.value)
+  expression '>' expression | $$.type = 'bool', $$.value = > ($1.value, $3.value)
+  expression '>=' expression | $$.type = 'bool', $$.value = >= ($1.value, $3.value)
+  expression 'in' expression | $$.type = 'bool', $$.value = in($1.value, $3.value)
+  expression '&' expression | #Bit operators
+  expression '^' epxression |
+  expression '|' expression |
+  expression '>>' expression |
+  expression '<<' expression |
+  expression '??' expression | $$.type = ??($1.type), $$.value = ??($1.value) #"Value or default" operator e.g. if x == nptr return 1 else return 2 -> x = 2 ?? 1, can be overloaded 
+  expression '=' expression | $$.type = $1.type, $1.type = $3.type, $$.value = $1.value; enforce-converible($3.type, $1.type)
+  '!' expression | $$.type = bool, $$ = ! $1.value; enforce-type($1.type = bool)
+  '*' expression | $$.type = $1.pointed-type, $$.value = dereference($1)
+  '&' expression | $$.type = address_t, $$.value = addresssof($1)
+  '++' expression | $$.type = $1.type, $$.value = ++($1.value), $1.value = ++($1.value)
+  expression '++' | $$.type = $1.type, $$.value = ++($1.value)
+  '--' expression | $$.type = $1.type, $$.value = --($1.value), $1.value = --($1.value)
+  expression '--' | $$.type = $1.type, $$.value = --($1.value)
+  '{' expression '}' == expression | $$.type = 'bool', $$.value = for each sub-expression s of $1, $$.value = op(==(s, $5), $$.value) where op is the operand (&&, ||) in $1
+  '{' expression '}' != expression | $$.type == 'bool', $$.value = for each sub-expression s of $1, $$.value = op(1=(s, $5), $$.value) where op is the operand (&&, ||) in $1
+  expression '[' expression ']' | $$.type = []($1.type), $$value = []($1.type, $3.value)
+  function-call-expression | $$.type = $1.type, $$.value = $1.value
+  expression '.' expression | $$.type = .($1.type, $3.type), $$.value = .($1.type, $3.value)
+  expression '->' expression | $$.type = .($1.pointed-to-type, $3.type), $$value = .($1.pointed-to-type, $3.value)
+  expression ',' expression | $$.type = make-tuple-type($1.type, $3.type) $$.value = make-tuple-value($1.value, $3.value)#Tuple return expression; how multiple values can be returned from an expression 
+  '(' expression ')' '?' expression ':' expression | $$.type = $5.type; enforce-type($2.type, 'bool')
+  new-expression | $$.type = $1.type, $$.value = $1.value
+
+function-call-expression = expression '(' [parameter-list] ')' | $$.type = ()($1.type, paramater-list.types), $$.value = ()($1.type, paramater-list.values)
+paramater-list =
+  paramater
+  paramater-list "," paramater
+pamarater = 
+  expression | $$.type = $1.type, $$.value = $1.value
+  identifier "=" expression 
+new-expression = "new" [new-args] type | $$.type = $3.type
+  "new" [new-args] type "(" [paramater-list] ")" | $$.type = type, $$.value = ctor($3, $5)
+  "new" [new-args] type "[" integer-literal "]" | $$.type = array-type(type), $3.value = ??
+
+#Statements
+statement = 
+  block-statement
+  loop-statement
+  conditional-statement 
+  exception-statement
+  jump-statement
+  expression-statement 
+  delete-statement 
+  nop-statement
+
+block-statement = "{" [statement-sequence] "}"
+statement-sequence = statement-sequnce statement 
+loop-statement = 
+  do-while-statement
+  while-statement
+  for-loop-statement
+
+do-while-statement =
+  "do" block-statement "while" "(" expression ")" | enforce-type($5, 'bool')
+
+while-statement = 
+  "while" "(" expression ")" | enforce-type($3, 'bool')
+
+for-loop-statement = 
+  for "(" [expression] ";" [expression] ";" [expression] ")" block-statement | enforce-type($5, 'bool')
+  "foreach" expression "in" expression | enforce-type($4, 'iterable')
+
+conditional-statement = 
+  if-statement [elseif-statements] [else-statement]
+  switch-statement
+
+if-statement = 
+  "if" ["compeval"] if-condition block-statement
+
+elseif-statements=
+  else-if-statement
+  elseif-statements else-if-statement 
+
+elseif-statement=
+  "elseif" if_condition block-statement
+
+else-statement=
+  "else" if-condition block-statement 
+
+if-condition =
+  "(" expression ")" | enforce-type($2, 'bool')
+
+switch-statement = 
+  swtich "(" expression ")" "{" [switch-block-sequence] [defaul-block] "}" | require-finite($3, is-finite)
+
+switch-block = 
+  "case" expression ":" [statement] jump-statement 
+
+default-block = 
+  "default" ":" [statement] jump-statement 
+
+exception-statement =
+  "try" block-statement "catch" "(" type [identifier] ")" block-statement
+  "try" block-statement "catch-all" block-statement 
+
+jump-statement =
+  "throw" [expression] ";"
+  "continue" ";"
+  return [expression] ";" | reqire($0.gtype, 'function-body'), enforce-convertible($1.type, $0.return-type)
+  goto identifier ":"
+
+expression-statement = 
+  expression ";"
+
+nop-statement = 
+  ";"
+
+header-statement =
+  "import" identifier
+
+type-alias =
+  [template-declaration] "define" identifier "=" type
+
+function = 
+  function-header block-statement 
+
+function-header = 
+  function-declaration 
+  operator-declaration 
+
+function-declaration = 
+  "func" [function-modifier] identifier "(" [function-argument-list] ")" ["const"] [nothrow] return-types | $$.return-types = $9, $$.arguments = $5.argument-list
+
+function-modifier = 
+  "static"
+  "virtual"
+  "final"
+  "compeval"
+
+function-argument-list = 
+  function-argument 
+  function-argument-list "," function-argument
+
+function-argument = 
+  type ["..."] [identifier] 
+  type identifier "=" expression
+
+nothrow = 
+  "nothrow" ["(" expression ")"]
+
+return-types = 
+  "->" return-type-list
+  "->" "void"
+
+return-type-list =
+  type
+  return-type-list "," type
+
+operator-declaration = 
+  "func" "operator" operator "(" [function-argument-list] ")" ["const"] [nothrow] return-types
+
+function-interface = 
+  function-declaration special-function ";"
+
+special-function = 
+  "=" "default" | "delete" | "interface"
