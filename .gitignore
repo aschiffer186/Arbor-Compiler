@@ -1,2 +1,8 @@
 .vscode/
+<<<<<<< HEAD
 build/
+=======
+build/
+
+scratch.txt
+>>>>>>> origin/main

@@ -203,3 +203,47 @@ header-statement =
 
 type-alias =
   [template-declaration] "define" identifier "=" type
+
+function = 
+  function-header block-statement 
+
+function-header = 
+  function-declaration 
+  operator-declaration 
+
+function-declaration = 
+  "func" [function-modifier] identifier "(" [function-argument-list] ")" ["const"] [nothrow] return-types | $$.return-types = $9, $$.arguments = $5.argument-list
+
+function-modifier = 
+  "static"
+  "virtual"
+  "final"
+  "compeval"
+
+function-argument-list = 
+  function-argument 
+  function-argument-list "," function-argument
+
+function-argument = 
+  type ["..."] [identifier] 
+  type identifier "=" expression
+
+nothrow = 
+  "nothrow" ["(" expression ")"]
+
+return-types = 
+  "->" return-type-list
+  "->" "void"
+
+return-type-list =
+  type
+  return-type-list "," type
+
+operator-declaration = 
+  "func" "operator" operator "(" [function-argument-list] ")" ["const"] [nothrow] return-types
+
+function-interface = 
+  function-declaration special-function ";"
+
+special-function = 
+  "=" "default" | "delete" | "interface"
