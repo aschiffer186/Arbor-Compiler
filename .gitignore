@@ -1,4 +1,7 @@
 .vscode/
 build/
+!Specification/specification.tex
+Specification/
+
 
 scratch.txt

@@ -113,6 +113,7 @@ expression =
   expression ',' expression | $$.type = make-tuple-type($1.type, $3.type) $$.value = make-tuple-value($1.value, $3.value)#Tuple return expression; how multiple values can be returned from an expression 
   '(' expression ')' '?' expression ':' expression | $$.type = $5.type; enforce-type($2.type, 'bool')
   new-expression | $$.type = $1.type, $$.value = $1.value
+  lambda-expression | $$.type = $1.return_type
 
 function-call-expression = expression '(' [parameter-list] ')' | $$.type = ()($1.type, paramater-list.types), $$.value = ()($1.type, paramater-list.values)
 paramater-list =
@@ -124,6 +125,8 @@ pamarater =
 new-expression = "new" [new-args] type | $$.type = $3.type
   "new" [new-args] type "(" [paramater-list] ")" | $$.type = type, $$.value = ctor($3, $5)
   "new" [new-args] type "[" integer-literal "]" | $$.type = array-type(type), $3.value = ??
+lambda-expression = 
+  "(" function-argment-list ")" "->" block-statement "->" return-type | $$.return-type = $7
 
 #Statements
 statement = 
@@ -202,7 +205,7 @@ header-statement =
   "import" identifier
 
 type-alias =
-  [template-declaration] "define" identifier "=" type
+  ["template"] "define" identifier "=" type [template-declaration]
 
 function = 
   function-header block-statement 
@@ -240,10 +243,87 @@ return-type-list =
   return-type-list "," type
 
 operator-declaration = 
-  "func" "operator" operator "(" [function-argument-list] ")" ["const"] [nothrow] return-types
+  "func" "operator" operator "(" [function-argument-list] ")" ["const"] [nothrow] return-types [special-modifiers]
+
+special-modifiers =
+  "default"
+  "deleted"
 
 function-interface = 
-  function-declaration special-function ";"
+  function-declaration "=" "interface" ";"
 
-special-function = 
-  "=" "default" | "delete" | "interface"
+class = 
+  class-declaration class-statements
+
+class-declaration = 
+ ["template"] "class" identifier [super-classes] [template-declaration]
+
+super-classes = 
+  super-class 
+  super-classes "," super-class
+
+super-class = 
+  "inherits" identifier [type-template-paramaters]
+
+class-statements =
+  "{" [class-blocks] "}"
+
+class-blocks = 
+  class-block
+  class-blocks class-block
+
+class-block =
+  public-block
+  private-block
+  protected-block
+
+public-block = 
+  "public" "{" [class-block-statements] "}"
+
+private-block = 
+  "private" "{" [class-block-statements] "}"
+
+protected-block = 
+  "protected" "{" [class-block-statements] "}"
+
+class-block-statements = 
+  class-block-statement 
+  class-block-statements class-block-statement
+
+class-block-statement = 
+  var-declaration ["="] [expression] 
+  function 
+  constructor
+  destructor 
+  class
+
+constructor = 
+  constructor-header block-statement 
+  constructor-interface
+
+constructor-header =
+  "ctor" ["explicit"] identifier "(" [function-argument-list] ")" 
+
+constructor-interface = 
+  constructor-header "=" "default" | "deleted" | "interface"
+
+destructor = 
+  "~" identifier "(" ")" ["="] ["default" | "deleted"]
+
+template-declaration =
+  ":" template-arguments
+
+template-arguments =
+  template-argument 
+  template-arguments "," template-argument 
+
+template-argument =
+  typename-argument 
+  type-argument 
+  type
+
+typename-argument =
+  "type" [identifier] ["="] [expression] | requires that expression be compeval expression
+
+type-argument =
+  type [identifier] ["="] [expression]
