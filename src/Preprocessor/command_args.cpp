@@ -6,7 +6,7 @@
 
 namespace Arbor::preprocessor
 {
-    options get_opt(int argc, char** argv)
+    options get_opt(int argc, const char** argv)
     {
         options opt;
         bool help_flag = false;
@@ -19,12 +19,13 @@ namespace Arbor::preprocessor
 
         for(int i = 1; i < argc; ++i)
         {
-            char* arg = argv[i];
+            const char* arg = argv[i];
             if (strlen(arg) < 2)
             {
                 if(!in_output_flag)
                 {
                     std::cerr << "Unexpected command line argument: " << arg << std::endl;
+                    
                     exit(EXIT_FAILURE);
                 }
                 else
@@ -38,34 +39,48 @@ namespace Arbor::preprocessor
                 if (strcmp(arg, "-h") == 0)
                 {
                     if (help_flag)
+                    {
                         std::cerr << "Invalid command line argument: duplicate -h flag" << std::endl;
+                        
                         exit(EXIT_FAILURE);
+                    }
                     help_flag = true;
                 }
                 else if (strcmp(arg, "-v") == 0)
                 {
                     if (version_flag)
+                    {
                         std::cerr << "Invalid command line argument: duplicate -v flag" << std::endl;
+                        
                         exit(EXIT_FAILURE);
+                    }
                     version_flag = true;
                 }
                 else if (strcmp(arg, "-g") == 0)
                 {
                     if(debug_flag)
+                    {
                         std::cerr << "Invalid command line argument: duplicate -g flag" << std::endl;
+                        
                         exit(EXIT_FAILURE);
+                    }
                     debug_flag = true;
                 }
                 else if(strcmp(arg, "-o") == 0)
                 {
                     if(seen_output_flag)
+                    {
                         std::cerr << "Invalid command line argument: duplicate -o flag" << std::endl;
+                        
                         exit(EXIT_FAILURE);
+                    }
                     seen_output_flag = true;
+                    in_output_flag = true;
                 }
                 else
                 {
                     std::cerr << "Unexpected command line argument: " << arg << std::endl;
+                    
                     exit(EXIT_FAILURE);
                 }
             } 
@@ -76,6 +91,7 @@ namespace Arbor::preprocessor
                     if(!in_output_flag)
                     {
                         std::cerr << "Unexpected command line argument: " << arg << std::endl;
+                        
                         exit(EXIT_FAILURE);
                     }
                     else
@@ -95,10 +111,11 @@ namespace Arbor::preprocessor
                 else 
                 {
                     size_t len = strlen(arg);
-                    char * pattern = ".arb";
+                    const char * pattern = ".arb";
                     if (strncmp(arg + (len - 4), pattern, 4) != 0)
                     {
                         std::cerr << "Unsupported file type; only .arb files are accepted" << std::endl;
+                        
                         exit(EXIT_FAILURE);
                     }
                     input_files.emplace_back(arg);
@@ -106,24 +123,33 @@ namespace Arbor::preprocessor
             }
         }
 
+        options opts = {help_flag, version_flag, debug_flag, output_file, input_files};
+
+        if (help_flag || version_flag)
+            return opts;
+
         if(!seen_output_flag)
+        {
             std::cerr << "Must specify output file" << std::endl;
+            
             exit(EXIT_FAILURE);
-        
+        }
         if((seen_output_flag || debug_flag) && input_files.size() == 0)
         {
             std::cerr << "Must specify input files" << std::endl;
+            
             exit(EXIT_FAILURE);
         }
 
         auto it = std::find(input_files.begin(), input_files.end(), output_file);
-        if (it != input_files.begin())
+        if (it != input_files.end())
         {
             std::cerr << "Error: output file is an input file" << std::endl;
+            
             exit(EXIT_FAILURE);
         }
 
-        options opts = {help_flag, version_flag, debug_flag, output_file, input_files};
+        
         return opts;
     }
 } // namespace Arbor::preprocessor

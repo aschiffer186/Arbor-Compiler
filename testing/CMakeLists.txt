@@ -1,0 +1,3 @@
+add_executable(command_line_arguments test_command_line_args.cpp test_command_line_args_main.cpp)
+target_link_libraries(command_line_arguments PRIVATE preprocessor)
+target_compile_options(command_line_arguments PRIVATE -g)

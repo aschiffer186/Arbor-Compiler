@@ -1,3 +1,3 @@
-set(${PREPROCESSOR_SOURCES} command_args.cpp)
+set(PREPROCESSOR_SOURCES command_args.cpp)
 
-add_library(preprocessor ${PREPROCESSOR_SOURCES} STATIC)
+add_library(preprocessor STATIC ${PREPROCESSOR_SOURCES})

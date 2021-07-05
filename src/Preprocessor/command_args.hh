@@ -16,8 +16,7 @@ namespace Arbor::preprocessor
     };
 
     ///\brief Processes command line arguments
-    options get_opt(int argc, char** argv);
+    options get_opt(int argc, const char** argv);
 } // namespace Arbor::preprocessor
-
 
 #endif
