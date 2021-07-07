@@ -21,7 +21,7 @@ namespace Arbor::preprocessor
     ///The preprocessor prepares a .arb file for compilation by performing the following actions.
     ///1) The preprocessor removes all comments and replaces them with whitespace.
     ///2) The preprocessor concatenates adjacent string literals.
-    ///3) The preprocess removes all import statements from the source file and records where they are from.
+    ///3) The preprocessor replaces __FILE__, __LINE__, __TIME__, and __DATE__ constants with the value of the file name or line number
     ///
     ///The preprocess function returns a \b source_file_t object containg the preprocessesed source code, file
     ///name, and import statements found in the file.

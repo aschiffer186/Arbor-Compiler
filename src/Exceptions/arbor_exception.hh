@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-namespace Arbor::exception
+namespace Arbor::exceptions
 {
     class arbor_exception : public std::exception
     {
@@ -40,6 +40,8 @@ namespace Arbor::exception
             {
                 return _M_what_arg.c_str();
             }
+
+            virtual const char* get_exception_class() const noexcept = 0;
 
             virtual ~arbor_exception()
             {
