@@ -259,10 +259,11 @@ no-op-statement = ';'
 
 #Functions
 function = 
-    function-header bloc-statement
+    function-header block-statement
 
 function-header =
     "func" function-options ["compeval"] identifier '(' [function-argument-list] ')' ["nothrow"] return-types
+    "operator" ["compeval"] operator '(' [function-argument-list] ')' ["nothrow"] return-types
 
 function-options =
     "virtual"
@@ -281,7 +282,7 @@ return-types =
 
 return-type-list =
     type 
-    return-type-list "," type
+    return-type-list ',' type
 
 #Enums
 enum =
@@ -296,23 +297,23 @@ enum-block =
 
 #Class
 class = 
-    class-declaration class-definition
+    [tempalate-declaration] class-declaration class-definition
 
 class-declaration = 
-    "class" identifier [class-inheritance]
+    "class" identifier ['(' template-type-paramaters ')'] [class-inheritance]
 
 class-inheritance = 
-    "inherits" class-name-list
+    "inherits" ':' class-name-list
 
 class-name-list =
     class-name
-    class-name-list "," class-name
+    class-name-list ',' class-name
 
 class-name =
     identifier [template-type-paramaters]
 
 class-definition = 
-    "{" [class-blocks] "}"
+    '{' [class-blocks] '}'
 
 class-blocks =
     class-block
@@ -322,3 +323,62 @@ class-block =
     constructor
     destructor
     variable-declaration
+
+constructor = 
+    "ctor" ["compeval"] identifier '(' [function-argument-list] ')' "nothrow" block-statement
+
+destructor = 
+    '~' ["compeval"] identifier '(' ')' block-statement
+
+#Templates
+template-declaration =
+    "template" '<' template-type-list '>' [template-constraint-list]
+
+#Miscelaneous Statements
+type-definition = 
+    "define" type "as" identifier
+
+# Modules
+module-statement = 
+    "module" module-name-units 
+
+module-name-units = 
+    identifier
+    module-name-units '.' identifier
+
+import-statement = 
+    "import" module-name-units
+
+#Namespaces
+namespace = 
+    "namespace" namespace-name '{' [namespace-units] '}'
+
+namespace-name = 
+    identifier 
+    namespace-name '.' identifier
+
+namespace-units = 
+    namespace-unit
+    namespace-units namespace unit
+
+namespace-unit =
+    class
+    enum
+    function
+    type-definition
+    import-statement
+
+#Program level
+file = [module-statement] [file-blocks]
+
+file-blocks =
+    file-block
+    file-blocks file-block
+
+file-block =
+    type-definition
+    class
+    enum
+    function
+    import-statement 
+    namespace
