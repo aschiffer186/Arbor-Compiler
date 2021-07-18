@@ -85,6 +85,7 @@ expression =
     "sizeof" '(' expression ')'
     typeof-expression
     "castas" '<' type '>' '(' expression ')'
+    expression "is" expression
 
     #Variable declaration
     variable-declaration 
@@ -110,7 +111,10 @@ expression-list =
     expression-list ',' expression
 
 variable-declaration =
-    "let" variable-declaration-list 
+    "let" [access-level] variable-declaration-list 
+
+access-level = 
+    "public" | "private" | "protected"
 
 variable-declaration-list =
     variable-declaration-block
@@ -293,4 +297,28 @@ enum-block =
 #Class
 class = 
     class-declaration class-definition
-    
+
+class-declaration = 
+    "class" identifier [class-inheritance]
+
+class-inheritance = 
+    "inherits" class-name-list
+
+class-name-list =
+    class-name
+    class-name-list "," class-name
+
+class-name =
+    identifier [template-type-paramaters]
+
+class-definition = 
+    "{" [class-blocks] "}"
+
+class-blocks =
+    class-block
+    class-blocks class-block
+
+class-block = 
+    constructor
+    destructor
+    variable-declaration
