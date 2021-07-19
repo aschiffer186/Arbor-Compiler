@@ -248,7 +248,7 @@ catch-statement-sequence =
     catch-statement
     cathc-statement-sequence catch-statement
 
-cathc-statement = 
+catch-statement = 
     catch-all-statement
     "catch" '(' type [identifier] ')' block-statement
 
@@ -262,7 +262,7 @@ function =
     function-header block-statement
 
 function-header =
-    "func" function-options ["compeval"] identifier '(' [function-argument-list] ')' ["nothrow"] return-types
+    "func" function-options ["compeval"] [identifier]  ['(' template-type-paramaters ')'] '(' [function-argument-list] ')' ["nothrow"] return-types
     "operator" ["compeval"] operator '(' [function-argument-list] ')' ["nothrow"] return-types
 
 function-options =
@@ -297,10 +297,10 @@ enum-block =
 
 #Class
 class = 
-    [tempalate-declaration] class-declaration class-definition
+    class-declaration class-definition
 
 class-declaration = 
-    "class" identifier ['(' template-type-paramaters ')'] [class-inheritance]
+    "class" ["template"] identifier ['(' template-type-paramaters ')'] [class-inheritance] [template-declaration]
 
 class-inheritance = 
     "inherits" ':' class-name-list
@@ -325,14 +325,32 @@ class-block =
     variable-declaration
 
 constructor = 
-    "ctor" ["compeval"] identifier '(' [function-argument-list] ')' "nothrow" block-statement
+   [template-declaration] "ctor" ["compeval"] identifier '(' [function-argument-list] ')' "nothrow" block-statement
 
 destructor = 
     '~' ["compeval"] identifier '(' ')' block-statement
 
 #Templates
 template-declaration =
-    "template" '<' template-type-list '>' [template-constraint-list]
+    ':' template-type-list [template-constraint]
+
+template-constraint = 
+    "requires" '{' template-requirement-list '}'
+
+template-requirement-list = 
+    template-requriement 
+    template-requirement-list ',' template-requirement
+
+template-requirement = 
+    is-statement 
+    has-statement 
+
+is-statement = 
+    identifier "is" expression 
+
+has-statement = 
+    identifier "has" function-header 
+    identifier "has" '{' function-headers '}'
 
 #Miscelaneous Statements
 type-definition = 
