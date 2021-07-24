@@ -1,0 +1,402 @@
+# Type system
+type = 
+    reference-type 
+    non-reference-type
+
+reference-type = 
+    non-reference-type '&' 
+    non-referenece-type '&' '*'
+
+non-reference-type =
+    type-core 
+    non-reference-type '*' 
+    non-reference-type '*' '!' 
+    non-reference-type '[' [integer-literal] ']' 
+
+type-core = 
+    identifier [type-template-paramters]
+    typeof-expression
+
+type-template-paramaters = 
+    '<' template-paramater-list '>'
+
+template-paramater-list = 
+    type 
+    template-paramater-list ',' type 
+
+# Expressions
+expression = 
+    # Primary Expressions
+    identifier 
+    literal 
+    "this" 
+
+    # Arithmetic Expressions
+    expression '+' expression 
+    expression '-' expression 
+    expression '*' expression 
+    expression '/' expression 
+    expression '^^' expression 
+    expression '%' expression 
+    expression '+=' expression 
+    expression '-=' expression 
+    expression '*=' expression 
+    expression '^^=' expression 
+    expression '%=' expression 
+
+    # Logical 
+    expression '&&' expression 
+    expression '||' expression 
+    expression '!=' expression 
+    expression '==' expression 
+    expression '>' expression 
+    expression '>=' expression 
+    expression '<' expression 
+    expression '<=' expression 
+
+    # Bit shift operators
+    expression '&' expression
+    expression '^' expression
+    expression '|' expression
+    expression '<<' expression 
+    expression '>>' expression
+
+    # Unary Operators
+    '!' expression | $$.type = 'bool', enforce-type($2.type, bool)
+    '++' expression 
+    '--' expression 
+    expression '++' 
+    expression '--' 
+    '*' expression 
+    '&' expression 
+
+    #Ternary expression
+    '(' expression ')' '?' expression ':' expression
+
+    #Other expressions 
+    expression '[' array-index-list ']'
+    expression '.' expression
+    epxression '->' expression
+    '(' expression ')'  
+    expression "in" expression
+    '{' [expression-list] '}'
+
+    #Memory and type expressions
+    "sizeof" '(' expression ')'
+    typeof-expression
+    "castas" '<' type '>' '(' expression ')'
+    expression "is" expression
+
+    #Variable declaration
+    variable-declaration 
+    #Function call expression 
+    function-call 
+    #Lambda Expression
+    lambda-expression 
+    #New Expression
+    new-expression
+    #Block-conditional
+    block-conditional-expression
+
+array-index-list = 
+    array-index
+    array-index-list ',' array-index
+
+array-index = 
+    expression
+    [expression] ':' [expression]
+
+expression-list = 
+    expression 
+    expression-list ',' expression
+
+variable-declaration =
+    "let" [access-level] variable-declaration-list 
+
+access-level = 
+    "public" | "private" | "protected"
+
+variable-declaration-list =
+    variable-declaration-block
+    variable-declaration-list ',' variable-decaration-block
+
+variable-declaration-block =
+    type identifier ['=' expression]
+
+function-call = 
+    expression '(' [function-call-param-list] ')'
+
+function-call-param-list = 
+    function-call-param 
+    function-call-param-list ',' function-call-param 
+
+function-call-param = 
+    expression 
+    identifier '=' expresssion
+
+typeof-expression =
+    "typeof" '(' expression ')'
+
+lambda-expression = 
+    '(' function-argument-list ')' '->' block-statement '->' return-types
+
+new-expression =
+    "new" '(' new-args ')' type ['(' function-call-param-list ')' ]
+
+new-args =
+    identifier
+    "nothrow"
+    identifier ',' "nothrow" 
+
+block-conditional-expression = 
+    '{' conditional-expression-list '}' logical-operator expression
+
+conditional-expression-list =
+    expression
+    conditional-expression '&&' expression
+    conditional-expression '||' expression
+
+logical-operator =
+    one of '==' '!=' '<' '<=' '>' '>='
+
+#Statements
+statement = 
+    block-statement
+    jump-statement
+    conditional-statement
+    loop-statement
+    delete-statement
+    exception-statement
+    expression-statement
+    no-op-statement
+
+block-statement = 
+    '{' [statement-list] '}'
+
+statement-list =
+    statement
+    statement-list statement
+
+jump-statement = 
+    "break" ';'
+    "continue" ';'
+    "return" [expression] ';'
+    "throw" [expression] ';'
+
+conditional-statement =
+    if-statement [else-if-statements] [else-statements]
+    switch-statement 
+
+if-statement
+    "if" '(' epxression ')' block-statement 
+
+else-if-statements =
+    else-if-statement 
+    else-if-statements else-if-statement 
+
+else-if-statement = 
+    "elseif" '(' condition ')' block-statement
+
+else-statement =
+    "else" block-statement
+
+switch-statement =
+    "switch" '(' expression ')' '{' [case-blocks] [default-block] '}'
+
+case-blocks =
+    case-block
+    case-blocks case-block
+
+case-block =
+    "case" expression ':' statement jump-statement
+
+default-block = 
+    "default" ':' statement jump-statement
+
+loop-statement = 
+    do-loop-statement
+    while-loop-statement
+    for-loop-statement
+
+while-loop-statement =
+    "while" '(' expression ')' statement
+
+do-loop-statement =
+    "do" statement "while" '(' expression ')' ';'
+
+for-loop-statement = 
+    "for" '(' [variable-declaration] ';' [expression] ';' [expression] ')' statement
+    "foreach" '(' variable-declaration "in" expression ')' statement
+
+delete-statement = 
+    "delete" expression ';'
+
+exception-statement =
+    try-statement catch-statements
+
+try-statement =
+    "try" block-statement 
+
+catch-statements =
+    catch-all-statement 
+    catch-statement-sequence 
+
+catch-all-statement =
+    "catchall" block-statement
+
+catch-statement-sequence =
+    catch-statement
+    cathc-statement-sequence catch-statement
+
+catch-statement = 
+    catch-all-statement
+    "catch" '(' type [identifier] ')' block-statement
+
+expression-statement =
+    expression ';'
+
+no-op-statement = ';'
+
+#Functions
+function = 
+    function-header block-statement
+
+function-header =
+    "func" function-options ["compeval"] [identifier]  ['(' template-type-paramaters ')'] '(' [function-argument-list] ')' ["nothrow"] return-types
+    "operator" ["compeval"] operator '(' [function-argument-list] ')' ["nothrow"] return-types
+
+function-options =
+    "virtual"
+    "static"
+    "final"
+
+function-argument-list =
+    function-argument 
+    function-argument-list ',' function-argument
+
+function-argument =
+    type [...] identifier ['=' expression]
+
+return-types = 
+    '->' return-type-list
+
+return-type-list =
+    type 
+    return-type-list ',' type
+
+#Enums
+enum =
+    "enum" identifier '{' enum-block-list '}'
+
+enum-block-list =
+    enum-block 
+    enum-block-list ',' enum-block
+
+enum-block = 
+    identifier ['=' int-literal]
+
+#Class
+class = 
+    class-declaration class-definition
+
+class-declaration = 
+    "class" ["template"] identifier ['(' template-type-paramaters ')'] [class-inheritance] [template-declaration]
+
+class-inheritance = 
+    "inherits" ':' class-name-list
+
+class-name-list =
+    class-name
+    class-name-list ',' class-name
+
+class-name =
+    identifier [template-type-paramaters]
+
+class-definition = 
+    '{' [class-blocks] '}'
+
+class-blocks =
+    class-block
+    class-blocks class-block
+
+class-block = 
+    constructor
+    destructor
+    variable-declaration
+
+constructor = 
+   [template-declaration] "ctor" ["compeval"] identifier '(' [function-argument-list] ')' "nothrow" block-statement
+
+destructor = 
+    '~' ["compeval"] identifier '(' ')' block-statement
+
+#Templates
+template-declaration =
+    ':' template-type-list [template-constraint]
+
+template-constraint = 
+    "requires" '{' template-requirement-list '}'
+
+template-requirement-list = 
+    template-requriement 
+    template-requirement-list ',' template-requirement
+
+template-requirement = 
+    is-statement 
+    has-statement 
+
+is-statement = 
+    identifier "is" expression 
+
+has-statement = 
+    identifier "has" function-header 
+    identifier "has" '{' function-headers '}'
+
+#Miscelaneous Statements
+type-definition = 
+    "define" type "as" identifier
+
+# Modules
+module-statement = 
+    "module" module-name-units 
+
+module-name-units = 
+    identifier
+    module-name-units '.' identifier
+
+import-statement = 
+    "import" module-name-units
+
+#Namespaces
+namespace = 
+    "namespace" namespace-name '{' [namespace-units] '}'
+
+namespace-name = 
+    identifier 
+    namespace-name '.' identifier
+
+namespace-units = 
+    namespace-unit
+    namespace-units namespace unit
+
+namespace-unit =
+    class
+    enum
+    function
+    type-definition
+    import-statement
+
+#Program level
+file = [module-statement] [file-blocks]
+
+file-blocks =
+    file-block
+    file-blocks file-block
+
+file-block =
+    type-definition
+    class
+    enum
+    function
+    import-statement 
+    namespace

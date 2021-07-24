@@ -1,5 +1,18 @@
 .vscode/
+arb/
+venv/
 build/
+<<<<<<< HEAD
 Specification/
 
 scratch.txt
+=======
+!Specification/specification.tex
+Specification/
+
+
+scratch.txt
+
+#For now
+*.arb
+>>>>>>> main

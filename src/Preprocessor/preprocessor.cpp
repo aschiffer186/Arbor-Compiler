@@ -1,6 +1,6 @@
 #include "preprocessor.hh"
 #include "../Exceptions/IO_exceptions.hh"
-#include "../Utiities/string_utilities.hh"
+#include "../src/Utiities/string_utilities.hh"
 
 #include <fstream>
 #include <ctime>
@@ -9,6 +9,9 @@ namespace Arbor::preprocessor
 {
     source_file_t preprocess(const std::string& file_name)
     {
+        source_file_t src_file;
+        src_file.file_name = file_name;
+
         std::ifstream fin(file_name);
         if (!fin.is_open())
         {
@@ -27,6 +30,20 @@ namespace Arbor::preprocessor
             auto time = std::time(nullptr);
             replace_all(curr_line, "__DATE__", std::asctime(std::localtime(&time)));
             replace_all(curr_line, "__ARB_VERSION__", "21");
+
+            //Update compiler definition table if necessary
+            size_t index = line.find("__COMPILER_DEFINITION__");
+            if(index != std::string::npos)
+            {
+                size_t prev_legnth = line.length();
+                trim(line);
+                if (line.length() != prev_legnth())
+                {
+                    throw 1;
+                }
+            }
+
+            src_file.source_text += line + "\n";
         }
     }
 } // namespace Arbor::preprocessor
