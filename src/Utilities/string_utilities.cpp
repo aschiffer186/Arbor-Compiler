@@ -8,7 +8,7 @@ namespace Arbor
     {
         std::string out;
         std::regex re(pattern);
-        std::regex_replace(std::back_insert_iterator(out), str.begin(), str.end(), re, replacement);
+        std::regex_replace(std::back_inserter(out), str.begin(), str.end(), re, replacement);
         str = out;
     }
 
@@ -22,8 +22,10 @@ namespace Arbor
         }
 
         if (forward_it == str.end())
+        {
             str = "";
             return;
+        }
 
         auto backward_it = std::prev(str.end());
 

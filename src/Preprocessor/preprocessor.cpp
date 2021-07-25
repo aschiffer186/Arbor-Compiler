@@ -1,6 +1,6 @@
 #include "preprocessor.hh"
 #include "../Exceptions/IO_exceptions.hh"
-#include "../src/Utiities/string_utilities.hh"
+#include "../src/Utilities/string_utilities.hh"
 
 #include <fstream>
 #include <ctime>
@@ -32,18 +32,21 @@ namespace Arbor::preprocessor
             replace_all(curr_line, "__ARB_VERSION__", "21");
 
             //Update compiler definition table if necessary
-            size_t index = line.find("__COMPILER_DEFINITION__");
+            size_t index = curr_line.find("__COMPILER_DEFINITION__");
             if(index != std::string::npos)
             {
-                size_t prev_legnth = line.length();
-                trim(line);
-                if (line.length() != prev_legnth())
+                size_t prev_legnth = curr_line.length();
+                trim(curr_line);
+                if (curr_line.length() != prev_legnth)
                 {
-                    throw 1;
+                    //Error handling 
+                    src_file.source_text += curr_line + "\n";
+                    continue;
                 }
             }
 
-            src_file.source_text += line + "\n";
+            src_file.source_text += curr_line + "\n";
+            ++curr_line_no;
         }
     }
 } // namespace Arbor::preprocessor
