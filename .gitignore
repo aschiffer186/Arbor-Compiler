@@ -1,12 +1,2 @@
 .vscode/
 arb/
-venv/
-build/
-!Specification/specification.tex
-Specification/
-
-
-scratch.txt
-
-#For now
-*.arb
