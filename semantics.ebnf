@@ -1,0 +1,12 @@
+# The 7 built-in types are Arbor's primitive types. All other types 
+# are built from the 7 primitive types and their array, reference, 
+# and pointer equivalents 
+built-in-types ::= 
+    bit # 1 bit
+    short # 4 byte integer 
+    int # 8 byter integer
+    long # 16 byte integer
+    double # IEE... double precision floating point number 
+    char # single character 
+    nptr # null-pointer
+    bool # boolean variable

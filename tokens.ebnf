@@ -1,0 +1,40 @@
+# This document describes the tokens of the Arbor language. Tokens are described using a combination of regular expressions 
+# and a modified EBNF grammar
+# There are 4 kinds of tokens: identifiers, literals, keywords, and operators/punctuators 
+
+# Identifiers are used as the names of variables, functions, and classes
+# Valid identifiers include 
+#   i
+#   type
+#   _t
+#   type4
+#   type-i
+# Invalid identifiers are 
+#   5
+#   -
+#   5a
+#   -a
+identifier = (_|[a-zA-Z])(_|-|[a-zA-Z0-9])*
+
+# Literals are the simplest expressions and the smallest unit of Arbor that has both a value and a type.
+# There are 6 types of literals in arbor each corresponding to a built-in type
+literal = bool-literal | pointer-literal | int-literal | float-literal | char-literal | string-literal
+# Bool literals represent boolean values and correspond to the built in type 'bool'
+bool-literal = "true" | "false"
+# The pointer literal represents a pointer that points to nothing. It corresponds to the built-in type "nptr_t"
+pointer-literal = "nptr"
+# Int literals represent unsigned integers. All integral types in Arbor can be represented by an int literal; 
+# the type corresponding to an int literal depends on its suffix. If there is no suffix, the type is 'int'
+int-literal = [0-9]+(l|L|s|S|ll|LL|b|B)?
+# Float literals represent floating-point numbers. They are represented by the built-in type double
+double-literal = ([0-9]+.)|([0-9]*\.[0-9]+([eE][+-]?(0-9)*\.?[0-9]+)?)
+# Char literals represent a single character or escape sequence. They are represented by the built-in type char. 
+# Chars are implicitly convertible to ints, but are not considered an integral type
+char-literal = '(\\(f|v|n|b|t|r|a)?[^\n\']?')
+# String literals represent a sequence of characters and/or escape sequences. They are represented by the type 
+# string.
+string-literal = "[^\"\n]*"
+
+# Keywords have a special meaning and are reserved for use by the compiler
+keywords =
+

@@ -1,0 +1,16 @@
+# Arbor has a limited preprocessor that can do two things: replace special constants with values and set compiler definitions
+
+# These constants provide meta data about a program. All meta-consteants evaluate to string literals
+meta-constants :=
+    __LINE__ # The current line 
+    __FILE__ # The file name
+    __VERSION__ # version of arbor being run 
+    __DATE__ # The date and time the program was run
+    __TIME__ # The time the program was run 
+    __OS__ # The operating system the program is run on (options: WIN32, WIN64, APPLE, LINUX)
+
+# Compiler definitions change the behavior of the program.
+# The __COMPILER_DEFINITIONS__ variable essentially acts as a dictionary of strings -> strings. You 
+# can access and modify any compiler definition (but you cannot create custom definitions), but you 
+# cannot use the compiler definitions object itself  
+__COMPILER_DEFINITIONS__(string-literal)

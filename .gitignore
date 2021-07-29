@@ -1,2 +1,9 @@
+# VS Code specific files
 .vscode/
 arb/
+
+# Doxygen output
+html/
+latex/
+
+syntax builder.txt

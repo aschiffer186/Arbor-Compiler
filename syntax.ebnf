@@ -1,0 +1,117 @@
+# Type system 
+type ::= ["const"] non-reference-type | ["const"] reference-type
+non-reference-type ::= type-core | type-core '*' | type-core '[' [int-literal] ']'
+type-core ::= identifier [type-template-parameters]
+type-template-parameters ::= '<' type-list '>'
+type-list ::= type | type-list ',' type
+reference-type ::= "ref" non-reference-type | "rref" non-reference-type
+
+# Expressions
+expresion ::=
+    # Primary expressions (cannot be broken down further)
+    literal 
+    identifier
+    "this"
+    "super"
+    # Binary expressions
+    expression '+' expression
+    expression '-' expression
+    expression '*' expression 
+    expression '/' expression 
+    expression '//' expression # integer division
+    expression '^^' expression # exponentiation 
+    expression '%' expression
+    expression '+=' expression # xx and modify expressions
+    expression '-=' expression
+    expression '*=' expression 
+    expression '/=' expression 
+    expression '//=' expression 
+    expression '^^=' expression
+    expression '%=' expression
+    expression '<' expression 
+    expression '<=' expression
+    expression '>' expression
+    expression '<=' expression
+    expression '<=>' expression # Three-way comparison
+    expression '==' expression 
+    expression '!=' expression
+    expression '&&' expression
+    expression '||' expression 
+    expression 'is' expression # Check type 
+    expression '&' expression # Bitwise AND
+    expression '|' expression # Bitwse OR 
+    expression '^' expression # Bitwise XOR
+    expression '~' expression # Bitwise NOT
+    expression '>>' expression # Bitwise shift left
+    expression '<<' expression # Bitwise shift right
+    expression '=' expression 
+    # Unary expressions
+    '++' expression
+    '--' expression
+    expression '++'
+    expression '--'
+    '-' expression
+    '*' expression # Pointer dereference
+    #Miscelaneous expressions
+    '(' expression ')' '?' expression ':' expression # Ternary operatory
+    '(' expression ')'
+    '[' array-index-list ']'
+    expression '.' expression 
+    expression '->' expression 
+    "typeof" '(' expression ')'
+    "castas" '<' type '>' '(' expression ')'
+    '{' [expression-list] '}'
+    variable-declaration
+    lambda-expression
+    function-call
+    new-expression
+# Helper non-terminals
+array-index-list ::= array-index | array-index-list ',' array-index
+array-index ::= expression | [expression] ':' [expression]
+variable-declaration ::= "let" variable-declaration-block-list 
+variable-declaration-block-list ::= variable-declaration-block | variable-declaration-block-list ',' variable-declaration-block
+variable-declaration-block ::= type identifier ['=' expression]
+lambda-expression ::= '(' function-argument-list ')' '=>' block-statement '->' return-type-list
+function-call ::= expression [type-template-parameters] '(' [expression-list] ')'
+expression-list ::= expression | expression-list ',' expresion
+new-expresion ::= "new" type '(' [expression-list] ')'
+
+# Statements
+statement ::= 
+    block-statement
+    conditional-statement 
+    loop-statement
+    exception-statement
+    clean-up-statement
+    jump-statement
+    expression-statement
+    no-op-statement
+block-statement ::= '{' [statement-list] '}'
+statement-list ::= statement | statement-list ',' statement
+exception-statement ::= try-block catch-blocks
+try-block ::= "try" block-statement
+catch-blocks ::= catch-block | catch-blocks catch-block
+catch-block ::= "catch" '(' variable-declaration ')' block-statement | "catch-all" block-statement
+# The clean-up statement provides an extension to the RAII idiom that Arbor follows. It allows 
+# the user to specify at run-time code (in the form of a function pointer, anoynomous function, or lambda), 
+# additional code to be run when the object is destroyed. The clean-up code is called before the destructor 
+# is called. 
+#   file f; 
+#   cleanup(f, () => {print("In clean up wooo");} -> void);
+#   file* f2
+#   cleanup(*f2, () => {print("In clean up 2 wooo");} -> void)
+# Whenever ~f() is called, the lambda will be called. If more than one clean-up statements are provided, the 
+# code will be expected in the order the clean-up statements are created. Clean-up statements are per variable 
+# not per type. 
+clean-up-statement ::= "cleanup" '(' identifier ',' clean-up-arg ')' ';'
+clean-up-arg ::= lambda-expression | function?? | identifier 
+jump-statement ::= 
+    "return" ';'
+    "break" ';'
+    "continue" ';'
+    "throw" expression ';'
+    "rethrow" ";"
+    "yield" ';'
+    "goto" identifier ':'
+expression-statement ::= expression ';'
+no-op-statement ::= ';'
