@@ -38,3 +38,4 @@ string-literal = "[^\"\n]*"
 # Keywords have a special meaning and are reserved for use by the compiler
 keywords =
 
+operator-punctuators=

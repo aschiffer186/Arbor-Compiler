@@ -1,4 +1,5 @@
 #include <regex>
+#include <fstream>
 
 #include "preprocessor.hh"
 
@@ -20,5 +21,19 @@ namespace Arbor::FE
         std::string replaced;
         std::regex_replace(std::back_inserter(replaced), str.begin(), str.end(), re, replacement);
         str = replaced;
+    }
+
+    source_file_t preprocess(const std::string& filename)
+    {
+        std::fstream fin(filename);
+        if (!fin.is_open())
+        {
+            //throw an error
+        }
+        std::string line, source_code;
+        while(getline(fin, line))
+        {
+            source_code.append(line);
+        }
     }
 } // namespace Arbor::FE

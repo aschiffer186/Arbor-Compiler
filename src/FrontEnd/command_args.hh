@@ -15,6 +15,7 @@ namespace Arbor::FE
         bool debug;
         bool help;
         bool version;
+        bool showGrammar;
         std::string output_file;
         std::vector<std::string> input_files;
     };

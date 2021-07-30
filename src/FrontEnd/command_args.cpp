@@ -11,14 +11,15 @@ namespace Arbor::FE
 {
     args process_command_args(int argc, char** argv)
     {
-        bool debugFlag = false, versionFlag = false, helpFlag = false, outputFlag = false, inOutputFlag = false;
+        bool debugFlag = false, versionFlag = false, helpFlag = false, outputFlag = false, inOutputFlag = false, showGrammarFlag = false;
         std::string output;
         std::vector<std::string> input_files;
+        std::regex r("[_a-zA-Z](_|-|[a-zA-Z0-9]*\\.arb"); // Match Arbor file pattern
+        std::cmatch s;
         for (int i = 1; i < argc; ++i) //Skip program name
         {
             char* arg = *(argv + i);
-
-            if (strlen(arg) == 1)
+            if (strlen(arg) == 1) // Currently there are no valid command arguments of length 1
             {
                 std::cout << "Invalid command line option" << std::endl;
                 exit(EXIT_FAILURE);
@@ -37,19 +38,30 @@ namespace Arbor::FE
                 {
                     versionFlag = true;
                 }
+                else if (strcmp(arg, "-r") == 0)
+                {
+                    showGrammarFlag = false;
+                }
                 else if (strcmp(arg, "-o") == 0)
                 {
+                    if (outputFlag)
+                    {
+                        std::cout << "May only specify one output file" << std::endl;
+                        exit(EXIT_FAILURE);
+                    }
                     outputFlag = true;
                     inOutputFlag = true;
                 }
                 else 
                 {
-                    std::cout << "Invalid command line option";
+                    std::cout << "Invalid command line option: " << arg << std::endl;
                     exit(EXIT_FAILURE);
                 }
             }
             else if (strlen(arg) < 5)
             {
+                //There are no valid file names of length 4 or shorter, 
+                //so the only valid files in this case are output files
                 if (inOutputFlag)
                 {
                     output = arg;
@@ -62,11 +74,48 @@ namespace Arbor::FE
                 }
             }
             else
-            {
-                std::regex r("[_a-zA-Z](_|-|[a-zA-Z0-9]*\\.arb");
-                std::cmatch s;
+            {   
                 bool is_valid_file = std::regex_match(arg, s, r);
+
+                if (is_valid_file)
+                {
+                    if (!inOutputFlag)
+                    {
+                        input_files.emplace_back(arg);
+                    }
+                    else
+                    {
+                        output = arg;
+                        inOutputFlag = false;
+                    }
+                }
+                else 
+                {
+                    //Only valid files are output files in this case
+                    if (!inOutputFlag)
+                    {
+                        std::cout << "Invalid command line argument" << std::endl;
+                        exit(EXIT_FAILURE);
+                    }
+                    output = arg;
+                    inOutputFlag = false;
+                }
             }
         }
+
+        //Check to ensure output is specified
+        if (output.empty())
+        {
+            std::cout << "Must specify output file" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        //Check to ensure at least one input is specified
+        if (input_files.empty())
+        {
+            std::cout << "Must specify at least one input file" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+
+        args a = {debugFlag, helpFlag, versionFlag, showGrammarFlag, output, input_files};
     }
 } // namespace Arbor::FE

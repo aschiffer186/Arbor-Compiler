@@ -2,8 +2,13 @@
 .vscode/
 arb/
 
+venv/
+
 # Doxygen output
 html/
 latex/
+
+#Python output
+*.html
 
 syntax builder.txt

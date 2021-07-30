@@ -51,7 +51,7 @@ expresion ::=
     expression '++'
     expression '--'
     '-' expression
-    '*' expression # Pointer dereference
+    '*' expression # Pointer dereference (note lack of address of)
     #Miscelaneous expressions
     '(' expression ')' '?' expression ':' expression # Ternary operatory
     '(' expression ')'
@@ -86,10 +86,18 @@ statement ::=
     jump-statement
     expression-statement
     no-op-statement
-block-statement ::= '{' [statement-list] '}'
-statement-list ::= statement | statement-list ',' statement
-exception-statement ::= try-block catch-blocks
-try-block ::= "try" block-statement
+block-statement ::= statement | block-statement statement
+loop-statement ::= while-loop-statement | do-loop-statement | for-loop-statement
+while-loop-statement ::= "while" '(' expression ')' block-statement "endwhile"
+do-loop-statement ::= "do" block-statement "while" '(' expression ')' "endwhile"
+for-loop-statement ::= "for" '(' for-loop-condition ')' block-statement "endfor"
+for-loop-condition ::= 
+    [expression] ';' [expression] ';' [expression]
+    variable-declaration 'in' expression
+conditional-statement ::= if-statement-sequence | switch-statement
+if-statement-sequence ::= if-statement [else-if-statements] []
+exception-statement ::= try-block catch-blocks "endcatch"
+try-block ::= "try" block-statement "endtry"
 catch-blocks ::= catch-block | catch-blocks catch-block
 catch-block ::= "catch" '(' variable-declaration ')' block-statement | "catch-all" block-statement
 # The clean-up statement provides an extension to the RAII idiom that Arbor follows. It allows 
