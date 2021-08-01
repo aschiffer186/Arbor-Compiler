@@ -27,12 +27,6 @@ namespace Arbor::FE
      *          LINUX: Any Linux operating system,
      *          OTHER: Unrecognized operating system
      *  
-     *  3. It updates the @b source_file_t's compiler definitions with any compiler definitions in the source file. Unique compiler definitions
-     *     are created for each occurence of the definition, e.g. if the same compiler definition appears in a file on two different lines,
-     *     two different compiler definition entries are created in the @b source_file_t's compiler definitions map.
-     * @param filename the name of the source file
-     * @return a @b source_file_t object representing the source file
-     * @see source_file_t
      */ 
     source_file_t preprocess(const std::string& filename);
 } // namespace Arbor::FE

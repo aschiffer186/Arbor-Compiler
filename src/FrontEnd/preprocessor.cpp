@@ -31,9 +31,31 @@ namespace Arbor::FE
             //throw an error
         }
         std::string line, source_code;
+        source_file_t source_file;
         while(getline(fin, line))
         {
-            source_code.append(line);
+            //Replace all magic constatns by their actual values
+            replace_all(line, "__LINE__", std::to_string(__LINE__));
+            replace_all(line, "__FILE__", filename);
+            replace_all(line, "__VERSION__", __VERSION__);
+            replace_all(line, "__DATE__", __DATE__);
+            replace_all(line, "__TIME__", __TIME__);
+            #if defined WIN32
+            replace_all(line, "__OS__", "WIN32");
+            #elif defined WIN64
+            replace_all(line, "__OS__", "WIN64");
+            #elif defined APPLE
+            replace_all(line, "__OS__", "APPLE");
+            #elif defined LINUX
+            replace_all(line, "__OS__", "LINUX");
+            #else
+            replace_all(line, "__OS__", "OTHER");
+            #endif
+
+            source_code.append(line + "\n");
         }
+
+        source_file.source_code = source_code;
+        return source_file;
     }
 } // namespace Arbor::FE
