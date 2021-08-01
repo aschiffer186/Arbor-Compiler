@@ -36,6 +36,65 @@ char-literal = '(\\(f|v|n|b|t|r|a)?[^\n\']?')
 string-literal = "[^\"\n]*"
 
 # Keywords have a special meaning and are reserved for use by the compiler
-keywords =
+keywords = 
+    "break"
+    "castas"
+    "catch"
+    "catch-all"
+    "cleanup"
+    "const"
+    "continue"
+    "compeval"
+    "default"
+    "delete"
+    "do"
+    "else"
+    "else-if"
+    "endcatch"
+    "endfor"
+    "endfunc"
+    "endtry"
+    "endwhile"
+    "for"
+    "func"
+    "goto"
+    "if"
+    "in"
+    "is"
+    "let"
+    "heap"
+    "new"
+    "nothrowable"
+    "operator"
+    "ref"
+    "rref"
+    "rethrow"
+    "return"
+    "static"
+    "super"
+    "this"
+    "throw"
+    "try"
+    "typeof"
+    "virtual"
+    "while"
+    "yield"
 
 operator-punctuators=
+    '[' ']'
+    '<' '>'
+    ','
+    '+' '-' '/' '//' '*' '^^' '%'
+    '+=' '-=' '*=' '/=' '//=' '^^=' '%=' 
+    '<=' '>=' '==' '!=' '<=>'
+    '&&' '||' 
+    '&' '|' '^' '~' '>>' '<<'
+    '='
+    '++' '--'
+    '(' ')'
+    '?' ":"
+    '.' '->'
+    '{' '}'
+    '=>' '->'
+    ';'
+    '...'

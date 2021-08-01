@@ -12,5 +12,7 @@ meta-constants :=
 # Compiler definitions change the behavior of the program.
 # The __COMPILER_DEFINITIONS__ variable essentially acts as a dictionary of strings -> strings. You 
 # can access and modify any compiler definition (but you cannot create custom definitions), but you 
-# cannot use the compiler definitions object itself  
+# cannot use the compiler definitions object itself
+#
+#Note: handled in parser 
 __COMPILER_DEFINITIONS__(string-literal)

@@ -1,8 +1,10 @@
+# Note, this grammar is at least as permissive as the final Bison grammar, but is not equivalent to it 
+
 # Type system 
 type ::= ["const"] non-reference-type | ["const"] reference-type
 non-reference-type ::= type-core | type-core '*' | type-core '[' [int-literal] ']'
 type-core ::= identifier [type-template-parameters]
-type-template-parameters ::= '<' type-list '>'
+type-template-parameters ::= '!' '(' type-list ')'
 type-list ::= type | type-list ',' type
 reference-type ::= "ref" non-reference-type | "rref" non-reference-type
 
@@ -37,7 +39,6 @@ expresion ::=
     expression '!=' expression
     expression '&&' expression
     expression '||' expression 
-    expression 'is' expression # Check type 
     expression '&' expression # Bitwise AND
     expression '|' expression # Bitwse OR 
     expression '^' expression # Bitwise XOR
@@ -52,6 +53,7 @@ expresion ::=
     expression '--'
     '-' expression
     '*' expression # Pointer dereference (note lack of address of)
+    '!' expression # unary-negation
     #Miscelaneous expressions
     '(' expression ')' '?' expression ':' expression # Ternary operatory
     '(' expression ')'
@@ -59,7 +61,7 @@ expresion ::=
     expression '.' expression 
     expression '->' expression 
     "typeof" '(' expression ')'
-    "castas" '<' type '>' '(' expression ')'
+    "castas" '(' type ')' '(' expression ')'
     '{' [expression-list] '}'
     variable-declaration
     lambda-expression
@@ -71,10 +73,12 @@ array-index ::= expression | [expression] ':' [expression]
 variable-declaration ::= "let" variable-declaration-block-list 
 variable-declaration-block-list ::= variable-declaration-block | variable-declaration-block-list ',' variable-declaration-block
 variable-declaration-block ::= type identifier ['=' expression]
-lambda-expression ::= '(' function-argument-list ')' '=>' block-statement '->' return-type-list
-function-call ::= expression [type-template-parameters] '(' [expression-list] ')'
+lambda-expression ::= '(' function-argument-list ')' '=>' "{" block-statement "}" '->' return-type-list
+function-call ::= expression '(' [function-call-list] ')'
+function-call-list ::= function-call-arg | function-call-list ',' function-call-arg
+function-call-arg ::= expression | identifier '=' expression
 expression-list ::= expression | expression-list ',' expresion
-new-expresion ::= "new" type '(' [expression-list] ')'
+new-expresion ::= "new" ["heap"] type '(' [expression-list] ')'
 
 # Statements
 statement ::= 
@@ -95,7 +99,15 @@ for-loop-condition ::=
     [expression] ';' [expression] ';' [expression]
     variable-declaration 'in' expression
 conditional-statement ::= if-statement-sequence | switch-statement
-if-statement-sequence ::= if-statement [else-if-statements] []
+if-statement-sequence ::= if-statement [else-if-statements] [else-statement]
+if-statement ::= "if" '(' expression ')' block-statement
+elseif-statements ::= elseif-statement | elseif-statements elseif-statement
+elseif-statement ::= "else-if" '(' expression ')' block-statement
+else-statement ::= "else" block-statement
+switch-statement ::= "switch" '(' expression ')' case-blocks [default-block] "endswitch"
+case_blocks ::= case-block | case-blocks case-block
+case-block ::= "case" expression ':' block-statement jump-statement |
+default-block ::= "default" ":" block-statement jump-statement
 exception-statement ::= try-block catch-blocks "endcatch"
 try-block ::= "try" block-statement "endtry"
 catch-blocks ::= catch-block | catch-blocks catch-block
@@ -123,3 +135,21 @@ jump-statement ::=
     "goto" identifier ':'
 expression-statement ::= expression ';'
 no-op-statement ::= ';'
+
+#functions 
+function = function-header block-statement "endfunc"
+anoynmous_function = anoynmous_function_header block_statement "endfunc"
+function-header = "func" ["virtual"] ["static"] ["compeval"] identifier '(' function-argument-list ')' throwable-expression '->' return-types-list
+function-argument-list ::= function-argument | function-argument-list ',' function-argument 
+function-argument ::= type ['...'] identifier ['=' expression]
+throwable-expression ::= "nothrowable" ['(' expression ')']
+return_types_list ::= return-type | return_types-list "," return-type
+return-type ::= type | "typeof" "(" expression ")"
+anoynmous_function_header = "func" ["compeval"] '(' function-argument-list ')' throwable-expression '->' return-types
+operator-overload = operator-overload-header block-statement "endfuc" | operator-overload-header '=' function-options ';'
+operator-overload = "operator" operator '(' function-argument-list ')' throwable-expression '->' return-types
+function-options = "default" | "delete"
+callable = function | operator-overload
+
+program = [callables]
+callables = callable | callables callable

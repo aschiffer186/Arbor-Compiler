@@ -6,6 +6,10 @@
 #include <string>
 #include <unordered_map>
 
+//Arbor facts
+///Current version of Arbor
+#define __VERSION__ "0.1.0"
+
 ///@namespace Arbor The parent namespace of all C++ code for the Arbor parser
 namespace Arbor
 {
@@ -22,6 +26,8 @@ namespace Arbor
         std::string source_code;
         ///Map of compiler definitions
         std::unordered_map<std::pair<std::string, int>, std::string> compiler_defs;
+
+        source_file_t() noexcept = default;
     };
 } // namespace Arbor
 
