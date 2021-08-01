@@ -1,10 +1,3 @@
-State 180 conflicts: 1 shift/reduce
-State 182 conflicts: 1 shift/reduce
-State 183 conflicts: 1 shift/reduce
-State 296 conflicts: 1 shift/reduce
-State 297 conflicts: 1 shift/reduce
-
-
 Grammar
 
     0 $accept: start $end
@@ -124,7 +117,7 @@ Grammar
    92 array_index: expression
    93            | expression0 ":" expression0
 
-   94 function_call: xvalue_expression "(" function_call_list ")"
+   94 function_call: xvalue_expression "(" function_argument_list ")"
    95              | xvalue_expression "(" ")"
 
    96 function_call_list: function_call_arg
@@ -422,233 +415,232 @@ Terminals, with rules where they appear
     POSTDEC (363)
     TERN (364)
     DEREF (365)
-    FUNC_CALL (366)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (112)
+    $accept (111)
         on left: 0
-    start (113)
+    start (112)
         on left: 1
         on right: 0
-    type (114)
+    type (113)
         on left: 2 3
         on right: 12 13 54 58 85 86 88 89 172 173 174 179 220
-    type_root (115)
+    type_root (114)
         on left: 4 5
         on right: 2 3
-    non_reference_type (116)
+    non_reference_type (115)
         on left: 6 7 8
         on right: 4 14 15
-    type_core (117)
+    type_core (116)
         on left: 9 10
         on right: 6 7 8
-    type_template_paramaters (118)
+    type_template_paramaters (117)
         on left: 11
         on right: 9
-    type_list (119)
+    type_list (118)
         on left: 12 13
         on right: 11 13
-    reference_type (120)
+    reference_type (119)
         on left: 14 15
         on right: 5
-    expression (121)
+    expression (120)
         on left: 16 17
         on right: 18 86 92 98 116 117 120 124 129 133 138 157 160 174 176 180
-    expression0 (122)
+    expression0 (121)
         on left: 18 19
         on right: 93 119
-    assignment_arg_expression (123)
+    assignment_arg_expression (122)
         on left: 20 21
         on right: 16
-    prvalue_expression (124)
+    prvalue_expression (123)
         on left: 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61
         on right: 21 62
-    rvalue_expression (125)
+    rvalue_expression (124)
         on left: 62 63
         on right: 17 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 73
-    xvalue_expression (126)
+    xvalue_expression (125)
         on left: 64 65 66 67 68 69 70 71 72 73 74 75
         on right: 17 20 30 31 32 33 34 35 48 49 50 51 52 53 63 66 67 68 69 70 71 72 94 95
-    literal (127)
+    literal (126)
         on left: 76 77 78 79 80 81
         on right: 22
-    variable_declaration (128)
+    variable_declaration (127)
         on left: 82
         on right: 119 120 146 161
-    variable_declaration_block_list (129)
+    variable_declaration_block_list (128)
         on left: 83 84
         on right: 82 84
-    variable_declaration_block (130)
+    variable_declaration_block (129)
         on left: 85 86
         on right: 83 84
-    lambda_expression (131)
+    lambda_expression (130)
         on left: 87
         on right: 61 150
-    new_expression (132)
+    new_expression (131)
         on left: 88 89
         on right: 60
-    array_index_list (133)
+    array_index_list (132)
         on left: 90 91
         on right: 74 91
-    array_index (134)
+    array_index (133)
         on left: 92 93
         on right: 90 91
-    function_call (135)
+    function_call (134)
         on left: 94 95
         on right: 75
-    function_call_list (136)
+    function_call_list (135)
         on left: 96 97
-        on right: 88 89 94 97
-    function_call_arg (137)
+        on right: 88 89 97
+    function_call_arg (136)
         on left: 98
         on right: 96 97
-    statement (138)
+    statement (137)
         on left: 99 100 101 102 103 104 105 106 107
         on right: 111 112
-    block_statement (139)
+    block_statement (138)
         on left: 108
         on right: 87 99 116 117 118 124 129 132 138 141 143 146 147 163 181 184
-    statements0 (140)
+    statements0 (139)
         on left: 109 110
         on right: 108
-    statements (141)
+    statements (140)
         on left: 111 112
         on right: 109 112
-    loop_statement (142)
+    loop_statement (141)
         on left: 113 114 115
         on right: 100
-    while_loop_statement (143)
+    while_loop_statement (142)
         on left: 116
         on right: 113
-    do_loop_statement (144)
+    do_loop_statement (143)
         on left: 117
         on right: 114
-    for_loop_statement (145)
+    for_loop_statement (144)
         on left: 118
         on right: 115
-    for_loop_condition (146)
+    for_loop_condition (145)
         on left: 119 120
         on right: 118
-    conditional_statement (147)
+    conditional_statement (146)
         on left: 121 122
         on right: 101
-    if_statement_sequence (148)
+    if_statement_sequence (147)
         on left: 123
         on right: 121
-    if_statement (149)
+    if_statement (148)
         on left: 124
         on right: 123
-    else_if_statements0 (150)
+    else_if_statements0 (149)
         on left: 125 126
         on right: 123
-    else_if_statements (151)
+    else_if_statements (150)
         on left: 127 128
         on right: 125 128
-    else_if_statement (152)
+    else_if_statement (151)
         on left: 129
         on right: 127 128
-    else_statement0 (153)
+    else_statement0 (152)
         on left: 130 131
         on right: 123
-    else_statement (154)
+    else_statement (153)
         on left: 132
         on right: 130
-    switch_statement (155)
+    switch_statement (154)
         on left: 133
         on right: 122
-    case_blocks0 (156)
+    case_blocks0 (155)
         on left: 134 135
         on right: 133
-    case_blocks (157)
+    case_blocks (156)
         on left: 136 137
         on right: 134 137
-    case_block (158)
+    case_block (157)
         on left: 138
         on right: 136 137
-    default_block0 (159)
+    default_block0 (158)
         on left: 139 140
         on right: 133
-    default_block (160)
+    default_block (159)
         on left: 141
         on right: 139
-    exception_statement (161)
+    exception_statement (160)
         on left: 142
         on right: 102
-    try_block (162)
+    try_block (161)
         on left: 143
         on right: 142
-    catch_blocks (163)
+    catch_blocks (162)
         on left: 144 145
         on right: 142 145
-    catch_block (164)
+    catch_block (163)
         on left: 146 147
         on right: 144 145
-    clean_up_statement (165)
+    clean_up_statement (164)
         on left: 148
         on right: 103
-    clean_up_arg (166)
+    clean_up_arg (165)
         on left: 149 150 151 152
         on right: 148
-    jump_statement (167)
+    jump_statement (166)
         on left: 153 154 155 156 157 158 159
         on right: 104 138 141
-    expression_statement (168)
+    expression_statement (167)
         on left: 160
         on right: 105
-    variable_declaration_statement (169)
+    variable_declaration_statement (168)
         on left: 161
         on right: 106
-    no_op_statement (170)
+    no_op_statement (169)
         on left: 162
         on right: 107
-    function (171)
+    function (170)
         on left: 163
         on right: 151 223
-    function_header (172)
+    function_header (171)
         on left: 164 165
         on right: 163
-    function_modifiers (173)
+    function_modifiers (172)
         on left: 166 167 168 169
         on right: 164
-    function_argument_list (174)
+    function_argument_list (173)
         on left: 170 171
-        on right: 87 164 165 171 182 183 186
-    function_argument (175)
+        on right: 87 94 164 165 171 182 183 186
+    function_argument (174)
         on left: 172 173 174
         on right: 170 171
-    throwable_expression (176)
+    throwable_expression (175)
         on left: 175 176
         on right: 164 165 182 183 186
-    return_types_list (177)
+    return_types_list (176)
         on left: 177 178
         on right: 87 164 165 178 182 183 186
-    return_type (178)
+    return_type (177)
         on left: 179 180
         on right: 177 178
-    anonymous_function (179)
+    anonymous_function (178)
         on left: 181
         on right: 152
-    anonymous_function_header (180)
+    anonymous_function_header (179)
         on left: 182 183
         on right: 181
-    operator_overload (181)
+    operator_overload (180)
         on left: 184 185
         on right: 224
-    operator_overload_header (182)
+    operator_overload_header (181)
         on left: 186
         on right: 184 185
-    operator (183)
+    operator (182)
         on left: 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220
         on right: 186
-    function_options (184)
+    function_options (183)
         on left: 221 222
         on right: 185
-    callable (185)
+    callable (184)
         on left: 223 224
         on right: 225 226
-    callables (186)
+    callables (185)
         on left: 225 226
         on right: 1 226
 
@@ -1326,7 +1318,7 @@ State 59
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
    99 statement: • block_statement
   100          | • loop_statement
@@ -1871,7 +1863,7 @@ State 99
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   157 jump_statement: "throw" • expression ";"
 
@@ -2013,7 +2005,7 @@ State 104
    91                 | • array_index_list "," array_index
    92 array_index: • expression
    93            | • expression0 ":" expression0
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -2118,7 +2110,7 @@ State 105
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -2165,7 +2157,7 @@ State 106
    73                  | • "(" rvalue_expression ")"
    74                  | • "[" array_index_list "]"
    75                  | • function_call
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -2246,7 +2238,7 @@ State 107
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -2293,7 +2285,7 @@ State 108
    73                  | • "(" rvalue_expression ")"
    74                  | • "[" array_index_list "]"
    75                  | • function_call
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -2323,7 +2315,7 @@ State 109
    73                  | • "(" rvalue_expression ")"
    74                  | • "[" array_index_list "]"
    75                  | • function_call
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -2417,7 +2409,7 @@ State 110
    87                  | "(" • function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   170 function_argument_list: • function_argument
   171                       | • function_argument_list "," function_argument
@@ -2564,7 +2556,7 @@ State 116
    69                  | xvalue_expression • "--"
    71                  | xvalue_expression • "." xvalue_expression
    72                  | xvalue_expression • "->" xvalue_expression
-   94 function_call: xvalue_expression • "(" function_call_list ")"
+   94 function_call: xvalue_expression • "(" function_argument_list ")"
    95              | xvalue_expression • "(" ")"
 
     "+="   shift, and go to state 206
@@ -2721,7 +2713,7 @@ State 125
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
    99 statement: • block_statement
   100          | • loop_statement
@@ -3223,7 +3215,7 @@ State 158
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   124 if_statement: "if" "(" • expression ")" block_statement
 
@@ -3420,7 +3412,7 @@ State 166
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   133 switch_statement: "switch" "(" • expression ")" case_blocks0 default_block0
 
@@ -3535,7 +3527,7 @@ State 169
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -3636,7 +3628,7 @@ State 170
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   116 while_loop_statement: "while" "(" • expression ")" block_statement
 
@@ -3784,7 +3776,7 @@ State 178
    69                  | xvalue_expression • "--"
    71                  | xvalue_expression • "." xvalue_expression
    72                  | xvalue_expression • "->" xvalue_expression
-   94 function_call: xvalue_expression • "(" function_call_list ")"
+   94 function_call: xvalue_expression • "(" function_argument_list ")"
    95              | xvalue_expression • "(" ")"
 
     "+="   shift, and go to state 206
@@ -3874,7 +3866,7 @@ State 179
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -3910,10 +3902,10 @@ State 180
 
    68 xvalue_expression: xvalue_expression • "++"
    69                  | xvalue_expression • "--"
-   70                  | "*" xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", "(", ")", ":", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
+   70                  | "*" xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", ")", ":", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
    71                  | xvalue_expression • "." xvalue_expression
    72                  | xvalue_expression • "->" xvalue_expression
-   94 function_call: xvalue_expression • "(" function_call_list ")"
+   94 function_call: xvalue_expression • "(" function_argument_list ")"
    95              | xvalue_expression • "(" ")"
 
     "++"  shift, and go to state 213
@@ -3922,44 +3914,13 @@ State 180
     "."   shift, and go to state 216
     "->"  shift, and go to state 217
 
-    "("       [reduce using rule 70 (xvalue_expression)]
     $default  reduce using rule 70 (xvalue_expression)
 
     Conflict between rule 70 and token "++" resolved as shift (%right "++").
     Conflict between rule 70 and token "--" resolved as shift (%right "--").
+    Conflict between rule 70 and token "(" resolved as shift (DEREF < "(").
     Conflict between rule 70 and token "." resolved as shift (DEREF < ".").
     Conflict between rule 70 and token "->" resolved as shift (DEREF < "->").
-
-    shift/reduce conflict on token "(":
-       70 xvalue_expression: "*" xvalue_expression •
-       94 function_call: xvalue_expression • "(" function_call_list ")"
-      Example: "*" xvalue_expression • "(" function_call_list ")"
-      Shift derivation
-        xvalue_expression
-        ↳ "*" xvalue_expression
-              ↳ function_call
-                ↳ xvalue_expression • "(" function_call_list ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression         "(" function_call_list ")"
-            ↳ "*" xvalue_expression •
-
-    shift/reduce conflict on token "(":
-       70 xvalue_expression: "*" xvalue_expression •
-       95 function_call: xvalue_expression • "(" ")"
-      Example: "*" xvalue_expression • "(" ")"
-      Shift derivation
-        xvalue_expression
-        ↳ "*" xvalue_expression
-              ↳ function_call
-                ↳ xvalue_expression • "(" ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression         "(" ")"
-            ↳ "*" xvalue_expression •
-
 
 
 State 181
@@ -4012,12 +3973,12 @@ State 181
 
 State 182
 
-   66 xvalue_expression: "++" xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", "(", ")", ":", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
+   66 xvalue_expression: "++" xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", ")", ":", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
    68                  | xvalue_expression • "++"
    69                  | xvalue_expression • "--"
    71                  | xvalue_expression • "." xvalue_expression
    72                  | xvalue_expression • "->" xvalue_expression
-   94 function_call: xvalue_expression • "(" function_call_list ")"
+   94 function_call: xvalue_expression • "(" function_argument_list ")"
    95              | xvalue_expression • "(" ")"
 
     "++"  shift, and go to state 213
@@ -4026,54 +3987,23 @@ State 182
     "."   shift, and go to state 216
     "->"  shift, and go to state 217
 
-    "("       [reduce using rule 66 (xvalue_expression)]
     $default  reduce using rule 66 (xvalue_expression)
 
     Conflict between rule 66 and token "++" resolved as shift (%right "++").
     Conflict between rule 66 and token "--" resolved as shift (%right "--").
+    Conflict between rule 66 and token "(" resolved as shift ("++" < "(").
     Conflict between rule 66 and token "." resolved as shift ("++" < ".").
     Conflict between rule 66 and token "->" resolved as shift ("++" < "->").
-
-    shift/reduce conflict on token "(":
-       66 xvalue_expression: "++" xvalue_expression •
-       94 function_call: xvalue_expression • "(" function_call_list ")"
-      Example: "++" xvalue_expression • "(" function_call_list ")"
-      Shift derivation
-        xvalue_expression
-        ↳ "++" xvalue_expression
-               ↳ function_call
-                 ↳ xvalue_expression • "(" function_call_list ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression          "(" function_call_list ")"
-            ↳ "++" xvalue_expression •
-
-    shift/reduce conflict on token "(":
-       66 xvalue_expression: "++" xvalue_expression •
-       95 function_call: xvalue_expression • "(" ")"
-      Example: "++" xvalue_expression • "(" ")"
-      Shift derivation
-        xvalue_expression
-        ↳ "++" xvalue_expression
-               ↳ function_call
-                 ↳ xvalue_expression • "(" ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression          "(" ")"
-            ↳ "++" xvalue_expression •
-
 
 
 State 183
 
-   67 xvalue_expression: "--" xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", "(", ")", ":", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
+   67 xvalue_expression: "--" xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", ")", ":", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
    68                  | xvalue_expression • "++"
    69                  | xvalue_expression • "--"
    71                  | xvalue_expression • "." xvalue_expression
    72                  | xvalue_expression • "->" xvalue_expression
-   94 function_call: xvalue_expression • "(" function_call_list ")"
+   94 function_call: xvalue_expression • "(" function_argument_list ")"
    95              | xvalue_expression • "(" ")"
 
     "++"  shift, and go to state 213
@@ -4082,44 +4012,13 @@ State 183
     "."   shift, and go to state 216
     "->"  shift, and go to state 217
 
-    "("       [reduce using rule 67 (xvalue_expression)]
     $default  reduce using rule 67 (xvalue_expression)
 
     Conflict between rule 67 and token "++" resolved as shift (%right "++").
     Conflict between rule 67 and token "--" resolved as shift (%right "--").
+    Conflict between rule 67 and token "(" resolved as shift ("--" < "(").
     Conflict between rule 67 and token "." resolved as shift ("--" < ".").
     Conflict between rule 67 and token "->" resolved as shift ("--" < "->").
-
-    shift/reduce conflict on token "(":
-       67 xvalue_expression: "--" xvalue_expression •
-       94 function_call: xvalue_expression • "(" function_call_list ")"
-      Example: "--" xvalue_expression • "(" function_call_list ")"
-      Shift derivation
-        xvalue_expression
-        ↳ "--" xvalue_expression
-               ↳ function_call
-                 ↳ xvalue_expression • "(" function_call_list ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression          "(" function_call_list ")"
-            ↳ "--" xvalue_expression •
-
-    shift/reduce conflict on token "(":
-       67 xvalue_expression: "--" xvalue_expression •
-       95 function_call: xvalue_expression • "(" ")"
-      Example: "--" xvalue_expression • "(" ")"
-      Shift derivation
-        xvalue_expression
-        ↳ "--" xvalue_expression
-               ↳ function_call
-                 ↳ xvalue_expression • "(" ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression          "(" ")"
-            ↳ "--" xvalue_expression •
-
 
 
 State 184
@@ -4277,7 +4176,7 @@ State 188
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -4375,7 +4274,7 @@ State 189
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -4473,7 +4372,7 @@ State 190
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -4571,7 +4470,7 @@ State 191
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -4669,7 +4568,7 @@ State 192
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -4767,7 +4666,7 @@ State 193
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -4865,7 +4764,7 @@ State 194
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -4963,7 +4862,7 @@ State 195
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5061,7 +4960,7 @@ State 196
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5159,7 +5058,7 @@ State 197
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5257,7 +5156,7 @@ State 198
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5355,7 +5254,7 @@ State 199
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5453,7 +5352,7 @@ State 200
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5551,7 +5450,7 @@ State 201
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5649,7 +5548,7 @@ State 202
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5747,7 +5646,7 @@ State 203
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5845,7 +5744,7 @@ State 204
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -5943,7 +5842,7 @@ State 205
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6041,7 +5940,7 @@ State 206
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6139,7 +6038,7 @@ State 207
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6237,7 +6136,7 @@ State 208
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6335,7 +6234,7 @@ State 209
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6433,7 +6332,7 @@ State 210
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6531,7 +6430,7 @@ State 211
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6629,7 +6528,7 @@ State 212
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6677,113 +6576,38 @@ State 214
 
 State 215
 
-   16 expression: • assignment_arg_expression
-   17           | • xvalue_expression "=" rvalue_expression
-   20 assignment_arg_expression: • xvalue_expression
-   21                          | • prvalue_expression
-   22 prvalue_expression: • literal
-   23                   | • "super"
-   24                   | • rvalue_expression "+" rvalue_expression
-   25                   | • rvalue_expression "-" rvalue_expression
-   26                   | • rvalue_expression "*" rvalue_expression
-   27                   | • rvalue_expression "/" rvalue_expression
-   28                   | • rvalue_expression "//" rvalue_expression
-   29                   | • rvalue_expression "^^" rvalue_expression
-   30                   | • xvalue_expression "+=" rvalue_expression
-   31                   | • xvalue_expression "-=" rvalue_expression
-   32                   | • xvalue_expression "*=" rvalue_expression
-   33                   | • xvalue_expression "/=" rvalue_expression
-   34                   | • xvalue_expression "//=" rvalue_expression
-   35                   | • xvalue_expression "^^=" rvalue_expression
-   36                   | • rvalue_expression ">" rvalue_expression
-   37                   | • rvalue_expression ">=" rvalue_expression
-   38                   | • rvalue_expression "<=" rvalue_expression
-   39                   | • rvalue_expression "<=>" rvalue_expression
-   40                   | • rvalue_expression "&&" rvalue_expression
-   41                   | • rvalue_expression "||" rvalue_expression
-   42                   | • rvalue_expression "&" rvalue_expression
-   43                   | • rvalue_expression "^" rvalue_expression
-   44                   | • rvalue_expression "|" rvalue_expression
-   45                   | • rvalue_expression "~" rvalue_expression
-   46                   | • rvalue_expression ">>" rvalue_expression
-   47                   | • rvalue_expression "<<" rvalue_expression
-   48                   | • xvalue_expression "&=" rvalue_expression
-   49                   | • xvalue_expression "^=" rvalue_expression
-   50                   | • xvalue_expression "|=" rvalue_expression
-   51                   | • xvalue_expression "~=" rvalue_expression
-   52                   | • xvalue_expression ">>=" rvalue_expression
-   53                   | • xvalue_expression "<<=" rvalue_expression
-   54                   | • rvalue_expression "is" type
-   55                   | • "!" rvalue_expression
-   56                   | • "-" rvalue_expression
-   57                   | • "typeof" "(" rvalue_expression ")"
-   58                   | • "castas" "(" type ")" "(" rvalue_expression ")"
-   59                   | • "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression
-   60                   | • new_expression
-   61                   | • lambda_expression
-   62 rvalue_expression: • prvalue_expression
-   63                  | • xvalue_expression
-   64 xvalue_expression: • IDENTIFIER
-   65                  | • "this"
-   66                  | • "++" xvalue_expression
-   67                  | • "--" xvalue_expression
-   68                  | • xvalue_expression "++"
-   69                  | • xvalue_expression "--"
-   70                  | • "*" xvalue_expression
-   71                  | • xvalue_expression "." xvalue_expression
-   72                  | • xvalue_expression "->" xvalue_expression
-   73                  | • "(" rvalue_expression ")"
-   74                  | • "[" array_index_list "]"
-   75                  | • function_call
-   76 literal: • BOOL
-   77        | • NPTR
-   78        | • INT
-   79        | • FLOAT
-   80        | • STRING
-   81        | • CHAR
-   87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
-   88 new_expression: • "new" type "(" function_call_list ")"
-   89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
-   94              | xvalue_expression "(" • function_call_list ")"
-   95              | • xvalue_expression "(" ")"
+    2 type: • "const" type_root
+    3     | • type_root
+    4 type_root: • non_reference_type
+    5          | • reference_type
+    6 non_reference_type: • type_core
+    7                   | • type_core POINTER_TYPE
+    8                   | • type_core ARRAYL INT ARRAYR
+    9 type_core: • TYPENAME type_template_paramaters
+   10          | • TYPENAME
+   14 reference_type: • "ref" non_reference_type
+   15               | • "rref" non_reference_type
+   94 function_call: xvalue_expression "(" • function_argument_list ")"
    95              | xvalue_expression "(" • ")"
-   96 function_call_list: • function_call_arg
-   97                   | • function_call_list "," function_call_arg ";"
-   98 function_call_arg: • expression
+  170 function_argument_list: • function_argument
+  171                       | • function_argument_list "," function_argument
+  172 function_argument: • type IDENTIFIER
+  173                  | • type "..."
+  174                  | • type IDENTIFIER "=" expression
 
-    IDENTIFIER  shift, and go to state 77
-    BOOL        shift, and go to state 78
-    NPTR        shift, and go to state 79
-    INT         shift, and go to state 80
-    FLOAT       shift, and go to state 81
-    CHAR        shift, and go to state 82
-    STRING      shift, and go to state 83
-    "castas"    shift, and go to state 85
-    "new"       shift, and go to state 93
-    "super"     shift, and go to state 96
-    "this"      shift, and go to state 98
-    "typeof"    shift, and go to state 101
-    "["         shift, and go to state 104
-    "-"         shift, and go to state 105
-    "*"         shift, and go to state 106
-    "!"         shift, and go to state 107
-    "++"        shift, and go to state 108
-    "--"        shift, and go to state 109
-    "("         shift, and go to state 110
-    ")"         shift, and go to state 292
+    TYPENAME  shift, and go to state 15
+    "const"   shift, and go to state 16
+    "ref"     shift, and go to state 18
+    "rref"    shift, and go to state 19
+    ")"       shift, and go to state 292
 
-    expression                 go to state 293
-    assignment_arg_expression  go to state 113
-    prvalue_expression         go to state 114
-    rvalue_expression          go to state 115
-    xvalue_expression          go to state 116
-    literal                    go to state 117
-    lambda_expression          go to state 119
-    new_expression             go to state 120
-    function_call              go to state 121
-    function_call_list         go to state 294
-    function_call_arg          go to state 295
+    type                    go to state 144
+    type_root               go to state 53
+    non_reference_type      go to state 54
+    type_core               go to state 55
+    reference_type          go to state 56
+    function_argument_list  go to state 293
+    function_argument       go to state 146
 
 
 State 216
@@ -6801,7 +6625,7 @@ State 216
    73                  | • "(" rvalue_expression ")"
    74                  | • "[" array_index_list "]"
    75                  | • function_call
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6812,7 +6636,7 @@ State 216
     "--"        shift, and go to state 109
     "("         shift, and go to state 179
 
-    xvalue_expression  go to state 296
+    xvalue_expression  go to state 294
     function_call      go to state 121
 
 
@@ -6831,7 +6655,7 @@ State 217
    73                  | • "(" rvalue_expression ")"
    74                  | • "[" array_index_list "]"
    75                  | • function_call
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6842,7 +6666,7 @@ State 217
     "--"        shift, and go to state 109
     "("         shift, and go to state 179
 
-    xvalue_expression  go to state 297
+    xvalue_expression  go to state 295
     function_call      go to state 121
 
 
@@ -6912,7 +6736,7 @@ State 218
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -6936,7 +6760,7 @@ State 218
     "("         shift, and go to state 110
 
     prvalue_expression  go to state 176
-    rvalue_expression   go to state 298
+    rvalue_expression   go to state 296
     xvalue_expression   go to state 178
     literal             go to state 117
     lambda_expression   go to state 119
@@ -7010,7 +6834,7 @@ State 219
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -7034,7 +6858,7 @@ State 219
     "("         shift, and go to state 110
 
     prvalue_expression  go to state 176
-    rvalue_expression   go to state 299
+    rvalue_expression   go to state 297
     xvalue_expression   go to state 178
     literal             go to state 117
     lambda_expression   go to state 119
@@ -7108,7 +6932,7 @@ State 220
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -7132,7 +6956,7 @@ State 220
     "("         shift, and go to state 110
 
     prvalue_expression  go to state 176
-    rvalue_expression   go to state 300
+    rvalue_expression   go to state 298
     xvalue_expression   go to state 178
     literal             go to state 117
     lambda_expression   go to state 119
@@ -7206,7 +7030,7 @@ State 221
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -7230,7 +7054,7 @@ State 221
     "("         shift, and go to state 110
 
     prvalue_expression  go to state 176
-    rvalue_expression   go to state 301
+    rvalue_expression   go to state 299
     xvalue_expression   go to state 178
     literal             go to state 117
     lambda_expression   go to state 119
@@ -7304,7 +7128,7 @@ State 222
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -7328,7 +7152,7 @@ State 222
     "("         shift, and go to state 110
 
     prvalue_expression  go to state 176
-    rvalue_expression   go to state 302
+    rvalue_expression   go to state 300
     xvalue_expression   go to state 178
     literal             go to state 117
     lambda_expression   go to state 119
@@ -7402,7 +7226,7 @@ State 223
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -7426,7 +7250,7 @@ State 223
     "("         shift, and go to state 110
 
     prvalue_expression  go to state 176
-    rvalue_expression   go to state 303
+    rvalue_expression   go to state 301
     xvalue_expression   go to state 178
     literal             go to state 117
     lambda_expression   go to state 119
@@ -7459,7 +7283,7 @@ State 227
 
   129 else_if_statement: "else-if" • "(" expression ")" block_statement
 
-    "("  shift, and go to state 304
+    "("  shift, and go to state 302
 
 
 State 228
@@ -7469,12 +7293,12 @@ State 228
   131                | • %empty  [IDENTIFIER, BOOL, NPTR, INT, FLOAT, CHAR, STRING, "break", "castas", "cleanup", "continue", "do", "for", "goto", "if", "let", "new", "rethrow", "return", "super", "switch", "this", "throw", "try", "typeof", "while", "yield", "[", "-", "*", "!", "++", "--", "(", "{", "}", ";"]
   132 else_statement: • "else" block_statement
 
-    "else"  shift, and go to state 305
+    "else"  shift, and go to state 303
 
     $default  reduce using rule 131 (else_statement0)
 
-    else_statement0  go to state 306
-    else_statement   go to state 307
+    else_statement0  go to state 304
+    else_statement   go to state 305
 
 
 State 229
@@ -7487,7 +7311,7 @@ State 229
 
     $default  reduce using rule 125 (else_if_statements0)
 
-    else_if_statement  go to state 308
+    else_if_statement  go to state 306
 
 
 State 230
@@ -7501,7 +7325,7 @@ State 231
 
   146 catch_block: "catch" • "(" variable_declaration ")" block_statement
 
-    "("  shift, and go to state 309
+    "("  shift, and go to state 307
 
 
 State 232
@@ -7511,7 +7335,7 @@ State 232
 
     "{"  shift, and go to state 59
 
-    block_statement  go to state 310
+    block_statement  go to state 308
 
 
 State 233
@@ -7526,7 +7350,7 @@ State 233
 
     $default  reduce using rule 142 (exception_statement)
 
-    catch_block  go to state 311
+    catch_block  go to state 309
 
 
 State 234
@@ -7548,7 +7372,7 @@ State 236
   172 function_argument: type IDENTIFIER •  [",", ")"]
   174                  | type IDENTIFIER • "=" expression
 
-    "="  shift, and go to state 312
+    "="  shift, and go to state 310
 
     $default  reduce using rule 172 (function_argument)
 
@@ -7588,7 +7412,7 @@ State 238
     non_reference_type  go to state 54
     type_core           go to state 55
     reference_type      go to state 56
-    function_argument   go to state 313
+    function_argument   go to state 311
 
 
 State 239
@@ -7597,9 +7421,9 @@ State 239
   175 throwable_expression: • "nothrowable"
   176                     | • "nothrowable" "(" expression ")"
 
-    "nothrowable"  shift, and go to state 314
+    "nothrowable"  shift, and go to state 312
 
-    throwable_expression  go to state 315
+    throwable_expression  go to state 313
 
 
 State 240
@@ -7608,7 +7432,7 @@ State 240
   171 function_argument_list: function_argument_list • "," function_argument
 
     ","  shift, and go to state 238
-    ")"  shift, and go to state 316
+    ")"  shift, and go to state 314
 
 
 State 241
@@ -7623,8 +7447,8 @@ State 242
    11 type_template_paramaters: "!" "(" type_list • ")"
    13 type_list: type_list • "," type
 
-    ","  shift, and go to state 317
-    ")"  shift, and go to state 318
+    ","  shift, and go to state 315
+    ")"  shift, and go to state 316
 
 
 State 243
@@ -7640,30 +7464,30 @@ State 244
   176                     | • "nothrowable" "(" expression ")"
   186 operator_overload_header: "operator" operator "(" function_argument_list ")" • throwable_expression "->" return_types_list
 
-    "nothrowable"  shift, and go to state 314
+    "nothrowable"  shift, and go to state 312
 
-    throwable_expression  go to state 319
+    throwable_expression  go to state 317
 
 
 State 245
 
    58 prvalue_expression: "castas" "(" type • ")" "(" rvalue_expression ")"
 
-    ")"  shift, and go to state 320
+    ")"  shift, and go to state 318
 
 
 State 246
 
   148 clean_up_statement: "cleanup" "(" IDENTIFIER • "," clean_up_arg ")" ";"
 
-    ","  shift, and go to state 321
+    ","  shift, and go to state 319
 
 
 State 247
 
   117 do_loop_statement: "do" block_statement "while" • "(" expression ")"
 
-    "("  shift, and go to state 322
+    "("  shift, and go to state 320
 
 
 State 248
@@ -7671,15 +7495,15 @@ State 248
   119 for_loop_condition: variable_declaration • ";" expression0 ";" expression0
   120                   | variable_declaration • "in" expression
 
-    "in"  shift, and go to state 323
-    ";"   shift, and go to state 324
+    "in"  shift, and go to state 321
+    ";"   shift, and go to state 322
 
 
 State 249
 
   118 for_loop_statement: "for" "(" for_loop_condition • ")" block_statement
 
-    ")"  shift, and go to state 325
+    ")"  shift, and go to state 323
 
 
 State 250
@@ -7693,7 +7517,7 @@ State 251
 
   124 if_statement: "if" "(" expression • ")" block_statement
 
-    ")"  shift, and go to state 326
+    ")"  shift, and go to state 324
 
 
 State 252
@@ -7701,7 +7525,7 @@ State 252
    85 variable_declaration_block: "let" type • IDENTIFIER
    86                           | "let" type • IDENTIFIER "=" expression
 
-    IDENTIFIER  shift, and go to state 327
+    IDENTIFIER  shift, and go to state 325
 
 
 State 253
@@ -7712,14 +7536,14 @@ State 253
 
     "let"  shift, and go to state 159
 
-    variable_declaration_block  go to state 328
+    variable_declaration_block  go to state 326
 
 
 State 254
 
    89 new_expression: "new" "heap" type • "(" function_call_list ")"
 
-    "("  shift, and go to state 329
+    "("  shift, and go to state 327
 
 
 State 255
@@ -7792,7 +7616,7 @@ State 255
    88 new_expression: • "new" type "(" function_call_list ")"
    88               | "new" type "(" • function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
    96 function_call_list: • function_call_arg
    97                   | • function_call_list "," function_call_arg ";"
@@ -7818,7 +7642,7 @@ State 255
     "--"        shift, and go to state 109
     "("         shift, and go to state 110
 
-    expression                 go to state 293
+    expression                 go to state 328
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -7827,8 +7651,8 @@ State 255
     lambda_expression          go to state 119
     new_expression             go to state 120
     function_call              go to state 121
-    function_call_list         go to state 330
-    function_call_arg          go to state 295
+    function_call_list         go to state 329
+    function_call_arg          go to state 330
 
 
 State 256
@@ -7969,7 +7793,7 @@ State 260
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
    93 array_index: expression0 ":" • expression0
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -8087,7 +7911,7 @@ State 262
    91 array_index_list: array_index_list "," • array_index
    92 array_index: • expression
    93            | • expression0 ":" expression0
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -9638,132 +9462,52 @@ State 292
 
 State 293
 
-   98 function_call_arg: expression •
+   94 function_call: xvalue_expression "(" function_argument_list • ")"
+  171 function_argument_list: function_argument_list • "," function_argument
 
-    $default  reduce using rule 98 (function_call_arg)
+    ","  shift, and go to state 238
+    ")"  shift, and go to state 340
 
 
 State 294
-
-   94 function_call: xvalue_expression "(" function_call_list • ")"
-   97 function_call_list: function_call_list • "," function_call_arg ";"
-
-    ","  shift, and go to state 340
-    ")"  shift, and go to state 341
-
-
-State 295
-
-   96 function_call_list: function_call_arg •
-
-    $default  reduce using rule 96 (function_call_list)
-
-
-State 296
 
    68 xvalue_expression: xvalue_expression • "++"
    69                  | xvalue_expression • "--"
    71                  | xvalue_expression • "." xvalue_expression
    71                  | xvalue_expression "." xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", "++", "--", "(", ")", ":", ".", "->", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
    72                  | xvalue_expression • "->" xvalue_expression
-   94 function_call: xvalue_expression • "(" function_call_list ")"
+   94 function_call: xvalue_expression • "(" function_argument_list ")"
    95              | xvalue_expression • "(" ")"
 
-    "("  shift, and go to state 215
-
-    "("       [reduce using rule 71 (xvalue_expression)]
     $default  reduce using rule 71 (xvalue_expression)
 
     Conflict between rule 71 and token "++" resolved as reduce ("++" < ".").
     Conflict between rule 71 and token "--" resolved as reduce ("--" < ".").
+    Conflict between rule 71 and token "(" resolved as reduce (%left "(").
     Conflict between rule 71 and token "." resolved as reduce (%left ".").
     Conflict between rule 71 and token "->" resolved as reduce (%left "->").
 
-    shift/reduce conflict on token "(":
-       71 xvalue_expression: xvalue_expression "." xvalue_expression •
-       94 function_call: xvalue_expression • "(" function_call_list ")"
-      Example: xvalue_expression "." xvalue_expression • "(" function_call_list ")"
-      Shift derivation
-        xvalue_expression
-        ↳ xvalue_expression "." xvalue_expression
-                                ↳ function_call
-                                  ↳ xvalue_expression • "(" function_call_list ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression                           "(" function_call_list ")"
-            ↳ xvalue_expression "." xvalue_expression •
 
-    shift/reduce conflict on token "(":
-       71 xvalue_expression: xvalue_expression "." xvalue_expression •
-       95 function_call: xvalue_expression • "(" ")"
-      Example: xvalue_expression "." xvalue_expression • "(" ")"
-      Shift derivation
-        xvalue_expression
-        ↳ xvalue_expression "." xvalue_expression
-                                ↳ function_call
-                                  ↳ xvalue_expression • "(" ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression                           "(" ")"
-            ↳ xvalue_expression "." xvalue_expression •
-
-
-
-State 297
+State 295
 
    68 xvalue_expression: xvalue_expression • "++"
    69                  | xvalue_expression • "--"
    71                  | xvalue_expression • "." xvalue_expression
    72                  | xvalue_expression • "->" xvalue_expression
    72                  | xvalue_expression "->" xvalue_expression •  ["in", "is", "]", ">", ",", "+", "-", "/", "//", "*", "^^", "+=", "-=", "*=", "/=", "//=", "^^=", "<=", ">=", "<=>", "&&", "||", "&", "|", "^", "~", ">>", "<<", "=", "++", "--", "(", ")", ":", ".", "->", ";", "&=", "^=", "|=", "~=", "<<=", ">>="]
-   94 function_call: xvalue_expression • "(" function_call_list ")"
+   94 function_call: xvalue_expression • "(" function_argument_list ")"
    95              | xvalue_expression • "(" ")"
 
-    "("  shift, and go to state 215
-
-    "("       [reduce using rule 72 (xvalue_expression)]
     $default  reduce using rule 72 (xvalue_expression)
 
     Conflict between rule 72 and token "++" resolved as reduce ("++" < "->").
     Conflict between rule 72 and token "--" resolved as reduce ("--" < "->").
+    Conflict between rule 72 and token "(" resolved as reduce (%left "(").
     Conflict between rule 72 and token "." resolved as reduce (%left ".").
     Conflict between rule 72 and token "->" resolved as reduce (%left "->").
 
-    shift/reduce conflict on token "(":
-       72 xvalue_expression: xvalue_expression "->" xvalue_expression •
-       94 function_call: xvalue_expression • "(" function_call_list ")"
-      Example: xvalue_expression "->" xvalue_expression • "(" function_call_list ")"
-      Shift derivation
-        xvalue_expression
-        ↳ xvalue_expression "->" xvalue_expression
-                                 ↳ function_call
-                                   ↳ xvalue_expression • "(" function_call_list ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression                            "(" function_call_list ")"
-            ↳ xvalue_expression "->" xvalue_expression •
 
-    shift/reduce conflict on token "(":
-       72 xvalue_expression: xvalue_expression "->" xvalue_expression •
-       95 function_call: xvalue_expression • "(" ")"
-      Example: xvalue_expression "->" xvalue_expression • "(" ")"
-      Shift derivation
-        xvalue_expression
-        ↳ xvalue_expression "->" xvalue_expression
-                                 ↳ function_call
-                                   ↳ xvalue_expression • "(" ")"
-      Reduce derivation
-        xvalue_expression
-        ↳ function_call
-          ↳ xvalue_expression                            "(" ")"
-            ↳ xvalue_expression "->" xvalue_expression •
-
-
-
-State 298
+State 296
 
    24 prvalue_expression: rvalue_expression • "+" rvalue_expression
    25                   | rvalue_expression • "-" rvalue_expression
@@ -9829,7 +9573,7 @@ State 298
     Conflict between rule 48 and token "<<" resolved as shift ("&=" < "<<").
 
 
-State 299
+State 297
 
    24 prvalue_expression: rvalue_expression • "+" rvalue_expression
    25                   | rvalue_expression • "-" rvalue_expression
@@ -9895,7 +9639,7 @@ State 299
     Conflict between rule 49 and token "<<" resolved as shift ("^=" < "<<").
 
 
-State 300
+State 298
 
    24 prvalue_expression: rvalue_expression • "+" rvalue_expression
    25                   | rvalue_expression • "-" rvalue_expression
@@ -9961,7 +9705,7 @@ State 300
     Conflict between rule 50 and token "<<" resolved as shift ("|=" < "<<").
 
 
-State 301
+State 299
 
    24 prvalue_expression: rvalue_expression • "+" rvalue_expression
    25                   | rvalue_expression • "-" rvalue_expression
@@ -10027,7 +9771,7 @@ State 301
     Conflict between rule 51 and token "<<" resolved as shift ("~=" < "<<").
 
 
-State 302
+State 300
 
    24 prvalue_expression: rvalue_expression • "+" rvalue_expression
    25                   | rvalue_expression • "-" rvalue_expression
@@ -10093,7 +9837,7 @@ State 302
     Conflict between rule 53 and token "<<" resolved as shift ("<<=" < "<<").
 
 
-State 303
+State 301
 
    24 prvalue_expression: rvalue_expression • "+" rvalue_expression
    25                   | rvalue_expression • "-" rvalue_expression
@@ -10159,7 +9903,7 @@ State 303
     Conflict between rule 52 and token "<<" resolved as shift (">>=" < "<<").
 
 
-State 304
+State 302
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -10228,7 +9972,7 @@ State 304
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   129 else_if_statement: "else-if" "(" • expression ")" block_statement
 
@@ -10252,7 +9996,7 @@ State 304
     "--"        shift, and go to state 109
     "("         shift, and go to state 110
 
-    expression                 go to state 342
+    expression                 go to state 341
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -10263,62 +10007,62 @@ State 304
     function_call              go to state 121
 
 
-State 305
+State 303
 
   108 block_statement: • "{" statements0 "}"
   132 else_statement: "else" • block_statement
 
     "{"  shift, and go to state 59
 
-    block_statement  go to state 343
+    block_statement  go to state 342
 
 
-State 306
+State 304
 
   123 if_statement_sequence: if_statement else_if_statements0 else_statement0 •
 
     $default  reduce using rule 123 (if_statement_sequence)
 
 
-State 307
+State 305
 
   130 else_statement0: else_statement •
 
     $default  reduce using rule 130 (else_statement0)
 
 
-State 308
+State 306
 
   128 else_if_statements: else_if_statements else_if_statement •
 
     $default  reduce using rule 128 (else_if_statements)
 
 
-State 309
+State 307
 
    82 variable_declaration: • "let" variable_declaration_block_list
   146 catch_block: "catch" "(" • variable_declaration ")" block_statement
 
     "let"  shift, and go to state 92
 
-    variable_declaration  go to state 344
+    variable_declaration  go to state 343
 
 
-State 310
+State 308
 
   147 catch_block: "catch-all" block_statement •
 
     $default  reduce using rule 147 (catch_block)
 
 
-State 311
+State 309
 
   145 catch_blocks: catch_blocks catch_block •
 
     $default  reduce using rule 145 (catch_blocks)
 
 
-State 312
+State 310
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -10387,7 +10131,7 @@ State 312
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   174 function_argument: type IDENTIFIER "=" • expression
 
@@ -10411,7 +10155,7 @@ State 312
     "--"        shift, and go to state 109
     "("         shift, and go to state 110
 
-    expression                 go to state 345
+    expression                 go to state 344
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -10422,42 +10166,42 @@ State 312
     function_call              go to state 121
 
 
-State 313
+State 311
 
   171 function_argument_list: function_argument_list "," function_argument •
 
     $default  reduce using rule 171 (function_argument_list)
 
 
-State 314
+State 312
 
   175 throwable_expression: "nothrowable" •  ["->"]
   176                     | "nothrowable" • "(" expression ")"
 
-    "("  shift, and go to state 346
+    "("  shift, and go to state 345
 
     $default  reduce using rule 175 (throwable_expression)
 
 
-State 315
+State 313
 
   165 function_header: "func" IDENTIFIER "(" function_argument_list ")" throwable_expression • "->" return_types_list
 
-    "->"  shift, and go to state 347
+    "->"  shift, and go to state 346
 
 
-State 316
+State 314
 
   164 function_header: "func" function_modifiers IDENTIFIER "(" function_argument_list ")" • throwable_expression "->" return_types_list
   175 throwable_expression: • "nothrowable"
   176                     | • "nothrowable" "(" expression ")"
 
-    "nothrowable"  shift, and go to state 314
+    "nothrowable"  shift, and go to state 312
 
-    throwable_expression  go to state 348
+    throwable_expression  go to state 347
 
 
-State 317
+State 315
 
     2 type: • "const" type_root
     3     | • type_root
@@ -10477,35 +10221,35 @@ State 317
     "ref"     shift, and go to state 18
     "rref"    shift, and go to state 19
 
-    type                go to state 349
+    type                go to state 348
     type_root           go to state 53
     non_reference_type  go to state 54
     type_core           go to state 55
     reference_type      go to state 56
 
 
-State 318
+State 316
 
    11 type_template_paramaters: "!" "(" type_list ")" •
 
     $default  reduce using rule 11 (type_template_paramaters)
 
 
-State 319
+State 317
 
   186 operator_overload_header: "operator" operator "(" function_argument_list ")" throwable_expression • "->" return_types_list
 
-    "->"  shift, and go to state 350
+    "->"  shift, and go to state 349
 
 
-State 320
+State 318
 
    58 prvalue_expression: "castas" "(" type ")" • "(" rvalue_expression ")"
 
-    "("  shift, and go to state 351
+    "("  shift, and go to state 350
 
 
-State 321
+State 319
 
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
   148 clean_up_statement: "cleanup" "(" IDENTIFIER "," • clean_up_arg ")" ";"
@@ -10520,19 +10264,19 @@ State 321
   182 anonymous_function_header: • "func" "compeval" "(" function_argument_list ")" throwable_expression "->" return_types_list
   183                          | • "func" "(" function_argument_list ")" throwable_expression "->" return_types_list
 
-    IDENTIFIER  shift, and go to state 352
-    "func"      shift, and go to state 353
-    "("         shift, and go to state 354
+    IDENTIFIER  shift, and go to state 351
+    "func"      shift, and go to state 352
+    "("         shift, and go to state 353
 
-    lambda_expression          go to state 355
-    clean_up_arg               go to state 356
-    function                   go to state 357
+    lambda_expression          go to state 354
+    clean_up_arg               go to state 355
+    function                   go to state 356
     function_header            go to state 5
-    anonymous_function         go to state 358
-    anonymous_function_header  go to state 359
+    anonymous_function         go to state 357
+    anonymous_function_header  go to state 358
 
 
-State 322
+State 320
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -10601,9 +10345,113 @@ State 322
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   117 do_loop_statement: "do" block_statement "while" "(" • expression ")"
+
+    IDENTIFIER  shift, and go to state 77
+    BOOL        shift, and go to state 78
+    NPTR        shift, and go to state 79
+    INT         shift, and go to state 80
+    FLOAT       shift, and go to state 81
+    CHAR        shift, and go to state 82
+    STRING      shift, and go to state 83
+    "castas"    shift, and go to state 85
+    "new"       shift, and go to state 93
+    "super"     shift, and go to state 96
+    "this"      shift, and go to state 98
+    "typeof"    shift, and go to state 101
+    "["         shift, and go to state 104
+    "-"         shift, and go to state 105
+    "*"         shift, and go to state 106
+    "!"         shift, and go to state 107
+    "++"        shift, and go to state 108
+    "--"        shift, and go to state 109
+    "("         shift, and go to state 110
+
+    expression                 go to state 359
+    assignment_arg_expression  go to state 113
+    prvalue_expression         go to state 114
+    rvalue_expression          go to state 115
+    xvalue_expression          go to state 116
+    literal                    go to state 117
+    lambda_expression          go to state 119
+    new_expression             go to state 120
+    function_call              go to state 121
+
+
+State 321
+
+   16 expression: • assignment_arg_expression
+   17           | • xvalue_expression "=" rvalue_expression
+   20 assignment_arg_expression: • xvalue_expression
+   21                          | • prvalue_expression
+   22 prvalue_expression: • literal
+   23                   | • "super"
+   24                   | • rvalue_expression "+" rvalue_expression
+   25                   | • rvalue_expression "-" rvalue_expression
+   26                   | • rvalue_expression "*" rvalue_expression
+   27                   | • rvalue_expression "/" rvalue_expression
+   28                   | • rvalue_expression "//" rvalue_expression
+   29                   | • rvalue_expression "^^" rvalue_expression
+   30                   | • xvalue_expression "+=" rvalue_expression
+   31                   | • xvalue_expression "-=" rvalue_expression
+   32                   | • xvalue_expression "*=" rvalue_expression
+   33                   | • xvalue_expression "/=" rvalue_expression
+   34                   | • xvalue_expression "//=" rvalue_expression
+   35                   | • xvalue_expression "^^=" rvalue_expression
+   36                   | • rvalue_expression ">" rvalue_expression
+   37                   | • rvalue_expression ">=" rvalue_expression
+   38                   | • rvalue_expression "<=" rvalue_expression
+   39                   | • rvalue_expression "<=>" rvalue_expression
+   40                   | • rvalue_expression "&&" rvalue_expression
+   41                   | • rvalue_expression "||" rvalue_expression
+   42                   | • rvalue_expression "&" rvalue_expression
+   43                   | • rvalue_expression "^" rvalue_expression
+   44                   | • rvalue_expression "|" rvalue_expression
+   45                   | • rvalue_expression "~" rvalue_expression
+   46                   | • rvalue_expression ">>" rvalue_expression
+   47                   | • rvalue_expression "<<" rvalue_expression
+   48                   | • xvalue_expression "&=" rvalue_expression
+   49                   | • xvalue_expression "^=" rvalue_expression
+   50                   | • xvalue_expression "|=" rvalue_expression
+   51                   | • xvalue_expression "~=" rvalue_expression
+   52                   | • xvalue_expression ">>=" rvalue_expression
+   53                   | • xvalue_expression "<<=" rvalue_expression
+   54                   | • rvalue_expression "is" type
+   55                   | • "!" rvalue_expression
+   56                   | • "-" rvalue_expression
+   57                   | • "typeof" "(" rvalue_expression ")"
+   58                   | • "castas" "(" type ")" "(" rvalue_expression ")"
+   59                   | • "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression
+   60                   | • new_expression
+   61                   | • lambda_expression
+   62 rvalue_expression: • prvalue_expression
+   63                  | • xvalue_expression
+   64 xvalue_expression: • IDENTIFIER
+   65                  | • "this"
+   66                  | • "++" xvalue_expression
+   67                  | • "--" xvalue_expression
+   68                  | • xvalue_expression "++"
+   69                  | • xvalue_expression "--"
+   70                  | • "*" xvalue_expression
+   71                  | • xvalue_expression "." xvalue_expression
+   72                  | • xvalue_expression "->" xvalue_expression
+   73                  | • "(" rvalue_expression ")"
+   74                  | • "[" array_index_list "]"
+   75                  | • function_call
+   76 literal: • BOOL
+   77        | • NPTR
+   78        | • INT
+   79        | • FLOAT
+   80        | • STRING
+   81        | • CHAR
+   87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
+   88 new_expression: • "new" type "(" function_call_list ")"
+   89               | • "new" "heap" type "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
+   95              | • xvalue_expression "(" ")"
+  120 for_loop_condition: variable_declaration "in" • expression
 
     IDENTIFIER  shift, and go to state 77
     BOOL        shift, and go to state 78
@@ -10636,111 +10484,7 @@ State 322
     function_call              go to state 121
 
 
-State 323
-
-   16 expression: • assignment_arg_expression
-   17           | • xvalue_expression "=" rvalue_expression
-   20 assignment_arg_expression: • xvalue_expression
-   21                          | • prvalue_expression
-   22 prvalue_expression: • literal
-   23                   | • "super"
-   24                   | • rvalue_expression "+" rvalue_expression
-   25                   | • rvalue_expression "-" rvalue_expression
-   26                   | • rvalue_expression "*" rvalue_expression
-   27                   | • rvalue_expression "/" rvalue_expression
-   28                   | • rvalue_expression "//" rvalue_expression
-   29                   | • rvalue_expression "^^" rvalue_expression
-   30                   | • xvalue_expression "+=" rvalue_expression
-   31                   | • xvalue_expression "-=" rvalue_expression
-   32                   | • xvalue_expression "*=" rvalue_expression
-   33                   | • xvalue_expression "/=" rvalue_expression
-   34                   | • xvalue_expression "//=" rvalue_expression
-   35                   | • xvalue_expression "^^=" rvalue_expression
-   36                   | • rvalue_expression ">" rvalue_expression
-   37                   | • rvalue_expression ">=" rvalue_expression
-   38                   | • rvalue_expression "<=" rvalue_expression
-   39                   | • rvalue_expression "<=>" rvalue_expression
-   40                   | • rvalue_expression "&&" rvalue_expression
-   41                   | • rvalue_expression "||" rvalue_expression
-   42                   | • rvalue_expression "&" rvalue_expression
-   43                   | • rvalue_expression "^" rvalue_expression
-   44                   | • rvalue_expression "|" rvalue_expression
-   45                   | • rvalue_expression "~" rvalue_expression
-   46                   | • rvalue_expression ">>" rvalue_expression
-   47                   | • rvalue_expression "<<" rvalue_expression
-   48                   | • xvalue_expression "&=" rvalue_expression
-   49                   | • xvalue_expression "^=" rvalue_expression
-   50                   | • xvalue_expression "|=" rvalue_expression
-   51                   | • xvalue_expression "~=" rvalue_expression
-   52                   | • xvalue_expression ">>=" rvalue_expression
-   53                   | • xvalue_expression "<<=" rvalue_expression
-   54                   | • rvalue_expression "is" type
-   55                   | • "!" rvalue_expression
-   56                   | • "-" rvalue_expression
-   57                   | • "typeof" "(" rvalue_expression ")"
-   58                   | • "castas" "(" type ")" "(" rvalue_expression ")"
-   59                   | • "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression
-   60                   | • new_expression
-   61                   | • lambda_expression
-   62 rvalue_expression: • prvalue_expression
-   63                  | • xvalue_expression
-   64 xvalue_expression: • IDENTIFIER
-   65                  | • "this"
-   66                  | • "++" xvalue_expression
-   67                  | • "--" xvalue_expression
-   68                  | • xvalue_expression "++"
-   69                  | • xvalue_expression "--"
-   70                  | • "*" xvalue_expression
-   71                  | • xvalue_expression "." xvalue_expression
-   72                  | • xvalue_expression "->" xvalue_expression
-   73                  | • "(" rvalue_expression ")"
-   74                  | • "[" array_index_list "]"
-   75                  | • function_call
-   76 literal: • BOOL
-   77        | • NPTR
-   78        | • INT
-   79        | • FLOAT
-   80        | • STRING
-   81        | • CHAR
-   87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
-   88 new_expression: • "new" type "(" function_call_list ")"
-   89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
-   95              | • xvalue_expression "(" ")"
-  120 for_loop_condition: variable_declaration "in" • expression
-
-    IDENTIFIER  shift, and go to state 77
-    BOOL        shift, and go to state 78
-    NPTR        shift, and go to state 79
-    INT         shift, and go to state 80
-    FLOAT       shift, and go to state 81
-    CHAR        shift, and go to state 82
-    STRING      shift, and go to state 83
-    "castas"    shift, and go to state 85
-    "new"       shift, and go to state 93
-    "super"     shift, and go to state 96
-    "this"      shift, and go to state 98
-    "typeof"    shift, and go to state 101
-    "["         shift, and go to state 104
-    "-"         shift, and go to state 105
-    "*"         shift, and go to state 106
-    "!"         shift, and go to state 107
-    "++"        shift, and go to state 108
-    "--"        shift, and go to state 109
-    "("         shift, and go to state 110
-
-    expression                 go to state 361
-    assignment_arg_expression  go to state 113
-    prvalue_expression         go to state 114
-    rvalue_expression          go to state 115
-    xvalue_expression          go to state 116
-    literal                    go to state 117
-    lambda_expression          go to state 119
-    new_expression             go to state 120
-    function_call              go to state 121
-
-
-State 324
+State 322
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -10811,7 +10555,7 @@ State 324
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   119 for_loop_condition: variable_declaration ";" • expression0 ";" expression0
 
@@ -10838,7 +10582,7 @@ State 324
     $default  reduce using rule 19 (expression0)
 
     expression                 go to state 334
-    expression0                go to state 362
+    expression0                go to state 361
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -10849,44 +10593,44 @@ State 324
     function_call              go to state 121
 
 
-State 325
+State 323
 
   108 block_statement: • "{" statements0 "}"
   118 for_loop_statement: "for" "(" for_loop_condition ")" • block_statement
 
     "{"  shift, and go to state 59
 
-    block_statement  go to state 363
+    block_statement  go to state 362
 
 
-State 326
+State 324
 
   108 block_statement: • "{" statements0 "}"
   124 if_statement: "if" "(" expression ")" • block_statement
 
     "{"  shift, and go to state 59
 
-    block_statement  go to state 364
+    block_statement  go to state 363
 
 
-State 327
+State 325
 
    85 variable_declaration_block: "let" type IDENTIFIER •  ["in", ",", ")", ";"]
    86                           | "let" type IDENTIFIER • "=" expression
 
-    "="  shift, and go to state 365
+    "="  shift, and go to state 364
 
     $default  reduce using rule 85 (variable_declaration_block)
 
 
-State 328
+State 326
 
    84 variable_declaration_block_list: variable_declaration_block_list "," variable_declaration_block •
 
     $default  reduce using rule 84 (variable_declaration_block_list)
 
 
-State 329
+State 327
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -10956,7 +10700,7 @@ State 329
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
    89               | "new" "heap" type "(" • function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
    96 function_call_list: • function_call_arg
    97                   | • function_call_list "," function_call_arg ";"
@@ -10982,7 +10726,7 @@ State 329
     "--"        shift, and go to state 109
     "("         shift, and go to state 110
 
-    expression                 go to state 293
+    expression                 go to state 328
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -10991,17 +10735,31 @@ State 329
     lambda_expression          go to state 119
     new_expression             go to state 120
     function_call              go to state 121
-    function_call_list         go to state 366
-    function_call_arg          go to state 295
+    function_call_list         go to state 365
+    function_call_arg          go to state 330
 
 
-State 330
+State 328
+
+   98 function_call_arg: expression •
+
+    $default  reduce using rule 98 (function_call_arg)
+
+
+State 329
 
    88 new_expression: "new" type "(" function_call_list • ")"
    97 function_call_list: function_call_list • "," function_call_arg ";"
 
-    ","  shift, and go to state 340
+    ","  shift, and go to state 366
     ")"  shift, and go to state 367
+
+
+State 330
+
+   96 function_call_list: function_call_arg •
+
+    $default  reduce using rule 96 (function_call_list)
 
 
 State 331
@@ -11133,7 +10891,7 @@ State 338
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -11201,146 +10959,40 @@ State 339
 
 State 340
 
-   16 expression: • assignment_arg_expression
-   17           | • xvalue_expression "=" rvalue_expression
-   20 assignment_arg_expression: • xvalue_expression
-   21                          | • prvalue_expression
-   22 prvalue_expression: • literal
-   23                   | • "super"
-   24                   | • rvalue_expression "+" rvalue_expression
-   25                   | • rvalue_expression "-" rvalue_expression
-   26                   | • rvalue_expression "*" rvalue_expression
-   27                   | • rvalue_expression "/" rvalue_expression
-   28                   | • rvalue_expression "//" rvalue_expression
-   29                   | • rvalue_expression "^^" rvalue_expression
-   30                   | • xvalue_expression "+=" rvalue_expression
-   31                   | • xvalue_expression "-=" rvalue_expression
-   32                   | • xvalue_expression "*=" rvalue_expression
-   33                   | • xvalue_expression "/=" rvalue_expression
-   34                   | • xvalue_expression "//=" rvalue_expression
-   35                   | • xvalue_expression "^^=" rvalue_expression
-   36                   | • rvalue_expression ">" rvalue_expression
-   37                   | • rvalue_expression ">=" rvalue_expression
-   38                   | • rvalue_expression "<=" rvalue_expression
-   39                   | • rvalue_expression "<=>" rvalue_expression
-   40                   | • rvalue_expression "&&" rvalue_expression
-   41                   | • rvalue_expression "||" rvalue_expression
-   42                   | • rvalue_expression "&" rvalue_expression
-   43                   | • rvalue_expression "^" rvalue_expression
-   44                   | • rvalue_expression "|" rvalue_expression
-   45                   | • rvalue_expression "~" rvalue_expression
-   46                   | • rvalue_expression ">>" rvalue_expression
-   47                   | • rvalue_expression "<<" rvalue_expression
-   48                   | • xvalue_expression "&=" rvalue_expression
-   49                   | • xvalue_expression "^=" rvalue_expression
-   50                   | • xvalue_expression "|=" rvalue_expression
-   51                   | • xvalue_expression "~=" rvalue_expression
-   52                   | • xvalue_expression ">>=" rvalue_expression
-   53                   | • xvalue_expression "<<=" rvalue_expression
-   54                   | • rvalue_expression "is" type
-   55                   | • "!" rvalue_expression
-   56                   | • "-" rvalue_expression
-   57                   | • "typeof" "(" rvalue_expression ")"
-   58                   | • "castas" "(" type ")" "(" rvalue_expression ")"
-   59                   | • "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression
-   60                   | • new_expression
-   61                   | • lambda_expression
-   62 rvalue_expression: • prvalue_expression
-   63                  | • xvalue_expression
-   64 xvalue_expression: • IDENTIFIER
-   65                  | • "this"
-   66                  | • "++" xvalue_expression
-   67                  | • "--" xvalue_expression
-   68                  | • xvalue_expression "++"
-   69                  | • xvalue_expression "--"
-   70                  | • "*" xvalue_expression
-   71                  | • xvalue_expression "." xvalue_expression
-   72                  | • xvalue_expression "->" xvalue_expression
-   73                  | • "(" rvalue_expression ")"
-   74                  | • "[" array_index_list "]"
-   75                  | • function_call
-   76 literal: • BOOL
-   77        | • NPTR
-   78        | • INT
-   79        | • FLOAT
-   80        | • STRING
-   81        | • CHAR
-   87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
-   88 new_expression: • "new" type "(" function_call_list ")"
-   89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
-   95              | • xvalue_expression "(" ")"
-   97 function_call_list: function_call_list "," • function_call_arg ";"
-   98 function_call_arg: • expression
-
-    IDENTIFIER  shift, and go to state 77
-    BOOL        shift, and go to state 78
-    NPTR        shift, and go to state 79
-    INT         shift, and go to state 80
-    FLOAT       shift, and go to state 81
-    CHAR        shift, and go to state 82
-    STRING      shift, and go to state 83
-    "castas"    shift, and go to state 85
-    "new"       shift, and go to state 93
-    "super"     shift, and go to state 96
-    "this"      shift, and go to state 98
-    "typeof"    shift, and go to state 101
-    "["         shift, and go to state 104
-    "-"         shift, and go to state 105
-    "*"         shift, and go to state 106
-    "!"         shift, and go to state 107
-    "++"        shift, and go to state 108
-    "--"        shift, and go to state 109
-    "("         shift, and go to state 110
-
-    expression                 go to state 293
-    assignment_arg_expression  go to state 113
-    prvalue_expression         go to state 114
-    rvalue_expression          go to state 115
-    xvalue_expression          go to state 116
-    literal                    go to state 117
-    lambda_expression          go to state 119
-    new_expression             go to state 120
-    function_call              go to state 121
-    function_call_arg          go to state 378
-
-
-State 341
-
-   94 function_call: xvalue_expression "(" function_call_list ")" •
+   94 function_call: xvalue_expression "(" function_argument_list ")" •
 
     $default  reduce using rule 94 (function_call)
 
 
-State 342
+State 341
 
   129 else_if_statement: "else-if" "(" expression • ")" block_statement
 
-    ")"  shift, and go to state 379
+    ")"  shift, and go to state 378
 
 
-State 343
+State 342
 
   132 else_statement: "else" block_statement •
 
     $default  reduce using rule 132 (else_statement)
 
 
-State 344
+State 343
 
   146 catch_block: "catch" "(" variable_declaration • ")" block_statement
 
-    ")"  shift, and go to state 380
+    ")"  shift, and go to state 379
 
 
-State 345
+State 344
 
   174 function_argument: type IDENTIFIER "=" expression •
 
     $default  reduce using rule 174 (function_argument)
 
 
-State 346
+State 345
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -11409,7 +11061,7 @@ State 346
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   176 throwable_expression: "nothrowable" "(" • expression ")"
 
@@ -11433,7 +11085,7 @@ State 346
     "--"        shift, and go to state 109
     "("         shift, and go to state 110
 
-    expression                 go to state 381
+    expression                 go to state 380
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -11444,7 +11096,7 @@ State 346
     function_call              go to state 121
 
 
-State 347
+State 346
 
     2 type: • "const" type_root
     3     | • type_root
@@ -11474,25 +11126,25 @@ State 347
     non_reference_type  go to state 54
     type_core           go to state 55
     reference_type      go to state 56
-    return_types_list   go to state 382
+    return_types_list   go to state 381
     return_type         go to state 377
 
 
-State 348
+State 347
 
   164 function_header: "func" function_modifiers IDENTIFIER "(" function_argument_list ")" throwable_expression • "->" return_types_list
 
-    "->"  shift, and go to state 383
+    "->"  shift, and go to state 382
 
 
-State 349
+State 348
 
    13 type_list: type_list "," type •
 
     $default  reduce using rule 13 (type_list)
 
 
-State 350
+State 349
 
     2 type: • "const" type_root
     3     | • type_root
@@ -11522,11 +11174,11 @@ State 350
     non_reference_type  go to state 54
     type_core           go to state 55
     reference_type      go to state 56
-    return_types_list   go to state 384
+    return_types_list   go to state 383
     return_type         go to state 377
 
 
-State 351
+State 350
 
    22 prvalue_expression: • literal
    23                   | • "super"
@@ -11592,7 +11244,7 @@ State 351
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -11616,7 +11268,7 @@ State 351
     "("         shift, and go to state 110
 
     prvalue_expression  go to state 176
-    rvalue_expression   go to state 385
+    rvalue_expression   go to state 384
     xvalue_expression   go to state 178
     literal             go to state 117
     lambda_expression   go to state 119
@@ -11624,14 +11276,14 @@ State 351
     function_call       go to state 121
 
 
-State 352
+State 351
 
   149 clean_up_arg: IDENTIFIER •
 
     $default  reduce using rule 149 (clean_up_arg)
 
 
-State 353
+State 352
 
   164 function_header: "func" • function_modifiers IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list
   165                | "func" • IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list
@@ -11643,15 +11295,15 @@ State 353
   183                          | "func" • "(" function_argument_list ")" throwable_expression "->" return_types_list
 
     IDENTIFIER  shift, and go to state 10
-    "compeval"  shift, and go to state 386
+    "compeval"  shift, and go to state 385
     "static"    shift, and go to state 12
     "virtual"   shift, and go to state 13
-    "("         shift, and go to state 387
+    "("         shift, and go to state 386
 
     function_modifiers  go to state 14
 
 
-State 354
+State 353
 
     2 type: • "const" type_root
     3     | • type_root
@@ -11685,80 +11337,80 @@ State 354
     function_argument       go to state 146
 
 
-State 355
+State 354
 
   150 clean_up_arg: lambda_expression •
 
     $default  reduce using rule 150 (clean_up_arg)
 
 
-State 356
+State 355
 
   148 clean_up_statement: "cleanup" "(" IDENTIFIER "," clean_up_arg • ")" ";"
 
-    ")"  shift, and go to state 388
+    ")"  shift, and go to state 387
 
 
-State 357
+State 356
 
   151 clean_up_arg: function •
 
     $default  reduce using rule 151 (clean_up_arg)
 
 
-State 358
+State 357
 
   152 clean_up_arg: anonymous_function •
 
     $default  reduce using rule 152 (clean_up_arg)
 
 
-State 359
+State 358
 
   108 block_statement: • "{" statements0 "}"
   181 anonymous_function: anonymous_function_header • block_statement
 
     "{"  shift, and go to state 59
 
-    block_statement  go to state 389
+    block_statement  go to state 388
 
 
-State 360
+State 359
 
   117 do_loop_statement: "do" block_statement "while" "(" expression • ")"
 
-    ")"  shift, and go to state 390
+    ")"  shift, and go to state 389
 
 
-State 361
+State 360
 
   120 for_loop_condition: variable_declaration "in" expression •
 
     $default  reduce using rule 120 (for_loop_condition)
 
 
-State 362
+State 361
 
   119 for_loop_condition: variable_declaration ";" expression0 • ";" expression0
 
-    ";"  shift, and go to state 391
+    ";"  shift, and go to state 390
 
 
-State 363
+State 362
 
   118 for_loop_statement: "for" "(" for_loop_condition ")" block_statement •
 
     $default  reduce using rule 118 (for_loop_statement)
 
 
-State 364
+State 363
 
   124 if_statement: "if" "(" expression ")" block_statement •
 
     $default  reduce using rule 124 (if_statement)
 
 
-State 365
+State 364
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -11828,7 +11480,7 @@ State 365
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -11851,7 +11503,7 @@ State 365
     "--"        shift, and go to state 109
     "("         shift, and go to state 110
 
-    expression                 go to state 392
+    expression                 go to state 391
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -11862,13 +11514,119 @@ State 365
     function_call              go to state 121
 
 
-State 366
+State 365
 
    89 new_expression: "new" "heap" type "(" function_call_list • ")"
    97 function_call_list: function_call_list • "," function_call_arg ";"
 
-    ","  shift, and go to state 340
-    ")"  shift, and go to state 393
+    ","  shift, and go to state 366
+    ")"  shift, and go to state 392
+
+
+State 366
+
+   16 expression: • assignment_arg_expression
+   17           | • xvalue_expression "=" rvalue_expression
+   20 assignment_arg_expression: • xvalue_expression
+   21                          | • prvalue_expression
+   22 prvalue_expression: • literal
+   23                   | • "super"
+   24                   | • rvalue_expression "+" rvalue_expression
+   25                   | • rvalue_expression "-" rvalue_expression
+   26                   | • rvalue_expression "*" rvalue_expression
+   27                   | • rvalue_expression "/" rvalue_expression
+   28                   | • rvalue_expression "//" rvalue_expression
+   29                   | • rvalue_expression "^^" rvalue_expression
+   30                   | • xvalue_expression "+=" rvalue_expression
+   31                   | • xvalue_expression "-=" rvalue_expression
+   32                   | • xvalue_expression "*=" rvalue_expression
+   33                   | • xvalue_expression "/=" rvalue_expression
+   34                   | • xvalue_expression "//=" rvalue_expression
+   35                   | • xvalue_expression "^^=" rvalue_expression
+   36                   | • rvalue_expression ">" rvalue_expression
+   37                   | • rvalue_expression ">=" rvalue_expression
+   38                   | • rvalue_expression "<=" rvalue_expression
+   39                   | • rvalue_expression "<=>" rvalue_expression
+   40                   | • rvalue_expression "&&" rvalue_expression
+   41                   | • rvalue_expression "||" rvalue_expression
+   42                   | • rvalue_expression "&" rvalue_expression
+   43                   | • rvalue_expression "^" rvalue_expression
+   44                   | • rvalue_expression "|" rvalue_expression
+   45                   | • rvalue_expression "~" rvalue_expression
+   46                   | • rvalue_expression ">>" rvalue_expression
+   47                   | • rvalue_expression "<<" rvalue_expression
+   48                   | • xvalue_expression "&=" rvalue_expression
+   49                   | • xvalue_expression "^=" rvalue_expression
+   50                   | • xvalue_expression "|=" rvalue_expression
+   51                   | • xvalue_expression "~=" rvalue_expression
+   52                   | • xvalue_expression ">>=" rvalue_expression
+   53                   | • xvalue_expression "<<=" rvalue_expression
+   54                   | • rvalue_expression "is" type
+   55                   | • "!" rvalue_expression
+   56                   | • "-" rvalue_expression
+   57                   | • "typeof" "(" rvalue_expression ")"
+   58                   | • "castas" "(" type ")" "(" rvalue_expression ")"
+   59                   | • "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression
+   60                   | • new_expression
+   61                   | • lambda_expression
+   62 rvalue_expression: • prvalue_expression
+   63                  | • xvalue_expression
+   64 xvalue_expression: • IDENTIFIER
+   65                  | • "this"
+   66                  | • "++" xvalue_expression
+   67                  | • "--" xvalue_expression
+   68                  | • xvalue_expression "++"
+   69                  | • xvalue_expression "--"
+   70                  | • "*" xvalue_expression
+   71                  | • xvalue_expression "." xvalue_expression
+   72                  | • xvalue_expression "->" xvalue_expression
+   73                  | • "(" rvalue_expression ")"
+   74                  | • "[" array_index_list "]"
+   75                  | • function_call
+   76 literal: • BOOL
+   77        | • NPTR
+   78        | • INT
+   79        | • FLOAT
+   80        | • STRING
+   81        | • CHAR
+   87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
+   88 new_expression: • "new" type "(" function_call_list ")"
+   89               | • "new" "heap" type "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
+   95              | • xvalue_expression "(" ")"
+   97 function_call_list: function_call_list "," • function_call_arg ";"
+   98 function_call_arg: • expression
+
+    IDENTIFIER  shift, and go to state 77
+    BOOL        shift, and go to state 78
+    NPTR        shift, and go to state 79
+    INT         shift, and go to state 80
+    FLOAT       shift, and go to state 81
+    CHAR        shift, and go to state 82
+    STRING      shift, and go to state 83
+    "castas"    shift, and go to state 85
+    "new"       shift, and go to state 93
+    "super"     shift, and go to state 96
+    "this"      shift, and go to state 98
+    "typeof"    shift, and go to state 101
+    "["         shift, and go to state 104
+    "-"         shift, and go to state 105
+    "*"         shift, and go to state 106
+    "!"         shift, and go to state 107
+    "++"        shift, and go to state 108
+    "--"        shift, and go to state 109
+    "("         shift, and go to state 110
+
+    expression                 go to state 328
+    assignment_arg_expression  go to state 113
+    prvalue_expression         go to state 114
+    rvalue_expression          go to state 115
+    xvalue_expression          go to state 116
+    literal                    go to state 117
+    lambda_expression          go to state 119
+    new_expression             go to state 120
+    function_call              go to state 121
+    function_call_arg          go to state 393
 
 
 State 367
@@ -11947,7 +11705,7 @@ State 368
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   138 case_block: "case" • expression ":" block_statement jump_statement
 
@@ -12101,15 +11859,18 @@ State 377
 
 State 378
 
-   97 function_call_list: function_call_list "," function_call_arg • ";"
+  108 block_statement: • "{" statements0 "}"
+  129 else_if_statement: "else-if" "(" expression ")" • block_statement
 
-    ";"  shift, and go to state 403
+    "{"  shift, and go to state 59
+
+    block_statement  go to state 403
 
 
 State 379
 
   108 block_statement: • "{" statements0 "}"
-  129 else_if_statement: "else-if" "(" expression ")" • block_statement
+  146 catch_block: "catch" "(" variable_declaration ")" • block_statement
 
     "{"  shift, and go to state 59
 
@@ -12118,22 +11879,12 @@ State 379
 
 State 380
 
-  108 block_statement: • "{" statements0 "}"
-  146 catch_block: "catch" "(" variable_declaration ")" • block_statement
+  176 throwable_expression: "nothrowable" "(" expression • ")"
 
-    "{"  shift, and go to state 59
-
-    block_statement  go to state 405
+    ")"  shift, and go to state 405
 
 
 State 381
-
-  176 throwable_expression: "nothrowable" "(" expression • ")"
-
-    ")"  shift, and go to state 406
-
-
-State 382
 
   165 function_header: "func" IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list •  ["{"]
   178 return_types_list: return_types_list • "," return_type
@@ -12143,7 +11894,7 @@ State 382
     $default  reduce using rule 165 (function_header)
 
 
-State 383
+State 382
 
     2 type: • "const" type_root
     3     | • type_root
@@ -12173,11 +11924,11 @@ State 383
     non_reference_type  go to state 54
     type_core           go to state 55
     reference_type      go to state 56
-    return_types_list   go to state 407
+    return_types_list   go to state 406
     return_type         go to state 377
 
 
-State 384
+State 383
 
   178 return_types_list: return_types_list • "," return_type
   186 operator_overload_header: "operator" operator "(" function_argument_list ")" throwable_expression "->" return_types_list •  ["=", "{"]
@@ -12187,7 +11938,7 @@ State 384
     $default  reduce using rule 186 (operator_overload_header)
 
 
-State 385
+State 384
 
    24 prvalue_expression: rvalue_expression • "+" rvalue_expression
    25                   | rvalue_expression • "-" rvalue_expression
@@ -12229,20 +11980,20 @@ State 385
     "~"    shift, and go to state 203
     ">>"   shift, and go to state 204
     "<<"   shift, and go to state 205
-    ")"    shift, and go to state 408
+    ")"    shift, and go to state 407
 
 
-State 386
+State 385
 
   167 function_modifiers: "compeval" •  [IDENTIFIER]
   182 anonymous_function_header: "func" "compeval" • "(" function_argument_list ")" throwable_expression "->" return_types_list
 
-    "("  shift, and go to state 409
+    "("  shift, and go to state 408
 
     $default  reduce using rule 167 (function_modifiers)
 
 
-State 387
+State 386
 
     2 type: • "const" type_root
     3     | • type_root
@@ -12272,32 +12023,32 @@ State 387
     non_reference_type      go to state 54
     type_core               go to state 55
     reference_type          go to state 56
-    function_argument_list  go to state 410
+    function_argument_list  go to state 409
     function_argument       go to state 146
 
 
-State 388
+State 387
 
   148 clean_up_statement: "cleanup" "(" IDENTIFIER "," clean_up_arg ")" • ";"
 
-    ";"  shift, and go to state 411
+    ";"  shift, and go to state 410
 
 
-State 389
+State 388
 
   181 anonymous_function: anonymous_function_header block_statement •
 
     $default  reduce using rule 181 (anonymous_function)
 
 
-State 390
+State 389
 
   117 do_loop_statement: "do" block_statement "while" "(" expression ")" •
 
     $default  reduce using rule 117 (do_loop_statement)
 
 
-State 391
+State 390
 
    16 expression: • assignment_arg_expression
    17           | • xvalue_expression "=" rvalue_expression
@@ -12368,7 +12119,7 @@ State 391
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   119 for_loop_condition: variable_declaration ";" expression0 ";" • expression0
 
@@ -12395,7 +12146,7 @@ State 391
     $default  reduce using rule 19 (expression0)
 
     expression                 go to state 334
-    expression0                go to state 412
+    expression0                go to state 411
     assignment_arg_expression  go to state 113
     prvalue_expression         go to state 114
     rvalue_expression          go to state 115
@@ -12406,18 +12157,25 @@ State 391
     function_call              go to state 121
 
 
-State 392
+State 391
 
    86 variable_declaration_block: "let" type IDENTIFIER "=" expression •
 
     $default  reduce using rule 86 (variable_declaration_block)
 
 
-State 393
+State 392
 
    89 new_expression: "new" "heap" type "(" function_call_list ")" •
 
     $default  reduce using rule 89 (new_expression)
+
+
+State 393
+
+   97 function_call_list: function_call_list "," function_call_arg • ";"
+
+    ";"  shift, and go to state 412
 
 
 State 394
@@ -12521,7 +12279,7 @@ State 399
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
 
     IDENTIFIER  shift, and go to state 77
@@ -12622,7 +12380,7 @@ State 400
    87 lambda_expression: • "(" function_argument_list ")" "->" return_types_list "=>" block_statement
    88 new_expression: • "new" type "(" function_call_list ")"
    89               | • "new" "heap" type "(" function_call_list ")"
-   94 function_call: • xvalue_expression "(" function_call_list ")"
+   94 function_call: • xvalue_expression "(" function_argument_list ")"
    95              | • xvalue_expression "(" ")"
   180 return_type: "typeof" "(" • expression ")"
 
@@ -12700,33 +12458,26 @@ State 402
 
 State 403
 
-   97 function_call_list: function_call_list "," function_call_arg ";" •
-
-    $default  reduce using rule 97 (function_call_list)
-
-
-State 404
-
   129 else_if_statement: "else-if" "(" expression ")" block_statement •
 
     $default  reduce using rule 129 (else_if_statement)
 
 
-State 405
+State 404
 
   146 catch_block: "catch" "(" variable_declaration ")" block_statement •
 
     $default  reduce using rule 146 (catch_block)
 
 
-State 406
+State 405
 
   176 throwable_expression: "nothrowable" "(" expression ")" •
 
     $default  reduce using rule 176 (throwable_expression)
 
 
-State 407
+State 406
 
   164 function_header: "func" function_modifiers IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list •  ["{"]
   178 return_types_list: return_types_list • "," return_type
@@ -12736,14 +12487,14 @@ State 407
     $default  reduce using rule 164 (function_header)
 
 
-State 408
+State 407
 
    58 prvalue_expression: "castas" "(" type ")" "(" rvalue_expression ")" •
 
     $default  reduce using rule 58 (prvalue_expression)
 
 
-State 409
+State 408
 
     2 type: • "const" type_root
     3     | • type_root
@@ -12777,7 +12528,7 @@ State 409
     function_argument       go to state 146
 
 
-State 410
+State 409
 
   171 function_argument_list: function_argument_list • "," function_argument
   183 anonymous_function_header: "func" "(" function_argument_list • ")" throwable_expression "->" return_types_list
@@ -12786,18 +12537,25 @@ State 410
     ")"  shift, and go to state 420
 
 
-State 411
+State 410
 
   148 clean_up_statement: "cleanup" "(" IDENTIFIER "," clean_up_arg ")" ";" •
 
     $default  reduce using rule 148 (clean_up_statement)
 
 
-State 412
+State 411
 
   119 for_loop_condition: variable_declaration ";" expression0 ";" expression0 •
 
     $default  reduce using rule 119 (for_loop_condition)
+
+
+State 412
+
+   97 function_call_list: function_call_list "," function_call_arg ";" •
+
+    $default  reduce using rule 97 (function_call_list)
 
 
 State 413
@@ -12922,7 +12680,7 @@ State 420
   176                     | • "nothrowable" "(" expression ")"
   183 anonymous_function_header: "func" "(" function_argument_list ")" • throwable_expression "->" return_types_list
 
-    "nothrowable"  shift, and go to state 314
+    "nothrowable"  shift, and go to state 312
 
     throwable_expression  go to state 425
 
@@ -12984,7 +12742,7 @@ State 424
   176                     | • "nothrowable" "(" expression ")"
   182 anonymous_function_header: "func" "compeval" "(" function_argument_list ")" • throwable_expression "->" return_types_list
 
-    "nothrowable"  shift, and go to state 314
+    "nothrowable"  shift, and go to state 312
 
     throwable_expression  go to state 428
 

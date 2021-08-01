@@ -57,7 +57,7 @@
 %left "*" "/" "%" "//"
 %right "^^"
 %right "!" "~" "++" "--" UMINUS DEREF
-%left "." "->" POSTINC POSTDEC FUNC_CALL
+%left "." "->" POSTINC POSTDEC "("
 
 
 %%
@@ -143,8 +143,8 @@ prvalue_expression: //Expressions that can only appear on the right side of an '
     rvalue_expression "is" type |
     "!" rvalue_expression |
     "-" rvalue_expression %prec UMINUS |
-    "typeof" "(" rvalue_expression ")" %prec FUNC_CALL |
-    "castas" "(" type ")" "(" rvalue_expression ")" %prec FUNC_CALL |
+    "typeof" "(" rvalue_expression ")" |
+    "castas" "(" type ")" "(" rvalue_expression ")" |
     "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression %prec TERN|
     new_expression |
     lambda_expression
@@ -195,9 +195,9 @@ array_index:
     expression |
     expression0 ":" expression0
     ;
-function_call:
-    xvalue_expression "(" function_call_list ")" %prec FUNC_CALL |
-    xvalue_expression "(" ")" %prec FUNC_CALL
+function_call: 
+    xvalue_expression "(" function_argument_list ")" |
+    xvalue_expression "(" ")"
     ;
 function_call_list:
     function_call_arg |

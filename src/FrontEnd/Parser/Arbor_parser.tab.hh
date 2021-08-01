@@ -544,8 +544,7 @@ namespace Arbor { namespace FE { namespace parser {
     POSTINC = 107,                 // POSTINC
     POSTDEC = 108,                 // POSTDEC
     TERN = 109,                    // TERN
-    DEREF = 110,                   // DEREF
-    FUNC_CALL = 111                // FUNC_CALL
+    DEREF = 110                    // DEREF
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -562,7 +561,7 @@ namespace Arbor { namespace FE { namespace parser {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 112, ///< Number of tokens.
+        YYNTOKENS = 111, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -675,82 +674,81 @@ namespace Arbor { namespace FE { namespace parser {
         S_POSTDEC = 108,                         // POSTDEC
         S_TERN = 109,                            // TERN
         S_DEREF = 110,                           // DEREF
-        S_FUNC_CALL = 111,                       // FUNC_CALL
-        S_YYACCEPT = 112,                        // $accept
-        S_start = 113,                           // start
-        S_type = 114,                            // type
-        S_type_root = 115,                       // type_root
-        S_non_reference_type = 116,              // non_reference_type
-        S_type_core = 117,                       // type_core
-        S_type_template_paramaters = 118,        // type_template_paramaters
-        S_type_list = 119,                       // type_list
-        S_reference_type = 120,                  // reference_type
-        S_expression = 121,                      // expression
-        S_expression0 = 122,                     // expression0
-        S_assignment_arg_expression = 123,       // assignment_arg_expression
-        S_prvalue_expression = 124,              // prvalue_expression
-        S_rvalue_expression = 125,               // rvalue_expression
-        S_xvalue_expression = 126,               // xvalue_expression
-        S_literal = 127,                         // literal
-        S_variable_declaration = 128,            // variable_declaration
-        S_variable_declaration_block_list = 129, // variable_declaration_block_list
-        S_variable_declaration_block = 130,      // variable_declaration_block
-        S_lambda_expression = 131,               // lambda_expression
-        S_new_expression = 132,                  // new_expression
-        S_array_index_list = 133,                // array_index_list
-        S_array_index = 134,                     // array_index
-        S_function_call = 135,                   // function_call
-        S_function_call_list = 136,              // function_call_list
-        S_function_call_arg = 137,               // function_call_arg
-        S_statement = 138,                       // statement
-        S_block_statement = 139,                 // block_statement
-        S_statements0 = 140,                     // statements0
-        S_statements = 141,                      // statements
-        S_loop_statement = 142,                  // loop_statement
-        S_while_loop_statement = 143,            // while_loop_statement
-        S_do_loop_statement = 144,               // do_loop_statement
-        S_for_loop_statement = 145,              // for_loop_statement
-        S_for_loop_condition = 146,              // for_loop_condition
-        S_conditional_statement = 147,           // conditional_statement
-        S_if_statement_sequence = 148,           // if_statement_sequence
-        S_if_statement = 149,                    // if_statement
-        S_else_if_statements0 = 150,             // else_if_statements0
-        S_else_if_statements = 151,              // else_if_statements
-        S_else_if_statement = 152,               // else_if_statement
-        S_else_statement0 = 153,                 // else_statement0
-        S_else_statement = 154,                  // else_statement
-        S_switch_statement = 155,                // switch_statement
-        S_case_blocks0 = 156,                    // case_blocks0
-        S_case_blocks = 157,                     // case_blocks
-        S_case_block = 158,                      // case_block
-        S_default_block0 = 159,                  // default_block0
-        S_default_block = 160,                   // default_block
-        S_exception_statement = 161,             // exception_statement
-        S_try_block = 162,                       // try_block
-        S_catch_blocks = 163,                    // catch_blocks
-        S_catch_block = 164,                     // catch_block
-        S_clean_up_statement = 165,              // clean_up_statement
-        S_clean_up_arg = 166,                    // clean_up_arg
-        S_jump_statement = 167,                  // jump_statement
-        S_expression_statement = 168,            // expression_statement
-        S_variable_declaration_statement = 169,  // variable_declaration_statement
-        S_no_op_statement = 170,                 // no_op_statement
-        S_function = 171,                        // function
-        S_function_header = 172,                 // function_header
-        S_function_modifiers = 173,              // function_modifiers
-        S_function_argument_list = 174,          // function_argument_list
-        S_function_argument = 175,               // function_argument
-        S_throwable_expression = 176,            // throwable_expression
-        S_return_types_list = 177,               // return_types_list
-        S_return_type = 178,                     // return_type
-        S_anonymous_function = 179,              // anonymous_function
-        S_anonymous_function_header = 180,       // anonymous_function_header
-        S_operator_overload = 181,               // operator_overload
-        S_operator_overload_header = 182,        // operator_overload_header
-        S_operator = 183,                        // operator
-        S_function_options = 184,                // function_options
-        S_callable = 185,                        // callable
-        S_callables = 186                        // callables
+        S_YYACCEPT = 111,                        // $accept
+        S_start = 112,                           // start
+        S_type = 113,                            // type
+        S_type_root = 114,                       // type_root
+        S_non_reference_type = 115,              // non_reference_type
+        S_type_core = 116,                       // type_core
+        S_type_template_paramaters = 117,        // type_template_paramaters
+        S_type_list = 118,                       // type_list
+        S_reference_type = 119,                  // reference_type
+        S_expression = 120,                      // expression
+        S_expression0 = 121,                     // expression0
+        S_assignment_arg_expression = 122,       // assignment_arg_expression
+        S_prvalue_expression = 123,              // prvalue_expression
+        S_rvalue_expression = 124,               // rvalue_expression
+        S_xvalue_expression = 125,               // xvalue_expression
+        S_literal = 126,                         // literal
+        S_variable_declaration = 127,            // variable_declaration
+        S_variable_declaration_block_list = 128, // variable_declaration_block_list
+        S_variable_declaration_block = 129,      // variable_declaration_block
+        S_lambda_expression = 130,               // lambda_expression
+        S_new_expression = 131,                  // new_expression
+        S_array_index_list = 132,                // array_index_list
+        S_array_index = 133,                     // array_index
+        S_function_call = 134,                   // function_call
+        S_function_call_list = 135,              // function_call_list
+        S_function_call_arg = 136,               // function_call_arg
+        S_statement = 137,                       // statement
+        S_block_statement = 138,                 // block_statement
+        S_statements0 = 139,                     // statements0
+        S_statements = 140,                      // statements
+        S_loop_statement = 141,                  // loop_statement
+        S_while_loop_statement = 142,            // while_loop_statement
+        S_do_loop_statement = 143,               // do_loop_statement
+        S_for_loop_statement = 144,              // for_loop_statement
+        S_for_loop_condition = 145,              // for_loop_condition
+        S_conditional_statement = 146,           // conditional_statement
+        S_if_statement_sequence = 147,           // if_statement_sequence
+        S_if_statement = 148,                    // if_statement
+        S_else_if_statements0 = 149,             // else_if_statements0
+        S_else_if_statements = 150,              // else_if_statements
+        S_else_if_statement = 151,               // else_if_statement
+        S_else_statement0 = 152,                 // else_statement0
+        S_else_statement = 153,                  // else_statement
+        S_switch_statement = 154,                // switch_statement
+        S_case_blocks0 = 155,                    // case_blocks0
+        S_case_blocks = 156,                     // case_blocks
+        S_case_block = 157,                      // case_block
+        S_default_block0 = 158,                  // default_block0
+        S_default_block = 159,                   // default_block
+        S_exception_statement = 160,             // exception_statement
+        S_try_block = 161,                       // try_block
+        S_catch_blocks = 162,                    // catch_blocks
+        S_catch_block = 163,                     // catch_block
+        S_clean_up_statement = 164,              // clean_up_statement
+        S_clean_up_arg = 165,                    // clean_up_arg
+        S_jump_statement = 166,                  // jump_statement
+        S_expression_statement = 167,            // expression_statement
+        S_variable_declaration_statement = 168,  // variable_declaration_statement
+        S_no_op_statement = 169,                 // no_op_statement
+        S_function = 170,                        // function
+        S_function_header = 171,                 // function_header
+        S_function_modifiers = 172,              // function_modifiers
+        S_function_argument_list = 173,          // function_argument_list
+        S_function_argument = 174,               // function_argument
+        S_throwable_expression = 175,            // throwable_expression
+        S_return_types_list = 176,               // return_types_list
+        S_return_type = 177,                     // return_type
+        S_anonymous_function = 178,              // anonymous_function
+        S_anonymous_function_header = 179,       // anonymous_function_header
+        S_operator_overload = 180,               // operator_overload
+        S_operator_overload_header = 181,        // operator_overload_header
+        S_operator = 182,                        // operator
+        S_function_options = 183,                // function_options
+        S_callable = 184,                        // callable
+        S_callables = 185                        // callables
       };
     };
 
@@ -2823,21 +2821,6 @@ switch (yykind)
         return symbol_type (token::DEREF, l);
       }
 #endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_FUNC_CALL (location_type l)
-      {
-        return symbol_type (token::FUNC_CALL, std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_FUNC_CALL (const location_type& l)
-      {
-        return symbol_type (token::FUNC_CALL, l);
-      }
-#endif
 
 
     class context
@@ -3182,7 +3165,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 1097,     ///< Last index in yytable_.
+      yylast_ = 1044,     ///< Last index in yytable_.
       yynnts_ = 75,  ///< Number of nonterminal symbols.
       yyfinal_ = 58 ///< Termination state number.
     };
@@ -3351,7 +3334,7 @@ switch (yykind)
 
 #line 7 "parser.yy"
 } } } // Arbor::FE::parser
-#line 3355 "Parser/Arbor_parser.tab.hh"
+#line 3338 "Parser/Arbor_parser.tab.hh"
 
 
 
