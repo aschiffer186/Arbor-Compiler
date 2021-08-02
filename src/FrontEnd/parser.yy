@@ -4,7 +4,6 @@
 %defines
 %file-prefix "Parser/Arbor_parser"
 
-%define api.namespace {Arbor::FE::parser}
 %define api.token.constructor
 %define api.token.raw
 %define api.value.type variant
@@ -21,13 +20,13 @@
 //Tokens
 %token <std::string> IDENTIFIER <std::string> TYPENAME;
 //Literals
-%token <bool> BOOL <std::nullptr_t> NPTR <int> INT <double> FLOAT <char> CHAR <std::string> STRING;
+%token <bool> BOOL NPTR <int> INT <double> FLOAT <char> CHAR <std::string> STRING;
 //Keyowrds
-%token BREAK "break" CASE "case" CASTAS "castas" CATCH "catch" CATCH_ALL "catch-all" CLEANUP "cleanup" CONST "const";
-%token CONTINUE "continue" COMPEVAL "compeval" DEFAULT "default" DELETE "delete" DO "do" ELSE "else" ELSEIF "else-if"  ;
-%token FOR "for" FUNC "func" GOTO "goto" HEAP "heap" IF "if" IN "in" IS "is" LET "let";
+%token BREAK "break" BIT "bit" BOOLT "bool" CASE "case" CASTAS "castas" CATCH "catch" CATCH_ALL "catch-all" CHART "char" CLEANUP "cleanup" CONST "const";
+%token CONTINUE "continue" COMPEVAL "compeval" DEFAULT "default" DELETE "delete" DO "do" ELSE "else" ELSEIF "else-if" ENUM "enum" FLOATT "float";
+%token FOR "for" FUNC "func" GOTO "goto" HEAP "heap" IF "if" IN "in" INTT "int" IS "is" LET "let" LONG "long";
 %token NEW "new" NOTHROWABLE "nothrowable" OPERATOR "operator" REF "ref" RREF "rref" RETHROW "rethrow" RETURN "return";
-%token STATIC "static" SUPER "super" SWITCH "switch" THIS "this" THROW "throw" TRY "try" TYPEOF "typeof";
+%token SHORT "short" STATIC "static" SUPER "super" SWITCH "switch" THIS "this" THROW "throw" TRY "try" TYPEOF "typeof";
 %token VIRTUAL "virtual" WHILE "while" YIELD "yield";
 //Operators
 %token LBRAC "[" RBRAC "]" GT "<" LT ">" COMMA "," PLUS "+" MINUS "-" SLASH "/" SLASHSLASH "//" STAR "*" CARROTCARROT "^^";
@@ -62,7 +61,7 @@
 
 %%
 //Start smybol
-start: callables
+start: callables | enum;
 
 //--------------------------------------------------TYPES------------------------------------------------------------------------------------------
 type: 
@@ -79,7 +78,14 @@ non_reference_type :
     ;
 type_core :
     TYPENAME type_template_paramaters |
-    TYPENAME
+    TYPENAME |
+    "bit" |
+    "bool" |
+    "short" |
+    "int" |
+    "long" |
+    "float" |
+    "char"
     ;
 type_template_paramaters:
     "!" "(" type_list ")"
@@ -144,7 +150,7 @@ prvalue_expression: //Expressions that can only appear on the right side of an '
     "!" rvalue_expression |
     "-" rvalue_expression %prec UMINUS |
     "typeof" "(" rvalue_expression ")" |
-    "castas" "(" type ")" "(" rvalue_expression ")" |
+    "castas" "!""(" type ")" "(" rvalue_expression ")" |
     "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression %prec TERN|
     new_expression |
     lambda_expression
@@ -170,16 +176,6 @@ xvalue_expression: //Expressions that can appear on the left or right side of an
 literal: 
     BOOL | NPTR | INT | FLOAT | STRING | CHAR
     ;
-variable_declaration:
-    "let" variable_declaration_block_list
-    ;
-variable_declaration_block_list:
-    variable_declaration_block |
-    variable_declaration_block_list "," variable_declaration_block
-    ;
-variable_declaration_block:
-    "let" type IDENTIFIER |
-    "let" type IDENTIFIER "=" expression;
 lambda_expression: 
     "(" function_argument_list ")" "->" return_types_list "=>" block_statement 
     ;
@@ -335,6 +331,16 @@ expression_statement:
 variable_declaration_statement:
     variable_declaration ";"
     ;
+variable_declaration:
+    "let" variable_declaration_block_list
+    ;
+variable_declaration_block_list:
+    variable_declaration_block |
+    variable_declaration_block_list "," variable_declaration_block
+    ;
+variable_declaration_block:
+    "let" type IDENTIFIER |
+    "let" type IDENTIFIER "=" expression;
 no_op_statement:
     ";"
     ;
@@ -402,5 +408,18 @@ callable:
 callables: 
     callable | 
     callables callable
+    ;
+
+//--------------------------------------------------------Enums-----------------------------------------------------------------------------------
+enum:
+    "enum" "{" enum_members_list "}"
+    ;
+enum_members_list:
+    enum_member |
+    enum_members_list "," enum_member
+    ;
+enum_member: 
+    IDENTIFIER |
+    IDENTIFIER "=" INT
     ;
 %%

@@ -9,76 +9,75 @@ type-list ::= type | type-list ',' type
 reference-type ::= "ref" non-reference-type | "rref" non-reference-type
 
 # Expressions
-expresion ::=
-    # Primary expressions (cannot be broken down further)
-    literal 
-    identifier
-    "this"
+expression ::= assignment-arg-expression | xvalue-expression '=' rvalue-expression
+prvalue-expression:
+    literal
     "super"
-    # Binary expressions
-    expression '+' expression
-    expression '-' expression
-    expression '*' expression 
-    expression '/' expression 
-    expression '//' expression # integer division
-    expression '^^' expression # exponentiation 
-    expression '%' expression
-    expression '+=' expression # xx and modify expressions
-    expression '-=' expression
-    expression '*=' expression 
-    expression '/=' expression 
-    expression '//=' expression 
-    expression '^^=' expression
-    expression '%=' expression
-    expression '<' expression 
-    expression '<=' expression
-    expression '>' expression
-    expression '<=' expression
-    expression '<=>' expression # Three-way comparison
-    expression '==' expression 
-    expression '!=' expression
-    expression '&&' expression
-    expression '||' expression 
-    expression '&' expression # Bitwise AND
-    expression '|' expression # Bitwse OR 
-    expression '^' expression # Bitwise XOR
-    expression '~' expression # Bitwise NOT
-    expression '>>' expression # Bitwise shift left
-    expression '<<' expression # Bitwise shift right
-    expression '=' expression 
-    # Unary expressions
-    '++' expression
-    '--' expression
-    expression '++'
-    expression '--'
-    '-' expression
-    '*' expression # Pointer dereference (note lack of address of)
-    '!' expression # unary-negation
-    #Miscelaneous expressions
-    '(' expression ')' '?' expression ':' expression # Ternary operatory
-    '(' expression ')'
-    '[' array-index-list ']'
-    expression '.' expression 
-    expression '->' expression 
-    "typeof" '(' expression ')'
-    "castas" '(' type ')' '(' expression ')'
-    '{' [expression-list] '}'
-    variable-declaration
+    rvalue-expression '+' rvalue-expression
+    rvalue-expression '-' rvalue-expression 
+    rvalue-expresison '*' rvalue-expression
+    rvalue-expression '/' rvalue-expression 
+    rvalue-expression '//' rvalue-expression
+    rvalue-expression '^^' rvalue-expression
+    xvalue-expression '+=' rvalue-expression
+    xvalue-expression '-=' rvalue-expression 
+    xvalue-expresison '*=' rvalue-expression
+    xvalue-expression '/=' rvalue-expression 
+    xvalue-expression '//=' rvalue-expression
+    xvalue-expression '^^=' rvalue-expression
+    rvalue-expression '>' rvalue-expression 
+    rvalue-expression '>=' rvalue-expression 
+    rvalue-expression '<=' rvalue-expression 
+    rvalue-expression '<=>' rvalue-expression 
+    rvalue-expression '&&' rvalue-expression 
+    rvalue-expression '' rvalue-expression 
+    rvalue-expression '&' rvalue-expression 
+    rvalue-expression '^' rvalue-expression 
+    rvalue-expression '' rvalue-expression 
+    rvalue-expression '~' rvalue-expression 
+    rvalue-expression '>>' rvalue-expression 
+    rvalue-expression '<<' rvalue-expression 
+    xvalue-expression '&=' rvalue-expression 
+    xvalue-expression '^=' rvalue-expression 
+    xvalue-expression '=' rvalue-expression 
+    xvalue-expression '~=' rvalue-expression 
+    xvalue-expression '>>=' rvalue-expression 
+    xvalue-expression '<<=' rvalue-expression 
+    rvalue-expression 'is' type 
+    '!' rvalue-expression 
+    '-' rvalue-expression
+    "typeof" '(' rvalue-expression ')' 
+    "castas" '(' type ')' '(' rvalue-expression ')' 
+    '(' rvalue-expression ')' '?' rvalue-expression ':' rvalue-expression
+    new-expression 
     lambda-expression
+rvalue-expresison ::= prvalue-expression | xvalue-expresison
+xvalue-expression ::=
+    "this" 
+    '++' xvalue-expression 
+    '--' xvalue-expression 
+    xvalue-expression '++'
+    xvalue-expression '--'
+    '*' xvalue-expression
+    xvalue-expression '.' xvalue-expression 
+    xvalue-expression '->' xvalue-expression 
+    '(' rvalue-expression ')' 
+    '[' array-index-list ']' 
     function-call
-    new-expression
-# Helper non-terminals
-array-index-list ::= array-index | array-index-list ',' array-index
-array-index ::= expression | [expression] ':' [expression]
-variable-declaration ::= "let" variable-declaration-block-list 
-variable-declaration-block-list ::= variable-declaration-block | variable-declaration-block-list ',' variable-declaration-block
-variable-declaration-block ::= type identifier ['=' expression]
-lambda-expression ::= '(' function-argument-list ')' '=>' "{" block-statement "}" '->' return-type-list
-function-call ::= expression '(' [function-call-list] ')'
-function-call-list ::= function-call-arg | function-call-list ',' function-call-arg
-function-call-arg ::= expression | identifier '=' expression
-expression-list ::= expression | expression-list ',' expresion
-new-expresion ::= "new" ["heap"] type '(' [expression-list] ')'
+literal ::= BOOL | NPTR | INT | FLOAT | STRING | CHAR
+lambda_expression ::=
+    "(" function_argument_list ")" "->" return_types_list "=>" block_statement 
+new_expression:
+    "new" type "(" function_call_list ")"
+    "new" "heap" type "(" function_call_list ")"
+array_index_list ::=
+    array_index |
+    array_index_list "," array_index
+array_index ::= [expression] ":" [expression]
+function_call ::=  xvalue_expression "(" [function_argument_list] ")"
+function_call_list ::= function_call_arg | function_call_list "," function_call_arg
+function_call_arg:
+    expression 
 
 # Statements
 statement ::= 
@@ -89,6 +88,7 @@ statement ::=
     clean-up-statement
     jump-statement
     expression-statement
+    variable-declaration-statement
     no-op-statement
 block-statement ::= statement | block-statement statement
 loop-statement ::= while-loop-statement | do-loop-statement | for-loop-statement
@@ -105,7 +105,7 @@ elseif-statements ::= elseif-statement | elseif-statements elseif-statement
 elseif-statement ::= "else-if" '(' expression ')' block-statement
 else-statement ::= "else" block-statement
 switch-statement ::= "switch" '(' expression ')' case-blocks [default-block] "endswitch"
-case_blocks ::= case-block | case-blocks case-block
+case-blocks ::= case-block | case-blocks case-block
 case-block ::= "case" expression ':' block-statement jump-statement |
 default-block ::= "default" ":" block-statement jump-statement
 exception-statement ::= try-block catch-blocks "endcatch"
@@ -134,22 +134,31 @@ jump-statement ::=
     "yield" ';'
     "goto" identifier ':'
 expression-statement ::= expression ';'
+variable-declaration-statement ::= variable-declaration ';'
+variable_declaration ::= "let" variable_declaration_block_list
+variable_declaration_block_list ::= variable_declaration_block | variable_declaration_block_list "," variable_declaration_block
+variable_declaration_block ::= "let" type IDENTIFIER | "let" type IDENTIFIER "=" expression;
 no-op-statement ::= ';'
 
 #functions 
 function = function-header block-statement "endfunc"
-anoynmous_function = anoynmous_function_header block_statement "endfunc"
+anoynmous-function = anoynmous-function-header block-statement "endfunc"
 function-header = "func" ["virtual"] ["static"] ["compeval"] identifier '(' function-argument-list ')' throwable-expression '->' return-types-list
 function-argument-list ::= function-argument | function-argument-list ',' function-argument 
 function-argument ::= type ['...'] identifier ['=' expression]
 throwable-expression ::= "nothrowable" ['(' expression ')']
-return_types_list ::= return-type | return_types-list "," return-type
+return-types-list ::= return-type | return-types-list "," return-type
 return-type ::= type | "typeof" "(" expression ")"
-anoynmous_function_header = "func" ["compeval"] '(' function-argument-list ')' throwable-expression '->' return-types
+anoynmous-function-header = "func" ["compeval"] '(' function-argument-list ')' throwable-expression '->' return-types
 operator-overload = operator-overload-header block-statement "endfuc" | operator-overload-header '=' function-options ';'
 operator-overload = "operator" operator '(' function-argument-list ')' throwable-expression '->' return-types
 function-options = "default" | "delete"
 callable = function | operator-overload
+
+#enums
+enum ::= "enum" "{" enum-members-list "}"
+enum-members-list ::= enum-member | enum-members-list ',' enum-member
+enumber-member ::= identifier ["=" INT]
 
 program = [callables]
 callables = callable | callables callable

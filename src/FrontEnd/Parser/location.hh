@@ -32,7 +32,7 @@
 
 /**
  ** \file Parser/location.hh
- ** Define the Arbor::FE::parser::location class.
+ ** Define the yy::location class.
  */
 
 #ifndef YY_YY_PARSER_LOCATION_HH_INCLUDED
@@ -53,9 +53,8 @@
 #  endif
 # endif
 
-#line 7 "parser.yy"
-namespace Arbor { namespace FE { namespace parser {
-#line 59 "Parser/location.hh"
+namespace yy {
+#line 58 "Parser/location.hh"
 
   /// A point in a source file.
   class position
@@ -299,8 +298,7 @@ namespace Arbor { namespace FE { namespace parser {
     return ostr;
   }
 
-#line 7 "parser.yy"
-} } } // Arbor::FE::parser
-#line 305 "Parser/location.hh"
+} // yy
+#line 303 "Parser/location.hh"
 
 #endif // !YY_YY_PARSER_LOCATION_HH_INCLUDED
