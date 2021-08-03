@@ -135,7 +135,7 @@ jump-statement ::=
     "goto" identifier ':'
 expression-statement ::= expression ';'
 variable-declaration-statement ::= variable-declaration ';'
-variable_declaration ::= "let" variable_declaration_block_list
+variable_declaration ::= "let" ["public"|"protected"|"private"] variable_declaration_block_list
 variable_declaration_block_list ::= variable_declaration_block | variable_declaration_block_list "," variable_declaration_block
 variable_declaration_block ::= "let" type IDENTIFIER | "let" type IDENTIFIER "=" expression;
 no-op-statement ::= ';'
@@ -143,7 +143,7 @@ no-op-statement ::= ';'
 #functions 
 function = function-header block-statement "endfunc"
 anoynmous-function = anoynmous-function-header block-statement "endfunc"
-function-header = "func" ["virtual"] ["static"] ["compeval"] identifier '(' function-argument-list ')' throwable-expression '->' return-types-list
+function-header = "func" ["public"|"private"|"protected"] ["virtual"] ["static"] ["compeval"] identifier '(' function-argument-list ')' throwable-expression '->' return-types-list
 function-argument-list ::= function-argument | function-argument-list ',' function-argument 
 function-argument ::= type ['...'] identifier ['=' expression]
 throwable-expression ::= "nothrowable" ['(' expression ')']
@@ -151,7 +151,7 @@ return-types-list ::= return-type | return-types-list "," return-type
 return-type ::= type | "typeof" "(" expression ")"
 anoynmous-function-header = "func" ["compeval"] '(' function-argument-list ')' throwable-expression '->' return-types
 operator-overload = operator-overload-header block-statement "endfuc" | operator-overload-header '=' function-options ';'
-operator-overload = "operator" operator '(' function-argument-list ')' throwable-expression '->' return-types
+operator-overload = "operator" ["public"|"private"|"protected"] operator '(' function-argument-list ')' throwable-expression '->' return-types
 function-options = "default" | "delete"
 callable = function | operator-overload
 
@@ -160,5 +160,13 @@ enum ::= "enum" "{" enum-members-list "}"
 enum-members-list ::= enum-member | enum-members-list ',' enum-member
 enumber-member ::= identifier ["=" INT]
 
+#Global level things 
+module ::= "module" module-name
+module-name ::= identifier | module-name "-" identifier | module-name '.' identifier 
+import ::= "import" module-name
+type-definition ::= 'define' type "as" identifier
+namespace ::= namespace module-name '{' [namespace-units] '}'
+namespace-units ::= namespace-unit | namespace-units namespace-unit 
+namespace-unit ::= 
 program = [callables]
 callables = callable | callables callable

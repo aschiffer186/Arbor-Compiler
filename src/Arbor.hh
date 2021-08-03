@@ -6,6 +6,9 @@
 #include <string>
 #include <unordered_map>
 
+#include "Utility/specializations.hh"
+#include "FrontEnd/parse_tree.hh"
+
 //Arbor facts
 ///Current version of Arbor
 #define __VERSION__ "0.1.0"
@@ -26,8 +29,8 @@ namespace Arbor
         std::string source_code;
         ///Map of compiler definitions
         std::unordered_map<std::pair<std::string, int>, std::string> compiler_defs;
-
-        source_file_t() noexcept = default;
+        ///Parse tree
+        FE::parse_tree_t parse_tree;
     };
 } // namespace Arbor
 

@@ -10,6 +10,7 @@
 
 %define parse.error detailed
 %define parse.lac full
+%define parse.trace
 
 %locations
 
@@ -17,18 +18,25 @@
     #include <string>
 }
 
-//Tokens
+%param {Arbor::FE::parse_context& pc}
+
+%code {
+    #include "../parse_context.hh"
+    yy::parser::symbol_type yylex(Arbor::FE::parse_context& pc);
+}
+
+//-------------------------------------------------------------------------Tokens-------------------------------------------------------------------
 %token <std::string> IDENTIFIER <std::string> TYPENAME;
-//Literals
-%token <bool> BOOL NPTR <int> INT <double> FLOAT <char> CHAR <std::string> STRING;
-//Keyowrds
-%token BREAK "break" BIT "bit" BOOLT "bool" CASE "case" CASTAS "castas" CATCH "catch" CATCH_ALL "catch-all" CHART "char" CLEANUP "cleanup" CONST "const";
-%token CONTINUE "continue" COMPEVAL "compeval" DEFAULT "default" DELETE "delete" DO "do" ELSE "else" ELSEIF "else-if" ENUM "enum" FLOATT "float";
-%token FOR "for" FUNC "func" GOTO "goto" HEAP "heap" IF "if" IN "in" INTT "int" IS "is" LET "let" LONG "long";
-%token NEW "new" NOTHROWABLE "nothrowable" OPERATOR "operator" REF "ref" RREF "rref" RETHROW "rethrow" RETURN "return";
+//-------------------------------------------------------------------------Literals------------------------------------------------------------------
+%token NPTR <bool> BOOL<int> INT <double> FLOAT <std::string> CHAR <std::string> STRING;
+//-------------------------------------------------------------------------Keyowrds----------------------------------------------------------------
+%token AS "as" BREAK "break" BIT "bit" BOOLT "bool" CASE "case" CASTAS "castas" CATCH "catch" CATCH_ALL "catch-all" CHART "char" CLASS "class" CLEANUP "cleanup" CONST "const";
+%token CONTINUE "continue" COMPEVAL "compeval" CTOR "ctor" DEFAULT "default" DEFINE "define" DELETE "delete" DO "do" ELSE "else" ELSEIF "else-if" ENUM "enum" FLOATT "float";
+%token FOR "for" FUNC "func" GET "get" GOTO "goto" HEAP "heap" IF "if" IMPORT "import" IN "in" INHERITS "inherits" INITIALIZE "initialize" INTT "int" IS "is" LET "let" LONG "long" MODULE "module";
+%token NEW "new" NOTHROWABLE "nothrowable" OPERATOR "operator" PRIVATE "private" PROPERTY "property" PROTECTED "protected" PUBLIC "public" REF "ref" RREF "rref" RETHROW "rethrow" RETURN "return" SET "set";
 %token SHORT "short" STATIC "static" SUPER "super" SWITCH "switch" THIS "this" THROW "throw" TRY "try" TYPEOF "typeof";
-%token VIRTUAL "virtual" WHILE "while" YIELD "yield";
-//Operators
+%token VIRTUAL "virtual" WEAK "weak" WHILE "while" YIELD "yield";
+//-----------------------------------------------------------------------Operators----------------------------------------------------------------------
 %token LBRAC "[" RBRAC "]" GT "<" LT ">" COMMA "," PLUS "+" MINUS "-" SLASH "/" SLASHSLASH "//" STAR "*" CARROTCARROT "^^";
 %token PERCENT "%" PLUS_EQ "+=" MINUS_EQ "-=" STAR_EQ "*=" SLASH_EQ "/=" SLASHSLASH_EQ "//=" CARROTCARROT_EQ "^^=" ;
 %token PERCENT_EQ "%=" LEQ "<=" GEQ ">=" EQ "==" NEQ "!=" SPACESHIP "<=>" AND "&&" OR "||" AMP "&" PIP "|" EXCLAMATION "!";
@@ -36,12 +44,12 @@
 %token LPAR "(" RPAR ")" QUESTION "?" COLON ":" DOT "." ARROW1 "->" LBRACE "{" RBRACE "}" ARROW2 "=>" SEMICOLON ";"
 %token DOTS "...";
 %token AMPEQ "&=" CARROTEQ "^=" PIPEQ "|=" TILDEEQ "~=" LEFTEQ "<<=" RIGHTEQ ">>=";
-//Context helpers
-%token POINTER_TYPE ARRAYL ARRAYR;
-//Dummy Precedence Tokens
+//--------------------------------------------------------------------Context helpers--------------------------------------------------------------
+%token POINTER_TYPE ARRAYL ARRAYR T_BEGIN T_END;
+//-----------------------------------------------------------------Dummy Precedence Tokens---------------------------------------------------------
 %token UMINUS POSTINC POSTDEC TERN
 
-//Precedences
+//---------------------------------------------------------------------Precedences------------------------------------------------------------------
 %right "+=" "-=" "*=" "/=" "//=" "^^=" "%=" "="  "^=" "&=" "~=" "|=" ">>=" "<<=" TERN "is"
 %left "||"
 %left "&&"
@@ -60,8 +68,11 @@
 
 
 %%
+//--------------------------------------------------------------------Begin Grammar----------------------------------------------------------------
 //Start smybol
-start: callables | enum;
+start: 
+    program_units | %empty
+    ;
 
 //--------------------------------------------------TYPES------------------------------------------------------------------------------------------
 type: 
@@ -74,7 +85,8 @@ type_root:
 non_reference_type :
     type_core |
     type_core POINTER_TYPE |
-    type_core ARRAYL INT ARRAYR
+    type_core "weak" POINTER_TYPE |
+    type_core ARRAYL xvalue_expression ARRAYR
     ;
 type_core :
     TYPENAME type_template_paramaters |
@@ -88,7 +100,7 @@ type_core :
     "char"
     ;
 type_template_paramaters:
-    "!" "(" type_list ")"
+    T_BEGIN type_list T_END
     ;
 type_list: 
     type |
@@ -150,7 +162,7 @@ prvalue_expression: //Expressions that can only appear on the right side of an '
     "!" rvalue_expression |
     "-" rvalue_expression %prec UMINUS |
     "typeof" "(" rvalue_expression ")" |
-    "castas" "!""(" type ")" "(" rvalue_expression ")" |
+    "castas" "<" type ">" "(" rvalue_expression ")" |
     "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression %prec TERN|
     new_expression |
     lambda_expression
@@ -332,7 +344,7 @@ variable_declaration_statement:
     variable_declaration ";"
     ;
 variable_declaration:
-    "let" variable_declaration_block_list
+    "let" access_modifier0 variable_declaration_block_list
     ;
 variable_declaration_block_list:
     variable_declaration_block |
@@ -341,6 +353,13 @@ variable_declaration_block_list:
 variable_declaration_block:
     "let" type IDENTIFIER |
     "let" type IDENTIFIER "=" expression;
+access_modifier0:
+    access_modifier |
+    %empty
+    ;
+access_modifier:
+    "public" | "private" | "protected"
+    ;
 no_op_statement:
     ";"
     ;
@@ -350,7 +369,7 @@ function:
     function_header block_statement  
     ;
 function_header:
-    "func" function_modifiers IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list |
+    "func" access_modifier function_modifiers IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list |
     "func" IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list
     ;
 function_modifiers:
@@ -405,12 +424,8 @@ callable:
     function |
     operator_overload
     ;
-callables: 
-    callable | 
-    callables callable
-    ;
 
-//--------------------------------------------------------Enums-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------Enums-----------------------------------------------------------------------------------
 enum:
     "enum" "{" enum_members_list "}"
     ;
@@ -421,5 +436,130 @@ enum_members_list:
 enum_member: 
     IDENTIFIER |
     IDENTIFIER "=" INT
+    ;
+
+//-----------------------------------------------------------------Classes---------------------------------------------------------------------------
+class:
+    class_header "{" class_statements "}" |
+    class_header "{" "}"
+    ;
+class_header:
+    "class" IDENTIFIER |
+    "class" IDENTIFIER inheritance
+    ;
+inheritance:
+    "inherits" class_names_list
+class_names_list:
+    class_name |
+    class_names_list "," class_name
+    ;
+class_name:
+    IDENTIFIER |
+    IDENTIFIER type_template_paramaters
+    ;
+class_statements:
+    class_statement |
+    class_statements class_statement
+    ;
+class_statement:
+    variable_declaration_statement |
+    callable |
+    constructor |
+    destructor |
+    property |
+    class
+    ;
+property:
+    "let" access_modifier "property" type IDENTIFIER "{" property_blocks "}" ";"
+property_blocks:
+    get_block |
+    set_block |
+    get_block set_block |
+    set_block get_block 
+    ;
+get_block:
+    "get" "(" ")" "=>" IDENTIFIER ";" |
+    "get" "(" ")" block_statement
+    ;
+set_block:
+    "set" "(" ")" "=>" IDENTIFIER ";" |
+    "set" "(" ")" block_statement
+constructor:
+    constructor_header initializer_list block_statement | 
+    constructor_header initializer_list ";" |
+    constructor_header block_statement |
+    constructor_header "=" function_options ";"
+    ;
+constructor_header:
+    "ctor" access_modifier compeval0 IDENTIFIER "(" function_argument_list ")" throwable_expression
+    ;
+initializer_list: 
+    "=>" "initailize" "(" initializer_blocks_list ")"
+    ;
+initializer_blocks_list: 
+    initializer_block |
+    initializer_blocks_list "," initializer_block
+    ;
+initializer_block:
+    IDENTIFIER ":" rvalue_expression
+    ;
+compeval0:
+    "compeval" | 
+    %empty
+    ;
+destructor:
+    destructor_header block_statement |
+    destructor_header "=" function_options ";"
+destructor_header:
+    "~" IDENTIFIER "(" ")"
+    ;
+
+//---------------------------------------------------------------------Templates----------------------------------------------------------------------
+
+//------------------------------------------------------------------Global Level Statements----------------------------------------------------------------------
+module:
+    "module" module_name ";"
+    ;
+module_name:
+    IDENTIFIER |
+    module_name "." IDENTIFIER |
+    module_name "-" IDENTIFIER
+    ;
+import:
+    "import" module_name ";"
+    ;
+type_definition: 
+    "define" type "as" IDENTIFIER
+    ;
+namespace:
+    "namespace" module_name "{" namespace_units "}" |
+    "namespace" module_name "{" "}"
+    ;
+namespace_units:
+    namespace_unit |
+    namespace_units namespace_unit
+    ;
+namespace_unit:
+    class |
+    enum |
+    callable |
+    type_definition |
+    variable_declaration_statement
+    ;
+
+//------------------------------------------------------------------Start Symbol Heleprs-----------------------------------------------------------------------
+program_units:
+    program_unit |
+    program_units program_unit
+    ;
+program_unit:
+    module |
+    import |
+    type_definition | 
+    callable |
+    variable_declaration_statement |
+    class |
+    enum |
+    namespace
     ;
 %%

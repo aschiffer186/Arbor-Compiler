@@ -7,13 +7,21 @@ arb/
 *.vcxproj
 
 venv/
+Junk/
+
+#For now 
+*.arb
 
 # Doxygen output
 html/
 latex/
 Doxyfile
 
+#Latex
+Specification/
+
 #Python output
 *.html
 
 syntax builder.txt
+Implementation details.txt
