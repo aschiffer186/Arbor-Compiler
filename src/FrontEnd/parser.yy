@@ -518,7 +518,8 @@ destructor_header:
 
 //------------------------------------------------------------------Global Level Statements----------------------------------------------------------------------
 module:
-    "module" module_name ";"
+    "module" module_name ";" |
+    "module" module_name ":" IDENTIFIER ";"
     ;
 module_name:
     IDENTIFIER |
@@ -526,10 +527,11 @@ module_name:
     module_name "-" IDENTIFIER
     ;
 import:
-    "import" module_name ";"
+    "import" module_name ";" |
+    "import" ":" IDENTIFIER ";"
     ;
 type_definition: 
-    "define" type "as" IDENTIFIER
+    "define" type "as" IDENTIFIER ";"
     ;
 namespace:
     "namespace" module_name "{" namespace_units "}" |

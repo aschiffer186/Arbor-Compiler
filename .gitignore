@@ -6,6 +6,9 @@ arb/
 *.vcxproj.*
 *.vcxproj
 
+#build files
+build/
+
 venv/
 Junk/
 
