@@ -11,7 +11,7 @@
 
 //Arbor facts
 ///Current version of Arbor
-#define __VERSION__ "0.1.0"
+static const std::string VERSION = "0.1.0";
 
 ///@namespace Arbor The parent namespace of all C++ code for the Arbor parser
 namespace Arbor

@@ -3,22 +3,23 @@
 #include <regex>
 
 #include "command_args.hh"
+#include "../Arbor.hh"
 
 ///@file command_args.cpp
 
 ///@namespace Arbor::FE The parent namespace for all code for the front end of the compiler
 namespace Arbor::FE
 {
-    args process_command_args(int argc, char** argv)
+    args process_command_args(int argc, const char** argv)
     {
         bool debugFlag = false, versionFlag = false, helpFlag = false, outputFlag = false, inOutputFlag = false, showGrammarFlag = false;
         std::string output;
         std::vector<std::string> input_files;
-        std::regex r("[_a-zA-Z](_|-|[a-zA-Z0-9]*\\.arb"); // Match Arbor file pattern
+        std::regex r("[_a-zA-Z](_|-|[a-zA-Z0-9])*\\.arb"); // Match Arbor file pattern
         std::cmatch s;
         for (int i = 1; i < argc; ++i) //Skip program name
         {
-            char* arg = *(argv + i);
+            const char* arg = *(argv + i);
             if (strlen(arg) == 1) // Currently there are no valid command arguments of length 1
             {
                 std::cout << "Invalid command line option" << std::endl;
@@ -32,15 +33,18 @@ namespace Arbor::FE
                 }
                 else if (strcmp(arg, "-h") == 0)
                 {
+                    std::cout << "Helpful help message" << std::endl;
                     helpFlag = true;
                 }
                 else if (strcmp(arg, "-v") == 0)
                 {
+                    std::cout << "Arbor version: " << VERSION << std::endl;
                     versionFlag = true;
                 }
                 else if (strcmp(arg, "-r") == 0)
                 {
-                    showGrammarFlag = false;
+                    std::cout << "Insert beautiful grammar here." << std::endl;
+                    showGrammarFlag = true;
                 }
                 else if (strcmp(arg, "-o") == 0)
                 {
@@ -104,18 +108,19 @@ namespace Arbor::FE
         }
 
         //Check to ensure output is specified
-        if (output.empty())
+        if (output.empty() && !helpFlag && !versionFlag && !showGrammarFlag)
         {
             std::cout << "Must specify output file" << std::endl;
             exit(EXIT_FAILURE);
         }
         //Check to ensure at least one input is specified
-        if (input_files.empty())
+        if (input_files.empty() && !helpFlag && !versionFlag && !showGrammarFlag)
         {
             std::cout << "Must specify at least one input file" << std::endl;
             exit(EXIT_FAILURE);
         }
 
         args a = {debugFlag, helpFlag, versionFlag, showGrammarFlag, output, input_files};
+        return a;
     }
 } // namespace Arbor::FE

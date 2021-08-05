@@ -14,7 +14,8 @@ namespace std
         size_t operator()(const std::pair<std::string, int>& p) const noexcept
         {
             size_t seed = hash<int>{}(p.second);
-            seed ^= hash<std::string>{}(p.first) + 0x9e3779b9 + (seed<<6) + (seed>>2);;
+            seed ^= hash<std::string>{}(p.first) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+            return seed;
         }
     };
 } // namespace name

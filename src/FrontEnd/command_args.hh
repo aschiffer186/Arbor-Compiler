@@ -28,7 +28,7 @@ namespace Arbor::FE
      * @param argv an array containing the command line arguments
      * @return a struct containing options and files to be passed to the compile
      * */
-    args process_command_args(int argc, char** argv);
+    args process_command_args(int argc, const char** argv);
 }
 
 #endif

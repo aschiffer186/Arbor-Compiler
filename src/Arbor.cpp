@@ -5,7 +5,7 @@
 
 ///@file Arbor.cpp Entry point to compiler containing main function.
 
-int main(int argc, char** argv)
+int main(int argc, const char** argv)
 {
     Arbor::FE::args command_args = Arbor::FE::process_command_args(argc, argv);
 
