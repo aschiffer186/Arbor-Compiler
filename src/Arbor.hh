@@ -7,11 +7,11 @@
 #include <unordered_map>
 
 #include "Utility/specializations.hh"
-#include "FrontEnd/parse_tree.hh"
+#include "FrontEnd/ParseTree/parse_tree.hh"
 
 //Arbor facts
 ///Current version of Arbor
-static const std::string VERSION = "0.1.0";
+static const std::string ARB_VERSION = "0.1.0";
 
 ///@namespace Arbor The parent namespace of all C++ code for the Arbor parser
 namespace Arbor
@@ -30,7 +30,7 @@ namespace Arbor
         ///Map of compiler definitions
         std::unordered_map<std::pair<std::string, int>, std::string> compiler_defs;
         ///Parse tree
-        FE::parse_tree_t parse_tree;
+        //FE::parse_tree_t parse_tree;
     };
 } // namespace Arbor
 

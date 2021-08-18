@@ -369,20 +369,23 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // literal
+      char dummy1[sizeof (Arbor::FE::prvalue_expression_node*)];
+
       // BOOL
-      char dummy1[sizeof (bool)];
+      char dummy2[sizeof (bool)];
 
       // FLOAT
-      char dummy2[sizeof (double)];
+      char dummy3[sizeof (double)];
 
       // INT
-      char dummy3[sizeof (int)];
+      char dummy4[sizeof (int)];
 
       // IDENTIFIER
       // TYPENAME
       // CHAR
       // STRING
-      char dummy4[sizeof (std::string)];
+      char dummy5[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -580,7 +583,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 138, ///< Number of tokens.
+        YYNTOKENS = 141, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -718,115 +721,121 @@ namespace yy {
         S_POSTDEC = 133,                         // POSTDEC
         S_TERN = 134,                            // TERN
         S_DEREF = 135,                           // DEREF
-        S_136_initailize_ = 136,                 // "initailize"
-        S_137_namespace_ = 137,                  // "namespace"
-        S_YYACCEPT = 138,                        // $accept
-        S_start = 139,                           // start
-        S_type = 140,                            // type
-        S_type_root = 141,                       // type_root
-        S_non_reference_type = 142,              // non_reference_type
-        S_type_core = 143,                       // type_core
-        S_type_template_paramaters = 144,        // type_template_paramaters
-        S_type_list = 145,                       // type_list
-        S_reference_type = 146,                  // reference_type
-        S_expression = 147,                      // expression
-        S_expression0 = 148,                     // expression0
-        S_assignment_arg_expression = 149,       // assignment_arg_expression
-        S_prvalue_expression = 150,              // prvalue_expression
-        S_rvalue_expression = 151,               // rvalue_expression
-        S_xvalue_expression = 152,               // xvalue_expression
-        S_literal = 153,                         // literal
-        S_lambda_expression = 154,               // lambda_expression
-        S_new_expression = 155,                  // new_expression
-        S_array_index_list = 156,                // array_index_list
-        S_array_index = 157,                     // array_index
-        S_function_call = 158,                   // function_call
-        S_function_call_list = 159,              // function_call_list
-        S_function_call_arg = 160,               // function_call_arg
-        S_statement = 161,                       // statement
-        S_block_statement = 162,                 // block_statement
-        S_statements0 = 163,                     // statements0
-        S_statements = 164,                      // statements
-        S_loop_statement = 165,                  // loop_statement
-        S_while_loop_statement = 166,            // while_loop_statement
-        S_do_loop_statement = 167,               // do_loop_statement
-        S_for_loop_statement = 168,              // for_loop_statement
-        S_for_loop_condition = 169,              // for_loop_condition
-        S_conditional_statement = 170,           // conditional_statement
-        S_if_statement_sequence = 171,           // if_statement_sequence
-        S_if_statement = 172,                    // if_statement
-        S_else_if_statements0 = 173,             // else_if_statements0
-        S_else_if_statements = 174,              // else_if_statements
-        S_else_if_statement = 175,               // else_if_statement
-        S_else_statement0 = 176,                 // else_statement0
-        S_else_statement = 177,                  // else_statement
-        S_switch_statement = 178,                // switch_statement
-        S_case_blocks0 = 179,                    // case_blocks0
-        S_case_blocks = 180,                     // case_blocks
-        S_case_block = 181,                      // case_block
-        S_default_block0 = 182,                  // default_block0
-        S_default_block = 183,                   // default_block
-        S_exception_statement = 184,             // exception_statement
-        S_try_block = 185,                       // try_block
-        S_catch_blocks = 186,                    // catch_blocks
-        S_catch_block = 187,                     // catch_block
-        S_clean_up_statement = 188,              // clean_up_statement
-        S_clean_up_arg = 189,                    // clean_up_arg
-        S_jump_statement = 190,                  // jump_statement
-        S_expression_statement = 191,            // expression_statement
-        S_variable_declaration_statement = 192,  // variable_declaration_statement
-        S_variable_declaration = 193,            // variable_declaration
-        S_variable_declaration_block_list = 194, // variable_declaration_block_list
-        S_variable_declaration_block = 195,      // variable_declaration_block
-        S_access_modifier0 = 196,                // access_modifier0
-        S_access_modifier = 197,                 // access_modifier
-        S_no_op_statement = 198,                 // no_op_statement
-        S_function = 199,                        // function
-        S_function_header = 200,                 // function_header
-        S_function_modifiers = 201,              // function_modifiers
-        S_function_argument_list = 202,          // function_argument_list
-        S_function_argument = 203,               // function_argument
-        S_throwable_expression = 204,            // throwable_expression
-        S_return_types_list = 205,               // return_types_list
-        S_return_type = 206,                     // return_type
-        S_anonymous_function = 207,              // anonymous_function
-        S_anonymous_function_header = 208,       // anonymous_function_header
-        S_operator_overload = 209,               // operator_overload
-        S_operator_overload_header = 210,        // operator_overload_header
-        S_operator = 211,                        // operator
-        S_function_options = 212,                // function_options
-        S_callable = 213,                        // callable
-        S_enum = 214,                            // enum
-        S_enum_members_list = 215,               // enum_members_list
-        S_enum_member = 216,                     // enum_member
-        S_class = 217,                           // class
-        S_class_header = 218,                    // class_header
-        S_inheritance = 219,                     // inheritance
-        S_class_names_list = 220,                // class_names_list
-        S_class_name = 221,                      // class_name
-        S_class_statements = 222,                // class_statements
-        S_class_statement = 223,                 // class_statement
-        S_property = 224,                        // property
-        S_property_blocks = 225,                 // property_blocks
-        S_get_block = 226,                       // get_block
-        S_set_block = 227,                       // set_block
-        S_constructor = 228,                     // constructor
-        S_constructor_header = 229,              // constructor_header
-        S_initializer_list = 230,                // initializer_list
-        S_initializer_blocks_list = 231,         // initializer_blocks_list
-        S_initializer_block = 232,               // initializer_block
-        S_compeval0 = 233,                       // compeval0
-        S_destructor = 234,                      // destructor
-        S_destructor_header = 235,               // destructor_header
-        S_module = 236,                          // module
-        S_module_name = 237,                     // module_name
-        S_import = 238,                          // import
-        S_type_definition = 239,                 // type_definition
-        S_namespace = 240,                       // namespace
-        S_namespace_units = 241,                 // namespace_units
-        S_namespace_unit = 242,                  // namespace_unit
-        S_program_units = 243,                   // program_units
-        S_program_unit = 244                     // program_unit
+        S_136_virtual_const_ = 136,              // "virtual const"
+        S_137_compeval_const_ = 137,             // "compeval const"
+        S_138_initailize_ = 138,                 // "initailize"
+        S_139_type_ = 139,                       // "type"
+        S_140_namespace_ = 140,                  // "namespace"
+        S_YYACCEPT = 141,                        // $accept
+        S_start = 142,                           // start
+        S_type = 143,                            // type
+        S_type_root = 144,                       // type_root
+        S_non_reference_type = 145,              // non_reference_type
+        S_type_core = 146,                       // type_core
+        S_type_template_paramaters = 147,        // type_template_paramaters
+        S_type_list = 148,                       // type_list
+        S_reference_type = 149,                  // reference_type
+        S_expression = 150,                      // expression
+        S_expression0 = 151,                     // expression0
+        S_assignment_arg_expression = 152,       // assignment_arg_expression
+        S_prvalue_expression = 153,              // prvalue_expression
+        S_rvalue_expression = 154,               // rvalue_expression
+        S_xvalue_expression = 155,               // xvalue_expression
+        S_literal = 156,                         // literal
+        S_lambda_expression = 157,               // lambda_expression
+        S_new_expression = 158,                  // new_expression
+        S_array_index_list = 159,                // array_index_list
+        S_array_index = 160,                     // array_index
+        S_function_call = 161,                   // function_call
+        S_function_call_list = 162,              // function_call_list
+        S_function_call_arg = 163,               // function_call_arg
+        S_statement = 164,                       // statement
+        S_block_statement = 165,                 // block_statement
+        S_statements0 = 166,                     // statements0
+        S_statements = 167,                      // statements
+        S_loop_statement = 168,                  // loop_statement
+        S_while_loop_statement = 169,            // while_loop_statement
+        S_do_loop_statement = 170,               // do_loop_statement
+        S_for_loop_statement = 171,              // for_loop_statement
+        S_for_loop_condition = 172,              // for_loop_condition
+        S_conditional_statement = 173,           // conditional_statement
+        S_if_statement_sequence = 174,           // if_statement_sequence
+        S_if_statement = 175,                    // if_statement
+        S_else_if_statements0 = 176,             // else_if_statements0
+        S_else_if_statements = 177,              // else_if_statements
+        S_else_if_statement = 178,               // else_if_statement
+        S_else_statement0 = 179,                 // else_statement0
+        S_else_statement = 180,                  // else_statement
+        S_switch_statement = 181,                // switch_statement
+        S_case_blocks0 = 182,                    // case_blocks0
+        S_case_blocks = 183,                     // case_blocks
+        S_case_block = 184,                      // case_block
+        S_default_block0 = 185,                  // default_block0
+        S_default_block = 186,                   // default_block
+        S_exception_statement = 187,             // exception_statement
+        S_try_block = 188,                       // try_block
+        S_catch_blocks = 189,                    // catch_blocks
+        S_catch_block = 190,                     // catch_block
+        S_clean_up_statement = 191,              // clean_up_statement
+        S_clean_up_arg = 192,                    // clean_up_arg
+        S_jump_statement = 193,                  // jump_statement
+        S_expression_statement = 194,            // expression_statement
+        S_variable_declaration_statement = 195,  // variable_declaration_statement
+        S_variable_declaration = 196,            // variable_declaration
+        S_variable_declaration_block_list = 197, // variable_declaration_block_list
+        S_variable_declaration_block = 198,      // variable_declaration_block
+        S_access_modifier0 = 199,                // access_modifier0
+        S_access_modifier = 200,                 // access_modifier
+        S_no_op_statement = 201,                 // no_op_statement
+        S_function = 202,                        // function
+        S_function_header = 203,                 // function_header
+        S_function_modifiers = 204,              // function_modifiers
+        S_function_argument_list = 205,          // function_argument_list
+        S_function_argument = 206,               // function_argument
+        S_throwable_expression = 207,            // throwable_expression
+        S_return_types_list = 208,               // return_types_list
+        S_return_type = 209,                     // return_type
+        S_anonymous_function = 210,              // anonymous_function
+        S_anonymous_function_header = 211,       // anonymous_function_header
+        S_operator_overload = 212,               // operator_overload
+        S_operator_overload_header = 213,        // operator_overload_header
+        S_operator = 214,                        // operator
+        S_function_options = 215,                // function_options
+        S_callable = 216,                        // callable
+        S_enum = 217,                            // enum
+        S_enum_members_list = 218,               // enum_members_list
+        S_enum_member = 219,                     // enum_member
+        S_class = 220,                           // class
+        S_class_header = 221,                    // class_header
+        S_inheritance = 222,                     // inheritance
+        S_class_names_list = 223,                // class_names_list
+        S_class_name = 224,                      // class_name
+        S_class_statements = 225,                // class_statements
+        S_class_statement = 226,                 // class_statement
+        S_property = 227,                        // property
+        S_property_blocks = 228,                 // property_blocks
+        S_get_block = 229,                       // get_block
+        S_set_block = 230,                       // set_block
+        S_constructor = 231,                     // constructor
+        S_constructor_header = 232,              // constructor_header
+        S_initializer_list = 233,                // initializer_list
+        S_initializer_blocks_list = 234,         // initializer_blocks_list
+        S_initializer_block = 235,               // initializer_block
+        S_compeval0 = 236,                       // compeval0
+        S_destructor = 237,                      // destructor
+        S_destructor_header = 238,               // destructor_header
+        S_template_header = 239,                 // template_header
+        S_template_declaration_list = 240,       // template_declaration_list
+        S_template_declaration_type = 241,       // template_declaration_type
+        S_module = 242,                          // module
+        S_module_name = 243,                     // module_name
+        S_import = 244,                          // import
+        S_type_definition = 245,                 // type_definition
+        S_namespace = 246,                       // namespace
+        S_namespace_units = 247,                 // namespace_units
+        S_namespace_unit = 248,                  // namespace_unit
+        S_program_units = 249,                   // program_units
+        S_program_unit = 250                     // program_unit
       };
     };
 
@@ -863,6 +872,10 @@ namespace yy {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_literal: // literal
+        value.move< Arbor::FE::prvalue_expression_node* > (std::move (that.value));
+        break;
+
       case symbol_kind::S_BOOL: // BOOL
         value.move< bool > (std::move (that.value));
         break;
@@ -901,6 +914,20 @@ namespace yy {
 #else
       basic_symbol (typename Base::kind_type t, const location_type& l)
         : Base (t)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Arbor::FE::prvalue_expression_node*&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Arbor::FE::prvalue_expression_node*& v, const location_type& l)
+        : Base (t)
+        , value (v)
         , location (l)
       {}
 #endif
@@ -983,6 +1010,10 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_literal: // literal
+        value.template destroy< Arbor::FE::prvalue_expression_node* > ();
+        break;
+
       case symbol_kind::S_BOOL: // BOOL
         value.template destroy< bool > ();
         break;
@@ -3279,7 +3310,7 @@ switch (yykind)
     static bool yy_table_value_is_error_ (int yyvalue);
 
     static const short yypact_ninf_;
-    static const signed char yytable_ninf_;
+    static const short yytable_ninf_;
 
     /// Convert a scanner token kind \a t to a symbol kind.
     /// In theory \a t should be a token_kind_type, but character literals
@@ -3560,9 +3591,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 1296,     ///< Last index in yytable_.
-      yynnts_ = 107,  ///< Number of nonterminal symbols.
-      yyfinal_ = 92 ///< Termination state number.
+      yylast_ = 1653,     ///< Last index in yytable_.
+      yynnts_ = 110,  ///< Number of nonterminal symbols.
+      yyfinal_ = 100 ///< Termination state number.
     };
 
 
@@ -3587,6 +3618,10 @@ switch (yykind)
   {
     switch (this->kind ())
     {
+      case symbol_kind::S_literal: // literal
+        value.copy< Arbor::FE::prvalue_expression_node* > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_BOOL: // BOOL
         value.copy< bool > (YY_MOVE (that.value));
         break;
@@ -3635,6 +3670,10 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
+      case symbol_kind::S_literal: // literal
+        value.move< Arbor::FE::prvalue_expression_node* > (YY_MOVE (s.value));
+        break;
+
       case symbol_kind::S_BOOL: // BOOL
         value.move< bool > (YY_MOVE (s.value));
         break;
@@ -3716,7 +3755,7 @@ switch (yykind)
   }
 
 } // yy
-#line 3720 "Parser/Arbor_parser.tab.hh"
+#line 3759 "Parser/Arbor_parser.tab.hh"
 
 
 

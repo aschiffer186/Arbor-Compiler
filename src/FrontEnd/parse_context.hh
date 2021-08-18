@@ -1,7 +1,7 @@
 #ifndef PARSE_CONTEXT
 #define PARSE_CONTEXT
 
-#include "parse_tree.hh"
+#include "ParseTree/parse_tree.hh"
 #include "../Arbor.hh"
 #include "Parser/location.hh"
 #include "Parser/Arbor_lexer.hh"
@@ -77,11 +77,14 @@ namespace Arbor::FE
              */ 
             yy::location& get_location();
 
+            std::vector<syntax_node*>& tree();
+
             ~parse_context();
         private:
             context_state _M_state;
             source_file_t _M_source;
             yy::location _M_loc;
+            std::vector<syntax_node*> _M_trees;
             YY_BUFFER_STATE _M_lex_buffer;
     };
 } // namespace Arbor::FE

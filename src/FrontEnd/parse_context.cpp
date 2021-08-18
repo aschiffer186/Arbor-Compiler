@@ -19,5 +19,19 @@ namespace Arbor::FE
     {
         _M_state = s;
     }
+
+    std::vector<syntax_node*>& parse_context::tree()
+    {
+        return _M_trees;
+    }
+
+    parse_context::~parse_context()
+    {
+        for (auto tree_ptr : _M_trees)
+        {
+            delete tree_ptr;
+            tree_ptr = nullptr;
+        }
+    }
 } // namespace Arbor::FE
 

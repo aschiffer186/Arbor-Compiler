@@ -1,0 +1,25 @@
+{
+    "name": "arb",
+    "displayName": "Arbor",
+    "description": "Syntax higlighting for the Arbor programming language.",
+    "version": "0.0.2",
+    "engines": {
+        "vscode": "^1.58.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "arb",
+            "aliases": ["Arbor", "arb"],
+            "extensions": [".arb"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "arb",
+            "scopeName": "source.arb",
+            "path": "./syntaxes/arb.tmLanguage.json"
+        }]
+    }
+}

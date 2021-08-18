@@ -22,6 +22,7 @@
 
 %code {
     #include "../parse_context.hh"
+    #include "../ParseTree/syntax_node.hh"
     yy::parser::symbol_type yylex(Arbor::FE::parse_context& pc);
 }
 
@@ -33,7 +34,7 @@
 %token AS "as" BREAK "break" BIT "bit" BOOLT "bool" CASE "case" CASTAS "castas" CATCH "catch" CATCH_ALL "catch-all" CHART "char" CLASS "class" CLEANUP "cleanup" CONST "const";
 %token CONTINUE "continue" COMPEVAL "compeval" CTOR "ctor" DEFAULT "default" DEFINE "define" DELETE "delete" DO "do" ELSE "else" ELSEIF "else-if" ENUM "enum" FLOATT "float";
 %token FOR "for" FUNC "func" GET "get" GOTO "goto" HEAP "heap" IF "if" IMPORT "import" IN "in" INHERITS "inherits" INITIALIZE "initialize" INTT "int" IS "is" LET "let" LONG "long" MODULE "module";
-%token NEW "new" NOTHROWABLE "nothrowable" OPERATOR "operator" PRIVATE "private" PROPERTY "property" PROTECTED "protected" PUBLIC "public" REF "ref" RREF "rref" RETHROW "rethrow" RETURN "return" SET "set";
+%token NEW "new" NOTHROWABLE "nothrowable" OPERATOR "operator" PRIVATE "private" PROPERTY "property" PROTECTED "protected" PUBLIC "public" REF "ref" MREF "mref" RETHROW "rethrow" RETURN "return" SET "set";
 %token SHORT "short" STATIC "static" SUPER "super" SWITCH "switch" THIS "this" THROW "throw" TRY "try" TYPEOF "typeof";
 %token VIRTUAL "virtual" WEAK "weak" WHILE "while" YIELD "yield";
 //-----------------------------------------------------------------------Operators----------------------------------------------------------------------
@@ -66,7 +67,7 @@
 %right "!" "~" "++" "--" UMINUS DEREF
 %left "." "->" POSTINC POSTDEC "("
 
-
+%nterm <Arbor::FE::prvalue_expression_node*> literal
 %%
 //--------------------------------------------------------------------Begin Grammar----------------------------------------------------------------
 //Start smybol
@@ -108,9 +109,8 @@ type_list:
     ;
 reference_type: 
     "ref" non_reference_type |
-    "rref" non_reference_type
+    "mref" non_reference_type
     ;
-
 
 //------------------------------------------------------------------Expressions--------------------------------------------------------------------
 expression: //All expressions
@@ -127,7 +127,7 @@ assignment_arg_expression:
     ;
 prvalue_expression: //Expressions that can only appear on the right side of an '=' sign
     literal |
-    "super" |
+    "super" | 
     rvalue_expression "+" rvalue_expression |
     rvalue_expression "-" rvalue_expression |
     rvalue_expression "*" rvalue_expression |
@@ -144,6 +144,8 @@ prvalue_expression: //Expressions that can only appear on the right side of an '
     rvalue_expression ">=" rvalue_expression |
     rvalue_expression "<=" rvalue_expression |
     rvalue_expression "<=>" rvalue_expression |
+    rvalue_expression "!=" rvalue_expression |
+    rvalue_expression "==" rvalue_expression |
     rvalue_expression "&&" rvalue_expression |
     rvalue_expression "||" rvalue_expression |
     rvalue_expression "&" rvalue_expression |
@@ -163,6 +165,7 @@ prvalue_expression: //Expressions that can only appear on the right side of an '
     "-" rvalue_expression %prec UMINUS |
     "typeof" "(" rvalue_expression ")" |
     "castas" "<" type ">" "(" rvalue_expression ")" |
+    "size" "(" rvalue_expression ")" |
     "(" rvalue_expression ")" "?" rvalue_expression ":" rvalue_expression %prec TERN|
     new_expression |
     lambda_expression
@@ -186,10 +189,15 @@ xvalue_expression: //Expressions that can appear on the left or right side of an
     function_call
     ;
 literal: 
-    BOOL | NPTR | INT | FLOAT | STRING | CHAR
+    BOOL {$$ = new Arbor::FE::literal_node<bool>($1);} | 
+    NPTR {$$ = new Arbor::FE::literal_node<bool>(nullptr));} | 
+    INT  {$$ = new Arbor::FE::literal_node<bool>($1);} |  
+    FLOAT {$$ = new Arbor::FE::literal_node<bool>($1);} |
+    STRING {$$ = new Arbor::FE::literal_node<bool>($1);} | 
+    CHAR {$$ = new Arbor::FE::literal_node<bool>($1);}
     ;
 lambda_expression: 
-    "(" function_argument_list ")" "->" return_types_list "=>" block_statement 
+    "(" function_argument_list ")" "->" return_types_list "=>" block_statement
     ;
 new_expression:
     "new" type "(" function_call_list ")" |
@@ -366,7 +374,8 @@ no_op_statement:
 
 //-------------------------------------------------------------------Functions-------------------------------------------------------------------------
 function:
-    function_header block_statement  
+    template_header function_header block_statement |
+    function_header block_statement
     ;
 function_header:
     "func" access_modifier function_modifiers IDENTIFIER "(" function_argument_list ")" throwable_expression "->" return_types_list |
@@ -376,7 +385,10 @@ function_modifiers:
     "virtual" |
     "compeval" |
     "static" |
-    "static" "compeval"
+    "static" "compeval" |
+    "virtual const" | 
+    "compeval const" |
+    %empty
     ;
 function_argument_list:
     function_argument |
@@ -400,7 +412,8 @@ return_type:
     "typeof" "(" expression ")"
     ;
 anonymous_function:
-    anonymous_function_header block_statement 
+    template_header anonymous_function_header block_statement |
+    anonymous_function_header block_statement
     ;
 anonymous_function_header:
     "func" "compeval""(" function_argument_list ")" throwable_expression "->" return_types_list |
@@ -411,7 +424,9 @@ operator_overload:
     operator_overload_header "=" function_options ";"
     ;
 operator_overload_header:
-    "operator" operator "(" function_argument_list ")" throwable_expression "->" return_types_list
+   template_declaration_type "operator" operator "(" function_argument_list ")" throwable_expression "->" return_types_list |
+   "operator" operator "(" function_argument_list ")" throwable_expression "->" return_types_list
+   ;
 operator:
     "+" | "-" | "*" | "/" | "//" | "^^" | "%" | "+=" | "-=" | "*=" | "/=" | "//=" | "^^=" | "%=" |
     ">" | ">=" | "<" | "<=" | "<=>" | "==" | "!=" | "^" | "&" | "~" | "<<" | ">>" | "=" | "++" | "--" |
@@ -444,8 +459,8 @@ class:
     class_header "{" "}"
     ;
 class_header:
-    "class" IDENTIFIER |
-    "class" IDENTIFIER inheritance
+    template_header "class" IDENTIFIER |
+    template_header "class" IDENTIFIER inheritance
     ;
 inheritance:
     "inherits" class_names_list
@@ -470,7 +485,9 @@ class_statement:
     class
     ;
 property:
+    template_header "let" access_modifier "property" type IDENTIFIER "{" property_blocks "}" ";" |
     "let" access_modifier "property" type IDENTIFIER "{" property_blocks "}" ";"
+    ;
 property_blocks:
     get_block |
     set_block |
@@ -491,6 +508,7 @@ constructor:
     constructor_header "=" function_options ";"
     ;
 constructor_header:
+    template_header "ctor" access_modifier compeval0 IDENTIFIER "(" function_argument_list ")" throwable_expression |
     "ctor" access_modifier compeval0 IDENTIFIER "(" function_argument_list ")" throwable_expression
     ;
 initializer_list: 
@@ -515,6 +533,22 @@ destructor_header:
     ;
 
 //---------------------------------------------------------------------Templates----------------------------------------------------------------------
+template_header:
+    template_declaration_list "=>"
+    ;
+template_declaration_list:
+    template_declaration_type |
+    template_declaration_list "," template_declaration_type 
+    ;
+template_declaration_type:
+    "type" IDENTIFIER |
+    type IDENTIFIER |
+    type
+    ;
+template_tyepdef:
+    %empty
+    //Coming soon to an Arbor compiler near you 
+    ;
 
 //------------------------------------------------------------------Global Level Statements----------------------------------------------------------------------
 module:
@@ -531,7 +565,7 @@ import:
     "import" ":" IDENTIFIER ";"
     ;
 type_definition: 
-    "define" type "as" IDENTIFIER ";"
+    access_modifier0 "define" type "as" IDENTIFIER ";"
     ;
 namespace:
     "namespace" module_name "{" namespace_units "}" |

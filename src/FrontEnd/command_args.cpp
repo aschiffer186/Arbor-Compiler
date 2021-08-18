@@ -38,7 +38,7 @@ namespace Arbor::FE
                 }
                 else if (strcmp(arg, "-v") == 0)
                 {
-                    std::cout << "Arbor version: " << VERSION << std::endl;
+                    std::cout << "Arbor version: " << ARB_VERSION << std::endl;
                     versionFlag = true;
                 }
                 else if (strcmp(arg, "-r") == 0)

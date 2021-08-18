@@ -1,0 +1,106 @@
+{
+	"scopeName": "source.arb",
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Arbor",
+	"patterns": [{ "include": "#keywords" }, {"include": "#expressions"}, {"include": "#comments"}],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        { "include": "#control" }, 
+        { "include": "#paren-expression" },
+        { "include": "#constants"},
+        { "include": "#magic-constants"},
+        { "include": "#types"},
+        { "include": "#structure"},
+        { "include": "#function-attributes"},
+        { "include": "#source-management"}
+      ]
+    },
+    "expressions": {
+      "patterns": [
+        {"include": "#numeric"},
+        {"include": "#identifiers"},
+        {"include": "#strings"},
+        {"include": "#char"}
+      ]
+    },
+    "comments":{
+      "patterns": [
+        {"include": "#single"},
+        {"include": "#multi"}
+      ]
+    },
+    "control": {
+      "match": "\\b(void|in|define|operator|cleanup|is|if|else|else-if|switch|case|default|while|for|do|break|return|continue|yield|try|catch|catch-all|throw|get|set|initialize|type|new|heap|requires|as)\\b",
+      "name": "keyword.control.arb"
+    },
+    "function-attributes":{
+      "match": "\\b(virtual|static|compeval|nothrowable|default|delete)\\b",
+      "name": "storage.type.functions.arb"
+    },
+    "source-management":{
+      "match": "\\b(import|module|namespace)\\b",
+      "name": "storage.type.source.management.arb"
+    },
+    "paren-expression": {
+      "begin": "\\(",
+      "end": "\\)",
+      "beginCaptures": {
+        "0": { "name": "punctuation.paren.open" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.paren.close" }
+      },
+      "name": "expression.group",
+      "patterns": [{ "include": "#expression" }]
+    },
+    "constants": {
+      "match": "\\b(true|false|super|this|nptr|let|auto)\\b",
+      "name": "constant.language.arb"
+    },
+    "magic-constants": {
+      "match": "\\b(__LINE__|__FILE__|__VERSION__|__OS__|__DATE__|__TIME__|__COMPILER_DEFINITIONS__)\\b",
+      "name": "constant.language.magic.arb"
+    },
+    "types": {
+      "match": "\\b(bool|char|int|float|const|ref|mref|weak|typedef|typeof|castas|long|short)\\b",
+      "name": "storage.type.buitins"
+    },
+    "structure": {
+      "match": "\\b(func|ctor|class|enum|property|public|private|protected|inherits|final)\\b",
+      "name": "storage.type.unit"
+    },
+    "numeric": {
+      "match": "[0-9]+",
+      "name": "constant.numeric.arb"
+    },
+    "identifiers":{
+      "match": "(_|[a-zA-Z])(_|-|[a-zA-Z0-9])*",
+      "name": "variable.parameter.arb"
+    },
+    "strings":{
+      "begin": "\"",
+      "end": "\"",
+      "name": "string.quoted.double.arb",
+      "patterns": [
+        {
+          "match": "\\.",
+          "name": "constant.character.escape.arb"
+        }
+      ]
+    },
+    "char": {
+      "match": "('.')|('\\n..')",
+      "name": "string.quoted.single.arb"
+    },
+    "single": {
+      "match": "//[^\\n]*",
+      "name": "comment.line.arb"
+    },
+    "multi": {
+      "begin": "/\\*",
+      "end": "\\*/",
+      "name": "comment.block"
+    }
+  }
+}

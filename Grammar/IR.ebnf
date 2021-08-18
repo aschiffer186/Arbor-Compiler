@@ -1,0 +1,29 @@
+# Commands needed 
+stalloc: allocate memory on stack 
+malloc: allocate memory from heap
+free: free memory on heap
+add, subtract, multiply, divide: arithmetic operations on values
+eq: compare two values
+neg: negate a value 
+gt, lt: check if a value is greater than or less than a value
+if: check if a value is true and jump if it is 
+fcall: call a function 
+jump: go to a line of code 
+copy: copy a value from one value to another
+move: move a value from one value to another
+
+func main(Arbor.string[] args) -> int
+{
+    for(let int i = 0; i < 10; ++i)
+    {
+
+    }
+
+    return 1;
+}
+
+stalloc: R0 main
+fcall: R0 R1 # Assume R1 contains args 
+copy: R1 R2 # copy args 
+stalloc: R3 1
+lt: R

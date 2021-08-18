@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20.0)
 project(Arbor C CXX)
 
-set(CXX_STANDARD 17)
+set(CXX_STANDARD 20)
 set(CXX_STANDARD_REQUIRED true)
 
 set(ARBOR_MAJOR_VERSION 0)

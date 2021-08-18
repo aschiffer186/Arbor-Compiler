@@ -1,7 +1,6 @@
 # VS Code specific files
 .vscode/
 .vs/
-arb/
 *.sln
 *.vcxproj.*
 *.vcxproj
